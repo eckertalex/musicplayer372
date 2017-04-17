@@ -15,4 +15,4 @@ Cameron Showalter (@alaska.edu)
 Project 3 for CS372 Spring 2017 at UAF
 Professor Dr. Hartman
 
-======================================================================
+***
