@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/bryanburkhardt/Documents/bmburkhardt/CS372/tester/src/main.cpp
+SFML/Graphics.hpp
+-
+SFML/Audio.hpp
+-
+iostream
+-
+
