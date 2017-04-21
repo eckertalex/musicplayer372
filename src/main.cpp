@@ -7,7 +7,7 @@ int main()
 	
 	sf::SoundBuffer buffer;
 	sf::Music music;
-	if (!music.openFromFile("../Dream.wav"))
+	if (!music.openFromFile("../currency.wav"))
 	{
 		return -1;
 	}
