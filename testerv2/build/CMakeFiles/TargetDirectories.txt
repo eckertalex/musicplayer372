@@ -1,9 +1,0 @@
-/Users/bryanburkhardt/Documents/bmburkhardt/CS372/tester/build/CMakeFiles/install/local.dir
-/Users/bryanburkhardt/Documents/bmburkhardt/CS372/tester/build/CMakeFiles/install/strip.dir
-/Users/bryanburkhardt/Documents/bmburkhardt/CS372/tester/build/CMakeFiles/install.dir
-/Users/bryanburkhardt/Documents/bmburkhardt/CS372/tester/build/CMakeFiles/list_install_components.dir
-/Users/bryanburkhardt/Documents/bmburkhardt/CS372/tester/build/CMakeFiles/package_source.dir
-/Users/bryanburkhardt/Documents/bmburkhardt/CS372/tester/build/CMakeFiles/rebuild_cache.dir
-/Users/bryanburkhardt/Documents/bmburkhardt/CS372/tester/build/CMakeFiles/edit_cache.dir
-/Users/bryanburkhardt/Documents/bmburkhardt/CS372/tester/build/CMakeFiles/package.dir
-/Users/bryanburkhardt/Documents/bmburkhardt/CS372/tester/build/CMakeFiles/musicplayer.dir
