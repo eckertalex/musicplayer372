@@ -6,10 +6,13 @@ int main()
 {
 	
 	sf::SoundBuffer buffer;
-	if (!buffer.loadFromFile("currency.wav"))
+	sf::Music music;
+	if (!music.openFromFile("currency.wav"))
 	{
 		return -1;
 	}
+	music.play();
+	
 	sf::RenderWindow window(sf::VideoMode(200, 200), "Chat");
 	
 	while (window.isOpen())
