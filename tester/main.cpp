@@ -1,13 +1,24 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
-
+#include <vector>
+using std::vector;
 int main()
 {
 	
 	sf::SoundBuffer buffer;
 	sf::Music music;
-	if (!music.openFromFile("currency.wav"))
+	vector<std::string> musicFiles;
+	musicFiles.emplace_back("currency.wav");
+	musicFiles.emplace_back("Explosion.wav");
+	
+	
+	if (!music.openFromFile(musicFiles[0]))
+	{
+		return -1;
+	}
+	music.play();
+	if (!music.openFromFile(musicFiles[1]))
 	{
 		return -1;
 	}
