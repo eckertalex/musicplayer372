@@ -12,15 +12,40 @@ int main()
 		return -1;
 	}
 	music.play();
-	sf::RectangleShape play(sf::Vector2f(60, 60));
-	sf::RectangleShape prev(sf::Vector2f(60, 60));
-	sf::RectangleShape next(sf::Vector2f(60, 60));
-	sf::RectangleShape mute(sf::Vector2f(60, 60));
-	sf::RectangleShape volumeDecrease(sf::Vector2f(60, 60));
-	sf::RectangleShape volumeIncrease(sf::Vector2f(60, 60));
 	sf::RectangleShape divline(sf::Vector2f(2, 300));
+
+	sf::Texture playtex;
+	playtex.loadFromFile("../res/icons/play.png");
+	sf::Sprite play;
+	play.setTexture(playtex);
+
+	sf::Texture prevtex;
+	prevtex.loadFromFile("../res/icons/previous.png");
+	sf::Sprite prev;
+	prev.setTexture(prevtex);
+
+	sf::Texture nexttex;
+	nexttex.loadFromFile("../res/icons/next.png");
+	sf::Sprite next;
+	next.setTexture(nexttex);
+
+	sf::Texture mutetex;
+	mutetex.loadFromFile("../res/icons/mute.png");
+	sf::Sprite mute;
+	mute.setTexture(mutetex);
+
+	sf::Texture increasetex;
+	increasetex.loadFromFile("../res/icons/volume_up.png");
+	sf::Sprite increase;
+	increase.setTexture(increasetex);
+
+	sf::Texture decreasetex;
+	decreasetex.loadFromFile("../res/icons/volume_down.png");
+	sf::Sprite decrease;
+	decrease.setTexture(decreasetex);
+
 	
-	sf::RenderWindow window(sf::VideoMode(700, 300), "Chat");
+	sf::RenderWindow window(sf::VideoMode(700, 300), "MusicPlayer");
 	
 	while (window.isOpen())
 	{
@@ -30,20 +55,20 @@ int main()
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
-		window.clear();
+		window.clear(sf::Color(0, 255, 0));
 		play.setPosition(120,210);
 		prev.setPosition(30,210);
 		next.setPosition(210,210);
-		volumeDecrease.setPosition(120,120);
+		decrease.setPosition(120,120);
 		mute.setPosition(30,120);
-		volumeIncrease.setPosition(210,120);
+		increase.setPosition(210,120);
 		divline.setPosition(300,0);
 		window.draw(play);
 		window.draw(prev);
 		window.draw(next);
 		window.draw(mute);
-		window.draw(volumeDecrease);
-		window.draw(volumeIncrease);
+		window.draw(increase);
+		window.draw(decrease);
 		window.draw(divline);
 
 		window.display();
