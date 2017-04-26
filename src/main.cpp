@@ -1,3 +1,15 @@
+// main.cpp
+// 26. April 2017
+// Created by:
+// 		Bryan Burkhardt (bmburkhardt@alaska.edu)  
+// 		Alexander Eckert (aeckert@alaska.edu)  
+// 		Jeremiah Jacobson (jjjacobson2@alaska.edu)  
+// 		Jarye Maurphy (@alaska.edu)  
+// 		Cameron Showalter (@alaska.edu) 
+//
+// Main file for MusicPlayer372, the project from CS372 
+// 		with Professor Chris Hartman
+
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
