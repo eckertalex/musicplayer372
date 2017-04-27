@@ -20,6 +20,7 @@
 #include "../include/textureManager.hpp"
 #include "../include/musicPlayer.hpp"
 
+
 bool MusicPlayer::clickInSprite(sf::Sprite s, int x , int y)
 {
 	if (x > s.getGlobalBounds().left && x <
@@ -95,7 +96,7 @@ void MusicPlayer::handleInput() {
 							//Previous song
 							if (i == 1)
 							{
-
+								
 							}
 							//Next Song
 							if (i == 2)
