@@ -19,6 +19,8 @@
 #include "config.hpp"
 #include "../include/textureManager.hpp"
 #include "../include/musicPlayer.hpp"
+#include "../include/directoryManager.hpp"
+
 
 
 bool MusicPlayer::clickInSprite(sf::Sprite s, int x , int y)
@@ -77,11 +79,12 @@ void MusicPlayer::handleInput() {
 				if(event.mouseButton.button == sf::Mouse::Left) {
 					auto mousePosX = sf::Mouse::getPosition(window).x; // x position 
 					auto mousePosY = sf::Mouse::getPosition(window).y; // y position
-					for (auto i = 0; i < spriteVec.size(); ++i)
+					for (unsigned int i = 0; i < spriteVec.size(); ++i)
 					{
 						//std::cout << " xPos " << mousePosX << " yPos " << mousePosY <<   std::endl;
 						if (clickInSprite(spriteVec[i], mousePosX, mousePosY) == true)
 						{
+							//Pause/Play song
 							if (i == 0)
 							{
 								if (music.getStatus() == music.Paused)
@@ -96,29 +99,63 @@ void MusicPlayer::handleInput() {
 							//Previous song
 							if (i == 1)
 							{
-								
+								if(songList_.size() != 0)
+								{
+									music.stop();
+
+									//if you're at the begining, just go to the end(if press prev)
+									if(songListIndex_ == 0){
+										songListIndex_ = songList_.size()-1;
+									}
+									else{
+										songListIndex_ =- 1;
+									}
+									music.openFromFile(songList_[songListIndex_]);
+									music.play();
+									std::cout << "prevSong: " << songList_[songListIndex_] << " vecIndex: " << songListIndex_ << std::endl;
+								}
 							}
 							//Next Song
 							if (i == 2)
 							{
-
-
+								if(songList_.size() != 0)
+								{
+									music.stop();
+									//if you're at the end, just go to the begining(if press next)
+									if(songListIndex_ == songList_.size()-1){
+										songListIndex_ = 0;
+									}
+									else{
+										songListIndex_ =+ 1;
+									}
+									music.openFromFile(songList_[songListIndex_]);
+									music.play();
+									std::cout << "nextSong: " << songList_[songListIndex_] << " vecIndex: " << songListIndex_ << std::endl;
+								}
 							}
 							// mute the volume or unmute
 							if (i == 3) {
 								//if its not muted than set the volume to 0
-								if (music.getVolume() != 0) {
-									volSave = music.getVolume();
+								if (isMuted_ == false) {
+									isMuted_ = true;
+									volSave_ = music.getVolume();
 									music.setVolume(0);
 									std::cout << "Muted player." << std::endl;
 								}
 								else {
-									music.setVolume(volSave); // unmute the music by restoring the volume to previous value
+									isMuted_=  false;
+									music.setVolume(volSave_); // unmute the music by restoring the volume to previous value
 									std::cout << "Unmuted player." << std::endl;
 								}
 							}
 							// decrease volume
 							if (i == 4 ) {
+								//first unmutes if muted
+								if(isMuted_ == true)
+								{
+									isMuted_=  false;
+									music.setVolume(volSave_); // unmute the music by restoring the volume to previous value
+								}
 								//if we change the " -1" for music.getVolume, make sure to change the ">= 1" in the if statement to the same value -CS
 								if(music.getVolume() >= 1){
 									music.setVolume(music.getVolume() - 1);
@@ -127,6 +164,12 @@ void MusicPlayer::handleInput() {
 							}
 							// increase volume
 							if (i == 5) {
+								//first unmutes if muted
+								if(isMuted_ == true)
+								{
+									isMuted_=  false;
+									music.setVolume(volSave_); // unmute the music by restoring the volume to previous value
+								}
 								//if we change the " +1" for music.getVolume, make sure to reduce the "<= 99" in the if statement (100 - number) -CS
 								if(music.getVolume() <= 99){
 									music.setVolume(music.getVolume() + 1);
@@ -199,6 +242,15 @@ MusicPlayer::MusicPlayer() {
 		muteButton, 				// 3
 		decreaseVolumeButton, 		// 4
 		increaseVolumeButton };		// 5
+
+	//create full songlist
+	songList_ = std::move(fileTreeMain());//flileTreeMain inside directoryManager.hpp
+	songListIndex_ = 0;
+	//print for testing, delete later
+	printVec(songList_);
+
+	volSave_ = 100;
+	isMuted_ = false;
 
 	std::cout << "MusicPlayer initialized" << std::endl;
 }

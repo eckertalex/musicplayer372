@@ -25,7 +25,10 @@ public:
 
 	sf::SoundBuffer buffer;
 	sf::Music music;
-	int volSave = 0;
+
+
+
+
 
 	sf::Sprite playPauseButton;
 	sf::Sprite prevButton;
@@ -47,7 +50,14 @@ public:
 private:
 	void loadTextures();
 
+	std::vector<std::string> songList_;
+	unsigned int songListIndex_;
+
+	unsigned int volSave_;
+	bool isMuted_;
+
 	MusicPlayer* musicPlayer;
+
 };
 
 #endif // #ifndef MUSICPLAYER_HPP
