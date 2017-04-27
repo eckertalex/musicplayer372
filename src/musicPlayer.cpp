@@ -47,6 +47,13 @@ void MusicPlayer::draw(const float dt) {
 }
 
 void MusicPlayer::update(const float dt) {
+	if (music.getStatus() != sf::SoundSource::Status::Playing) {
+		playPauseButton.setTexture(this->texmgr.getRef("playTex"));
+	}
+	else {
+		playPauseButton.setTexture(this->texmgr.getRef("pauseTex"));
+	}
+
 	return;
 }
 
@@ -124,7 +131,7 @@ MusicPlayer::MusicPlayer() {
 	window.setFramerateLimit(60);
 
 	// set textures
-	playPauseButton.setTexture(this->texmgr.getRef("playTex"));
+	playPauseButton.setTexture(this->texmgr.getRef("pauseTex"));
 	prevButton.setTexture(this->texmgr.getRef("prevTex"));
 	nextButton.setTexture(this->texmgr.getRef("nextTex"));
 	muteButton.setTexture(this->texmgr.getRef("muteTex"));
