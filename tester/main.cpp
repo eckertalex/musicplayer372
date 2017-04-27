@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 using std::vector;
+
 int main()
 {
 	
@@ -11,18 +12,19 @@ int main()
 	vector<std::string> musicFiles;
 	musicFiles.emplace_back("currency.wav");
 	musicFiles.emplace_back("Explosion.wav");
-	
-	
-	if (!music.openFromFile(musicFiles[0]))
+	for (int i = 0; i != musicFiles.size(); ++i)
 	{
-		return -1;
+		if (!music.openFromFile(musicFiles[i]))
+		{
+			return -1;
+		}
+		else
+		{
+			music.play();
+			music.setLoop(true);
+			
+		}
 	}
-	music.play();
-	if (!music.openFromFile(musicFiles[1]))
-	{
-		return -1;
-	}
-	music.play();
 	
 	sf::RenderWindow window(sf::VideoMode(200, 200), "Chat");
 	

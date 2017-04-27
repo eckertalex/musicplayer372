@@ -67,7 +67,7 @@ int main()
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
-		window.clear(sf::Color(0, 255, 0));
+		window.clear(sf::Color::White);
 		play.setPosition(120,210);
 		prev.setPosition(30,210);
 		next.setPosition(210,210);
@@ -75,6 +75,7 @@ int main()
 		mute.setPosition(30,120);
 		increase.setPosition(210,120);
 		divline.setPosition(300,0);
+		divline.setFillColor(sf::Color::Black);
 		window.draw(play);
 		window.draw(prev);
 		window.draw(next);
