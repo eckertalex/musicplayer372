@@ -20,7 +20,6 @@ using std::map;
 
 class TextureManager
 {
-
 public:
 	// Add a texture from a file
 	void loadTexture(const string &name, const string &filename);

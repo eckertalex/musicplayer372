@@ -27,10 +27,10 @@ int main()
 
 
 
-	if (!musicPlayer.music.openFromFile("../res/audio/AMemoryAway.ogg"))
-	{
+	if (!musicPlayer.music.openFromFile("../res/audio/AMemoryAway.ogg")) {
 		return -1;
 	}
+	
 	musicPlayer.music.play();
 	
 	musicPlayer.playerLoop();

@@ -13,6 +13,7 @@
 #define MUSICPLAYER_HPP
 
 #include <vector>
+#include <memory>
 
 #include "textureManager.hpp"
 
@@ -25,10 +26,6 @@ public:
 
 	sf::SoundBuffer buffer;
 	sf::Music music;
-
-
-
-
 
 	sf::Sprite playPauseButton;
 	sf::Sprite prevButton;
@@ -56,8 +53,7 @@ private:
 	unsigned int volSave_;
 	bool isMuted_;
 
-	MusicPlayer* musicPlayer;
-
+	std::unique_ptr<MusicPlayer> musicPlayer;
 };
 
 #endif // #ifndef MUSICPLAYER_HPP

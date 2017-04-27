@@ -23,8 +23,7 @@
 
 
 
-bool MusicPlayer::clickInSprite(sf::Sprite s, int x , int y)
-{
+bool MusicPlayer::clickInSprite(sf::Sprite s, int x , int y) {
 	if (x > s.getGlobalBounds().left && x <
 			(s.getGlobalBounds().left + s.getGlobalBounds().width) && 
 			y > s.getGlobalBounds().top && y < (s.getGlobalBounds().top 
@@ -55,7 +54,6 @@ void MusicPlayer::update(const float dt) {
 	else {
 		playPauseButton.setTexture(this->texmgr.getRef("pauseTex"));
 	}
-
 	return;
 }
 
@@ -79,35 +77,28 @@ void MusicPlayer::handleInput() {
 				if(event.mouseButton.button == sf::Mouse::Left) {
 					auto mousePosX = sf::Mouse::getPosition(window).x; // x position 
 					auto mousePosY = sf::Mouse::getPosition(window).y; // y position
-					for (unsigned int i = 0; i < spriteVec.size(); ++i)
-					{
+					for (unsigned int i = 0; i < spriteVec.size(); ++i)	{
 						//std::cout << " xPos " << mousePosX << " yPos " << mousePosY <<   std::endl;
-						if (clickInSprite(spriteVec[i], mousePosX, mousePosY) == true)
-						{
+						if (clickInSprite(spriteVec[i], mousePosX, mousePosY) == true) {
 							//Pause/Play song
-							if (i == 0)
-							{
-								if (music.getStatus() == music.Paused)
-								{
+							if (i == 0)	{
+								if (music.getStatus() == music.Paused) {
 									music.play();
 								}
-								else
-								{
+								else {
 									music.pause();
 								}
 							}
 							//Previous song
-							if (i == 1)
-							{
-								if(songList_.size() != 0)
-								{
+							if (i == 1)	{
+								if(songList_.size() != 0) {
 									music.stop();
 
 									//if you're at the begining, just go to the end(if press prev)
-									if(songListIndex_ == 0){
+									if(songListIndex_ == 0) {
 										songListIndex_ = songList_.size()-1;
 									}
-									else{
+									else {
 										songListIndex_ =- 1;
 									}
 									music.openFromFile(songList_[songListIndex_]);
@@ -116,16 +107,14 @@ void MusicPlayer::handleInput() {
 								}
 							}
 							//Next Song
-							if (i == 2)
-							{
-								if(songList_.size() != 0)
-								{
+							if (i == 2)	{
+								if(songList_.size() != 0) {
 									music.stop();
 									//if you're at the end, just go to the begining(if press next)
-									if(songListIndex_ == songList_.size()-1){
+									if(songListIndex_ == songList_.size()-1) {
 										songListIndex_ = 0;
 									}
-									else{
+									else {
 										songListIndex_ =+ 1;
 									}
 									music.openFromFile(songList_[songListIndex_]);
@@ -244,7 +233,7 @@ MusicPlayer::MusicPlayer() {
 		increaseVolumeButton };		// 5
 
 	//create full songlist
-	songList_ = std::move(fileTreeMain());//flileTreeMain inside directoryManager.hpp
+	songList_ = std::move(fileTreeMain()); //fileTreeMain inside directoryManager.hpp
 	songListIndex_ = 0;
 	//print for testing, delete later
 	printVec(songList_);
