@@ -8,8 +8,8 @@ Created by:
 Bryan Burkhardt (bmburkhardt@alaska.edu)  
 Alexander Eckert (aeckert@alaska.edu)  
 Jeremiah Jacobson (jjjacobson2@alaska.edu)  
-Jarye Maurphy (@alaska.edu)  
-Cameron Showalter (@alaska.edu)  
+Jarye Maurphy (jmurphy11@alaska.edu)  
+Cameron Showalter (cjshowalter@alaska.edu)  
 
 
 Project 3 for CS372 Spring 2017 at UAF
