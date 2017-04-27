@@ -3,8 +3,8 @@
 // Created by:
 // 		Bryan Burkhardt (bmburkhardt@alaska.edu)  
 // 		Alexander Eckert (aeckert@alaska.edu)  
-// 		Jeremiah Jacobson (jjjacobson2@alaska.edu)  
-// 		Jarye Maurphy (@alaska.edu)  
+// 		Jeremiah Jacobson (jjacobson2@alaska.edu)  
+// 		Jarye Maurphy (jmurphy11@alaska.edu)  
 // 		Cameron Showalter (@alaska.edu) 
 //
 // Source file for MusicPlayer class
@@ -59,7 +59,6 @@ void MusicPlayer::update(const float dt) {
 
 void MusicPlayer::handleInput() {
 	sf::Event event;
-	int volSave = music.getVolume(); // restore point for when you unmute the music
 	while(window.pollEvent(event))
 	{
 		switch(event.type) {
@@ -84,12 +83,19 @@ void MusicPlayer::handleInput() {
 					auto mousePosY = sf::Mouse::getPosition(window).y; // y position
 					for (auto i = 0; i < spriteVec.size(); ++i)
 					{
-						std::cout << " xPos " << mousePosX << " yPos " << mousePosY <<   std::endl;
+						//std::cout << " xPos " << mousePosX << " yPos " << mousePosY <<   std::endl;
 						if (clickInSprite(spriteVec[i], mousePosX, mousePosY) == true)
 						{
 							if (i == 0)
 							{
-								music.pause();
+								if (music.getStatus() == music.Paused)
+								{
+									music.play();
+								}
+								else
+								{
+									music.pause();
+								}
 							}
 							if (i == 3) // decrease the volume
 							{
@@ -102,10 +108,6 @@ void MusicPlayer::handleInput() {
 								{
 									music.setVolume(0);
 									
-								}
-								else
-								{
-									music.setVolume(volSave); // unmute the music by restoring the volume to previous value
 								}
 								
 							}
