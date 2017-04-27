@@ -72,7 +72,6 @@ void MusicPlayer::handleInput() {
 					std::cout << "Closed Game\nGood Bye!" << std::endl;
 				}
 			}
-			
 			case sf::Event::MouseButtonPressed: {
 				if(event.mouseButton.button == sf::Mouse::Left) {
 					auto mousePosX = sf::Mouse::getPosition(window).x; // x position 
@@ -101,6 +100,7 @@ void MusicPlayer::handleInput() {
 							//Next Song
 							if (i == 2)
 							{
+
 
 							}
 							// mute the volume or unmute
