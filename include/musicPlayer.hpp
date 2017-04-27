@@ -12,12 +12,19 @@
 #ifndef MUSICPLAYER_HPP
 #define MUSICPLAYER_HPP
 
+#include <vector>
+
 #include "textureManager.hpp"
 
 class MusicPlayer {
 public:
 	sf::RenderWindow window;
 	TextureManager texmgr;
+	
+	std::vector<sf::Sprite> spriteVec;
+
+	sf::SoundBuffer buffer;
+	sf::Music music;
 
 	sf::Sprite playPauseButton;
 	sf::Sprite prevButton;
@@ -34,6 +41,7 @@ public:
 	void draw(const float dt);
 	void update(const float dt);
 	void handleInput();
+	bool clickInSprite(sf::Sprite s, int x , int y);
 
 private:
 	void loadTextures();

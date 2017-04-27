@@ -14,10 +14,23 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
+#include <vector>
 
 #include "config.hpp"
 #include "../include/textureManager.hpp"
 #include "../include/musicPlayer.hpp"
+
+bool MusicPlayer::clickInSprite(sf::Sprite s, int x , int y)
+{
+	if (x > s.getGlobalBounds().left && x <
+		(s.getGlobalBounds().left + s.getGlobalBounds().width) && y > s.getGlobalBounds().top &&
+			y < (s.getGlobalBounds().top + s.getGlobalBounds().height))
+	{
+		return true;
+	}
+	
+	return false;
+}
 
 void MusicPlayer::draw(const float dt) {
 	window.clear(sf::Color::Green);
@@ -52,6 +65,25 @@ void MusicPlayer::handleInput() {
 					window.close();
 					std::cout << "Closed Game\nGood Bye!" << std::endl;
 				}
+			}
+			case sf::Event::MouseButtonPressed: {
+				std::vector<sf::Sprite> spriteVec = { playPauseButton, prevButton, 
+													nextButton, decreaseVolumeButton, 
+													muteButton, increaseVolumeButton };
+				if(event.mouseButton.button == sf::Mouse::Left) {
+					auto mousePosX = sf::Mouse::getPosition(window).x; // x position 
+					auto mousePosY = sf::Mouse::getPosition(window).y; // y position
+					for (auto i = 0; i < spriteVec.size(); ++i)
+					{
+						std::cout << " xPos " << mousePosX << " yPos " << mousePosY <<   std::endl;
+						if (clickInSprite(spriteVec[i], mousePosX, mousePosY) == true)
+						{
+							music.play();
+							std::cout << "you clicked into the box";
+						}
+					}
+				}
+				break;
 			}
 			default:
 				break;
@@ -106,6 +138,10 @@ MusicPlayer::MusicPlayer() {
 	decreaseVolumeButton.setPosition(120,120);
 	muteButton.setPosition(30,120);
 	increaseVolumeButton.setPosition(210,120);
+
+	spriteVec = { playPauseButton, prevButton, 
+				nextButton, decreaseVolumeButton, 
+				muteButton, increaseVolumeButton };
 
 	std::cout << "MusicPlayer initialized" << std::endl;
 }
