@@ -35,12 +35,12 @@ void MusicPlayer::draw(const float dt) {
 	window.clear(sf::Color::Green);
 
 	// draw buttons
-	window.draw(playPauseButton);		 //0
-	window.draw(prevButton); 			 //1
-	window.draw(nextButton);			 //2
-	window.draw(muteButton); 			 //3
-	window.draw(increaseVolumeButton);	 //4
-	window.draw(decreaseVolumeButton);	 //5
+	window.draw(playPauseButton);			//0
+	window.draw(prevButton); 				//1
+	window.draw(nextButton);				//2
+	window.draw(muteButton); 				//3
+	window.draw(increaseVolumeButton);		//4
+	window.draw(decreaseVolumeButton);		//5
 
 	return;
 }
@@ -126,7 +126,7 @@ void MusicPlayer::handleInput() {
 							}
 							// increase volume
 							if (i == 5) {
-								//if we change the " +1" for music.getVolume, make sure to change the "<= 1" in the if statement to the same value -CS
+								//if we change the " +1" for music.getVolume, make sure to reduce the "<= 99" in the if statement (100 - number) -CS
 								if(music.getVolume() <= 99){
 									music.setVolume(music.getVolume() + 1);
 									std::cout << "The volume is " << music.getVolume() << std::endl;
@@ -138,7 +138,7 @@ void MusicPlayer::handleInput() {
 				break;
 			}
 			default:
-				break;
+			break;
 		}
 	}
 	return;
