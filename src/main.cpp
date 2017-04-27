@@ -4,7 +4,7 @@
 // 		Bryan Burkhardt (bmburkhardt@alaska.edu)  
 // 		Alexander Eckert (aeckert@alaska.edu)  
 // 		Jeremiah Jacobson (jjjacobson2@alaska.edu)  
-// 		Jarye Maurphy (@alaska.edu)  
+// 		Jarye Maurphy (jmurphy11@alaska.edu)  
 // 		Cameron Showalter (@alaska.edu) 
 //
 // Main file for MusicPlayer372, the project from CS372 
@@ -13,7 +13,17 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
-
+bool clickInSprite(sf::Sprite s, int x , int y)
+{
+	if (x > s.getGlobalBounds().left && x <
+		(s.getGlobalBounds().left + s.getGlobalBounds().width) && y > s.getGlobalBounds().top &&
+			y < (s.getGlobalBounds().top + s.getGlobalBounds().height))
+	{
+		return true;
+	}
+	
+	return false;
+}
 int main()
 {
 	
@@ -85,6 +95,24 @@ int main()
 		window.draw(divline);
 
 		window.display();
+		
+		// get a vector full of all the sprites
+		std::vector<sf::Sprite> spriteVec = { play,prev,next,decrease,mute,increase };
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) == true) // see if someone has left clicked
+		{
+			int mousePosX = sf::Mouse::getPosition(window).x; // x position 
+			int mousePosY = sf::Mouse::getPosition(window).y; // y position
+			for (int i = 0; i < spriteVec.size(); ++i)
+			{
+				//std::cout << "x left val is " << play.getGlobalBounds().left << "/n";
+				//std::cout << " xPos " << mousePosX << " yPos " << mousePosY <<   "\n";
+				if (clickInSprite(spriteVec[i], mousePosX, mousePosY) == true)
+				{
+					music.pause();
+					std::cout << "you clicked into the box";
+				}
+			}
+		}
 	}
 
 	return 0;
