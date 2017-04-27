@@ -23,12 +23,11 @@
 bool MusicPlayer::clickInSprite(sf::Sprite s, int x , int y)
 {
 	if (x > s.getGlobalBounds().left && x <
-		(s.getGlobalBounds().left + s.getGlobalBounds().width) && y > s.getGlobalBounds().top &&
-			y < (s.getGlobalBounds().top + s.getGlobalBounds().height))
-	{
+			(s.getGlobalBounds().left + s.getGlobalBounds().width) && 
+			y > s.getGlobalBounds().top && y < (s.getGlobalBounds().top 
+			+ s.getGlobalBounds().height)) {
 		return true;
 	}
-	
 	return false;
 }
 
@@ -75,12 +74,10 @@ void MusicPlayer::handleInput() {
 			}
 			
 			case sf::Event::MouseButtonPressed: {
-				std::vector<sf::Sprite> spriteVec = { playPauseButton, prevButton, 
-													nextButton, decreaseVolumeButton, 
-													muteButton, increaseVolumeButton };
 				if(event.mouseButton.button == sf::Mouse::Left) {
 					auto mousePosX = sf::Mouse::getPosition(window).x; // x position 
 					auto mousePosY = sf::Mouse::getPosition(window).y; // y position
+<<<<<<< HEAD
 					for (auto i = 0; i < spriteVec.size(); ++i)
 					{
 						//std::cout << " xPos " << mousePosX << " yPos " << mousePosY <<   std::endl;
@@ -101,24 +98,48 @@ void MusicPlayer::handleInput() {
 							{
 								music.setVolume(music.getVolume() - 1);
 								std::cout << "the volume is " << music.getVolume() << "/n";
-							}
-							if (i == 4 ) // mute the voluem or unmute
-							{
-								if (music.getVolume() != 0)//if its not muted than set the volume to 0
-								{
-									music.setVolume(0);
-									
+=======
+					std::cout << " xPos " << mousePosX << " yPos " << mousePosY <<   std::endl;
+					for (auto i = 0; i < spriteVec.size(); ++i) {
+						// restore point for when you unmute the music
+						if (clickInSprite(spriteVec[i], mousePosX, mousePosY) == true) {
+							if (i == 0) { 
+								if (music.getStatus() != sf::SoundSource::Status::Playing) {
+									music.play();
+									std::cout << "Play music." << std::endl;
 								}
-								
+								else {
+									music.pause();
+									std::cout << "Music paused." << std::endl;
+								}
+>>>>>>> 9c59da9d78f9d869471ed1da818bd5469b55ef98
 							}
-							if (i == 5)
-							{
+							// mute the volume or unmute
+							if (i == 3) {
+								//if its not muted than set the volume to 0
+								if (music.getVolume() != 0) {
+									volSave = music.getVolume();
+									music.setVolume(0);
+									std::cout << "Muted player." << std::endl;
+								}
+<<<<<<< HEAD
+								
+=======
+								else {
+									music.setVolume(volSave); // unmute the music by restoring the volume to previous value
+									std::cout << "Unmuted player." << std::endl;
+								}
+>>>>>>> 9c59da9d78f9d869471ed1da818bd5469b55ef98
+							}
+							// decrease volume
+							if (i == 4 ) {
+								music.setVolume(music.getVolume() - 1);
+								std::cout << "The volume is " << music.getVolume() << std::endl;
+							}
+							if (i == 5) {
 								music.setVolume(music.getVolume() + 1);
-								
-								std::cout << "the volume is " << music.getVolume() << "/n";
-							}
-						
-							
+								std::cout << "The volume is " << music.getVolume() << std::endl;
+							}	
 						}
 					}
 				}
@@ -178,9 +199,13 @@ MusicPlayer::MusicPlayer() {
 	muteButton.setPosition(30,120);
 	increaseVolumeButton.setPosition(210,120);
 
-	spriteVec = { playPauseButton, prevButton, 
-				nextButton, decreaseVolumeButton, 
-				muteButton, increaseVolumeButton };
+	spriteVec = { 
+		playPauseButton,			// 0
+		prevButton, 				// 1
+		nextButton, 				// 2
+		muteButton, 				// 3
+		decreaseVolumeButton, 		// 4
+		increaseVolumeButton };		// 5
 
 	std::cout << "MusicPlayer initialized" << std::endl;
 }

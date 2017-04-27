@@ -23,7 +23,7 @@ int main()
 	std::cout << "Version " << myproject_VERSION_MAJOR << "." << myproject_VERSION_MINOR << std::endl;
 	MusicPlayer musicPlayer;
 	
-	if (!musicPlayer.music.openFromFile("../res/audio/currency.wav"))
+	if (!musicPlayer.music.openFromFile("../res/audio/AMemoryAway.ogg"))
 	{
 		return -1;
 	}

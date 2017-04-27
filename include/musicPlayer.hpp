@@ -25,6 +25,7 @@ public:
 
 	sf::SoundBuffer buffer;
 	sf::Music music;
+	int volSave = 0;
 
 	sf::Sprite playPauseButton;
 	sf::Sprite prevButton;
