@@ -19,7 +19,7 @@ int main()
 	
 	sf::SoundBuffer buffer;
 	sf::Music music;
-	if (!music.openFromFile("../currency.wav"))
+	if (!music.openFromFile("../res/audio/currency.wav"))
 	{
 		return -1;
 	}
