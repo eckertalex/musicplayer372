@@ -59,6 +59,7 @@ void MusicPlayer::update(const float dt) {
 
 void MusicPlayer::handleInput() {
 	sf::Event event;
+	int volSave = music.getVolume(); // restore point for when you unmute the music
 	while(window.pollEvent(event))
 	{
 		switch(event.type) {
@@ -73,6 +74,7 @@ void MusicPlayer::handleInput() {
 					std::cout << "Closed Game\nGood Bye!" << std::endl;
 				}
 			}
+			
 			case sf::Event::MouseButtonPressed: {
 				std::vector<sf::Sprite> spriteVec = { playPauseButton, prevButton, 
 													nextButton, decreaseVolumeButton, 
@@ -85,8 +87,36 @@ void MusicPlayer::handleInput() {
 						std::cout << " xPos " << mousePosX << " yPos " << mousePosY <<   std::endl;
 						if (clickInSprite(spriteVec[i], mousePosX, mousePosY) == true)
 						{
-							music.play();
-							std::cout << "you clicked into the box";
+							if (i == 0)
+							{
+								music.pause();
+							}
+							if (i == 3) // decrease the volume
+							{
+								music.setVolume(music.getVolume() - 1);
+								std::cout << "the volume is " << music.getVolume() << "/n";
+							}
+							if (i == 4 ) // mute the voluem or unmute
+							{
+								if (music.getVolume() != 0)//if its not muted than set the volume to 0
+								{
+									music.setVolume(0);
+									
+								}
+								else
+								{
+									music.setVolume(volSave); // unmute the music by restoring the volume to previous value
+								}
+								
+							}
+							if (i == 5)
+							{
+								music.setVolume(music.getVolume() + 1);
+								
+								std::cout << "the volume is " << music.getVolume() << "/n";
+							}
+						
+							
 						}
 					}
 				}
