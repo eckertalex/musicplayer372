@@ -57,7 +57,7 @@ int main()
 	decrease.setTexture(decreasetex);
 
 	
-	sf::RenderWindow window(sf::VideoMode(700, 300), "MusicPlayer");
+	sf::RenderWindow window(sf::VideoMode(700, 300), "MusicPlayer", sf::Style::Titlebar | sf::Style::Close);
 	
 	while (window.isOpen())
 	{
