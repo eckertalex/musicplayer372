@@ -13,7 +13,7 @@
 #define myproject_VERSION_MINOR @myproject_VERSION_MINOR@
 
 // define window size
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 608
+#define WINDOW_WIDTH 700
+#define WINDOW_HEIGHT 300
 
 #endif // CONFIG_HPP_INCLUDED
