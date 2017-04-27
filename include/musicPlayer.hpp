@@ -48,7 +48,7 @@ private:
 	void loadTextures();
 
 	std::vector<std::string> songList_;
-	unsigned int songListIndex_;
+	unsigned int songListIndex_ = 0;
 
 	unsigned int volSave_;
 	bool isMuted_;

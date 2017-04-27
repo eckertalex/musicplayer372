@@ -82,8 +82,9 @@ void MusicPlayer::handleInput() {
 						if (clickInSprite(spriteVec[i], mousePosX, mousePosY) == true) {
 							//Pause/Play song
 							if (i == 0)	{
-								if (music.getStatus() == music.Paused) {
+								if (music.getStatus() != music.Playing) {
 									music.play();
+									std::cout << "Playing song: " << songList_[songListIndex_] << std::endl;
 								}
 								else {
 									music.pause();
@@ -91,20 +92,20 @@ void MusicPlayer::handleInput() {
 							}
 							//Previous song
 							if (i == 1)	{
-								if(songList_.size() != 0) {
-									music.stop();
+								// if(songList_.size() != 0) {
+								// 	music.stop();
 
-									//if you're at the begining, just go to the end(if press prev)
-									if(songListIndex_ == 0) {
-										songListIndex_ = songList_.size()-1;
-									}
-									else {
-										songListIndex_ =- 1;
-									}
-									music.openFromFile(songList_[songListIndex_]);
-									music.play();
-									std::cout << "prevSong: " << songList_[songListIndex_] << " vecIndex: " << songListIndex_ << std::endl;
-								}
+								// 	//if you're at the begining, just go to the end(if press prev)
+								// 	if(songListIndex_ == 0) {
+								// 		songListIndex_ = songList_.size()-1;
+								// 	}
+								// 	else {
+								// 		songListIndex_ =- 1;
+								// 	}
+								// 	music.openFromFile(songList_[songListIndex_]);
+								// 	music.play();
+								// 	std::cout << "prevSong: " << songList_[songListIndex_] << " vecIndex: " << songListIndex_ << std::endl;
+								// }
 							}
 							//Next Song
 							if (i == 2)	{
@@ -119,7 +120,8 @@ void MusicPlayer::handleInput() {
 									}
 									music.openFromFile(songList_[songListIndex_]);
 									music.play();
-									std::cout << "nextSong: " << songList_[songListIndex_] << " vecIndex: " << songListIndex_ << std::endl;
+									std::cout << "NextSong: " << songList_[songListIndex_] << " vecIndex: " << songListIndex_ << std::endl;
+									std::cout << "Playing song: " << songList_[songListIndex_] << std::endl;
 								}
 							}
 							// mute the volume or unmute
@@ -234,7 +236,7 @@ MusicPlayer::MusicPlayer() {
 
 	//create full songlist
 	songList_ = std::move(fileTreeMain()); //fileTreeMain inside directoryManager.hpp
-	songListIndex_ = 0;
+	music.openFromFile(songList_[songListIndex_]);
 	//print for testing, delete later
 	printVec(songList_);
 

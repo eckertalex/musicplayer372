@@ -24,14 +24,6 @@ int main()
 	std::cout << "MusicPlayer372" << std::endl;
 	std::cout << "Version " << myproject_VERSION_MAJOR << "." << myproject_VERSION_MINOR << std::endl;
 	MusicPlayer musicPlayer;
-
-
-
-	if (!musicPlayer.music.openFromFile("../res/audio/AMemoryAway.ogg")) {
-		return -1;
-	}
-	
-	musicPlayer.music.play();
 	
 	musicPlayer.playerLoop();
 
