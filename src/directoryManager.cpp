@@ -17,8 +17,14 @@
 #include <algorithm> 		// find replace remove_if
 #include <cctype> 			// isspace
 
-#include <dirent.h> 		//directory navagation
-#include <sys/stat.h>		//directory navagation
+//dirent.h used for navigtion
+//if using VisualS, include one, else include the other
+#ifdef _MSC_VER
+#include "dirent.h"
+#else
+#include <dirent.h> 
+#endif		
+#include <sys/stat.h>
 
 
 //------TEMP METHODS FOR TESTING / PRINTING (WILL BE DELETED)------
