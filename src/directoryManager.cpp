@@ -290,7 +290,7 @@ std::vector<std::string> fileTreeMain()
 	//	It will just return an empty vector
 	else
 	{
-		std::cout << "Failed to find \"DirectoryConfig.txt\" inside musicplayer372" << std::endl;
+		std::cout << "Failed to find \"DirectoryConfig.txt\" inside musicplayer372/res" << std::endl;
 		std::cout << "Switched to default: only looking for music in \"musicplayer372/res/audio\"" << std::endl;
 
 		if(yourOS == "Windows"){
@@ -308,7 +308,12 @@ std::vector<std::string> fileTreeMain()
 	if(songList[0] == "")
 	{
 		std::cout << "SONGLIST RETURNED EMPTY: adding default song to prevent program from crashing. do real fix later" << std::endl;
-		songList.push_back("../res/audio/AMemoryAway.ogg");
+		if(yourOS == "Windows"){
+			songList.push_back("..\\res\\audio\\AMemoryAway.ogg");
+		}
+		else{
+			songList.push_back("../res/audio/AMemoryAway.ogg");
+		}
 	}
 	return songList;
 }
