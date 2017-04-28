@@ -71,6 +71,19 @@ void MusicPlayer::update(const float dt) {
 			playPauseButton.setTexture(this->texmgr.getRef("pauseTex2"));
 		}
 	}
+	// mute the volume or unmute
+	if(!isMuted_) {
+		muteButton.setTexture(this->texmgr.getRef("muteTex"));
+		if ((mousePosX > 38 && mousePosX < 84) && (mousePosY > 128 && mousePosY < 174)) {
+		  	muteButton.setTexture(this->texmgr.getRef("muteTex2"));
+		}
+	}
+	else {
+		muteButton.setTexture(this->texmgr.getRef("muteTexv2"));
+		if ((mousePosX > 38 && mousePosX < 84) && (mousePosY > 128 && mousePosY < 174)) {
+		  	muteButton.setTexture(this->texmgr.getRef("muteTexv22"));
+		}
+	}
 	//Previous song
 	if ((mousePosX > 45 && mousePosX < 76) && (mousePosY > 216 && mousePosY < 268)) {
 		prevButton.setTexture(this->texmgr.getRef("prevTex2"));
@@ -78,10 +91,6 @@ void MusicPlayer::update(const float dt) {
 	//Next Song
 	else if ((mousePosX > 225 && mousePosX < 257) && (mousePosY > 216 && mousePosY < 268)) {
 		nextButton.setTexture(this->texmgr.getRef("nextTex2"));
-	}
-	// mute the volume or unmute
-	else if ((mousePosX > 38 && mousePosX < 84) && (mousePosY > 128 && mousePosY < 174)) {
-	  	muteButton.setTexture(this->texmgr.getRef("muteTex2"));
 	}
 	// // decrease volume
 	else if ((mousePosX > 133 && mousePosX < 168) && (mousePosY > 128 && mousePosY < 174)) {
@@ -94,7 +103,6 @@ void MusicPlayer::update(const float dt) {
 	else {
 		prevButton.setTexture(this->texmgr.getRef("prevTex"));
 		nextButton.setTexture(this->texmgr.getRef("nextTex"));
-		muteButton.setTexture(this->texmgr.getRef("muteTex"));
 		decreaseVolumeButton.setTexture(this->texmgr.getRef("decreaseVolumeTex"));
 		increaseVolumeButton.setTexture(this->texmgr.getRef("increaseVolumeTex"));
 	}
@@ -238,14 +246,16 @@ void MusicPlayer::loadTextures() {
 	texmgr.loadTexture("nextTex",    			"../res/icons/next.png");
 	texmgr.loadTexture("decreaseVolumeTex",    	"../res/icons/volume_down.png");
 	texmgr.loadTexture("increaseVolumeTex",    	"../res/icons/volume_up.png");
-	texmgr.loadTexture("muteTex",				"../res/icons/mutev2.png");
+	texmgr.loadTexture("muteTex",				"../res/icons/mute.png");
 	texmgr.loadTexture("playTex2",    			"../res/icons/play2.png");
 	texmgr.loadTexture("pauseTex2",   			"../res/icons/pause2.png");
 	texmgr.loadTexture("prevTex2",    			"../res/icons/previous2.png");
 	texmgr.loadTexture("nextTex2",    			"../res/icons/next2.png");
 	texmgr.loadTexture("decreaseVolumeTex2",    "../res/icons/volume_down2.png");
 	texmgr.loadTexture("increaseVolumeTex2",    "../res/icons/volume_up2.png");
-	texmgr.loadTexture("muteTex2",				"../res/icons/mutev2-2.png");
+	texmgr.loadTexture("muteTexv2",				"../res/icons/mutev2.png");
+	texmgr.loadTexture("muteTex2",				"../res/icons/mute2.png");
+	texmgr.loadTexture("muteTexv22",				"../res/icons/mutev2-2.png");
 	std::cout << "Textures loaded" << std::endl;
 }
 
