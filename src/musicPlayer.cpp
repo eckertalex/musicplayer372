@@ -15,13 +15,18 @@
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
 #include <vector>
+#include <string>
+#include <cstddef>
 
 #include "config.hpp"
 #include "../include/textureManager.hpp"
 #include "../include/musicPlayer.hpp"
 #include "../include/directoryManager.hpp" // for fileTreeMain()
 
-
+std::string trimFilename(const std::string& str) {
+  std::size_t found = str.find_last_of("/\\");
+  return str.substr(found+1);
+}
 
 bool MusicPlayer::clickInSprite(sf::Sprite s, int x , int y) {
 	if (x > s.getGlobalBounds().left && x <
@@ -108,7 +113,7 @@ void MusicPlayer::update(const float dt) {
 	}
 
 	// currentSong.setString(songList_[songListIndex_ - 1]);
-	currentSong.setString(songList_[songListIndex_]);
+	currentSong.setString(trimFilename(songList_[songListIndex_]));
 	// currentSong.setString(songList_[songListIndex_ + 1]);
 	// currentSong.setString(songList_[songListIndex_ + 2]);
 	// currentSong.setString(songList_[songListIndex_ + 3]);
