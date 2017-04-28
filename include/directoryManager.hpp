@@ -46,9 +46,10 @@ static int OPERATINGSYSTEMOVERRIDE = 0;
 	//true  -> if program finds multiple songs of same name if different directories, it adds both
 static bool REPEATSONGSOVERRIDE = false;
 
-//removeWhiteSpaceCustom:
+//formatPath:
 //	removes all whitespace from a string, exept for '\ '
-void removeWhiteSpaceCustom(std::string &str);
+//	if yourOS = "Windows", removes '\' from '\ ' and puts quotes around currLine
+void formatPath(std::string &str, std::string &yourOS);
 
 //isFileOverride
 //checks to see if str is a override command

@@ -1,12 +1,9 @@
 #DirectoryConfig.txt
-#	If you move this file, update ../directoryMannager.hpp
-#	If this file is deleted, directoryManager automatically looks into "../res/audio"
-#	If for whatever reason you have a file named "REPEATSONGSOVERRIDE=false", 
-#		that will not be added and switch the flag automatically
-#	IF YOUR FILES CONTAIN SPACES, YOU MUST BACKSLASH THEM OUT'\ '
-#note to self: not actually sure yet how to backslash on windows. window repositories with spaces currently won't work
+#	If you move this file or change its name, update ../include/directoryMannager.hpp
+#	If this file is deleted or can't be read, directoryManager automatically only looks into "../res/audio" 
+#	Will add all songs it can access from directories listed below, and every directory after them
 
-#OPERATINGSYSTEMOVERRIDE:
+#     OPERATINGSYSTEMOVERRIDE:
 #	0 -> program returns empty vector if os not reconized
 #	1 -> program will treat your computer as "linux/MacOS"
 #	2 -> program will treat your computer as "Windows"
@@ -14,7 +11,7 @@
 OPERATINGSYSTEMOVERRIDE = 0
 
 
-#REPEATSONGSOVERRIDE:
+#     REPEATSONGSOVERRIDE:
 #	false -> if program finds multiple songs of same name if different directories, will NOT add both
 #	true  -> if program finds multiple songs of same name if different directories, it adds both
 
@@ -22,6 +19,7 @@ REPEATSONGSOVERRIDE = false
 
 
 #IMPORTANT WINDOWS USERS: still type the repositories with "/" below, the program will change them automatically if needed.
+#IF YOUR FILES CONTAIN SPACES, YOU MUST BACKSLASH THEM OUT'\ '
 #List of repositories here:
 ../res/audio
 

@@ -35,17 +35,23 @@ void printVec(std::vector<std::string> & songList)
 
 //------END TEMP METHODS------
 
-
-
-
-//removeWhiteSpaceCustom:
+//formatPath:
 //	removes all whitespace from a string, exept for '\ '
-void removeWhiteSpaceCustom(std::string &str)
+//	if yourOS = "Windows", removes '\' from '\ ' and puts quotes around currLine
+void formatPath(std::string &str, std::string & yourOS)
 {
+	if(yourOS == "Windows"){
+		//if on Windows, put quotes around possible paths to read spaces
+		str = "\"" + str + "\"";
+	}
 	for(unsigned int i=0; i<str.size(); ++i)
 	{
 		// i!=0 to keep str.at(i) from being out of range
 		if( i!=0 && str.at(i) == ' ' && str.at(i-1) == '\\'){
+			if(yourOS == "Windows"){
+				//if on Windows, erase the back slash but leave the space
+				str.erase( str.begin()+(i-1) );
+			}
 			continue;
 		}
 		//now that '\ ' has been ignored, remove all other whitespace
@@ -128,11 +134,11 @@ std::string getOsName()
 
 //note: .mp3 is not supported, and not on this list
 //isMusicFile
-//	returns true if filename is audio file supported by SFML
+//	returns true if fileName is audio file supported by SFML
 //	.mp3 files will not be included
 bool isMusicFile(std::string fileName)
 {
-	//check size incase filename is a.au, it won't break with fileName.substr( fileName.length()-6 )
+	//check size incase fileName is a.au, it won't break with fileName.substr( fileName.length()-6 )
 	if(fileName.size() > 6) {
 		fileName = fileName.substr( fileName.length() - 6 );
 		if(fileName == ".ircam" || fileName == ".mpc2k") {
@@ -227,7 +233,13 @@ void explorer(char *dir_name, std::vector<std::string> & songList, std::vector<s
 //if opperating system not found, returns empty vector
 std::vector<std::string> fileTreeMain() 
 {
+	//where DirectoryConfig.txt file is located, only declared here
+	//	Windows users: still use forward slash below. if Windows is detected, "/" is autochanged to "\\"
+	std::string filePath = "../res/DirectoryConfig.txt";
+
+	//songList is what is eventually returned, filled of paths to all songs found
 	std::vector<std::string> songList;
+	//uniqueSongs is NOT returned, only fills with unique songs if REPEATSONGSOVERRIDE=false
 	std::vector<std::string> uniqueSongs;
 
 	//try to open the file. if can't, only look in "../res/audio"
@@ -235,21 +247,21 @@ std::vector<std::string> fileTreeMain()
 	std::cout << "TESTING---> YOUR OS IS: " << yourOS  << std::endl;
 	if(yourOS == "Other")
 	{
-		std::cout << "UNKNOWN OS: override located inside \"res/DirectoryConfig.txt\"" << std::endl;
+		std::cout << "UNKNOWN OS: set override located inside \"" << filePath <<"\"" << std::endl;
 		return songList;
 	}
+	else if( yourOS == "Windows" )
+	{
+		//changes all '/' in file path to '\\'
+		std::replace( filePath.begin(), filePath.end(), '/', '\\');
+		//add quotes around of path incase of spaces 
+		filePath = "\"" + filePath + "\"";
+	}
+	//else if not "Windows" and not "Other", then yourOS = "linux/MacOS"
 
-	//where DirectoryConfig.txt file is located
-	std::string fileName;
-	if( yourOS == "Windows" ){
-		fileName = "..\\res\\DirectoryConfig.txt";
-	}
-	else{//else you're not using windows
-		fileName = "../res/DirectoryConfig.txt";
-	}
 
 	//file open, start running through all directories inside it
-	std::ifstream file (fileName);
+	std::ifstream file (filePath);
 
 	if(file.is_open())
 	{	
@@ -262,7 +274,8 @@ std::vector<std::string> fileTreeMain()
 			getline(file, currLine);
 
 			//	removes all whitespace from a string, exept for '\ '
-			removeWhiteSpaceCustom(currLine);
+			//	if yourOS = "Windows", removes '\' from '\ ' and puts quotes around currLine
+			formatPath(currLine, yourOS);
 
 			//removes possible white space, makes for easy comparing
 			//next line found on http://stackoverflow.com/questions/14233065/remove-whitespace-in-stdstring
@@ -290,7 +303,7 @@ std::vector<std::string> fileTreeMain()
 	//	It will just return an empty vector
 	else
 	{
-		std::cout << "Failed to find \"DirectoryConfig.txt\" inside musicplayer372/res" << std::endl;
+		std::cout << "Failed to find \"DirectoryConfig.txt\", looked inside \"" << filePath << "\"" << std::endl;
 		std::cout << "Switched to default: only looking for music in \"musicplayer372/res/audio\"" << std::endl;
 
 		if(yourOS == "Windows"){
