@@ -50,12 +50,12 @@ void MusicPlayer::draw(const float dt) {
 	window.draw(increaseVolumeButton);		//4
 	window.draw(decreaseVolumeButton);		//5
 
-	window.draw(prevSong);
+	// window.draw(prevSong);
 	window.draw(currentSong);
 	window.draw(nextSong);
 	window.draw(next2Song);
-	window.draw(next3Song);
-	window.draw(next4Song);
+	// window.draw(next3Song);
+	// window.draw(next4Song);
 
 	return;
 }
@@ -112,12 +112,12 @@ void MusicPlayer::update(const float dt) {
 		increaseVolumeButton.setTexture(this->texmgr.getRef("increaseVolumeTex"));
 	}
 
-	// currentSong.setString(songList_[songListIndex_ - 1]);
+	// prevSong.setString(trimFilename(songList_[songListIndex_ - 1]));
 	currentSong.setString(trimFilename(songList_[songListIndex_]));
-	// currentSong.setString(songList_[songListIndex_ + 1]);
-	// currentSong.setString(songList_[songListIndex_ + 2]);
-	// currentSong.setString(songList_[songListIndex_ + 3]);
-	// currentSong.setString(songList_[songListIndex_ + 4]);
+	nextSong.setString(trimFilename(songList_[songListIndex_ + 1]));
+	next2Song.setString(trimFilename(songList_[songListIndex_ + 2]));
+	// next3Song.setString(trimFilename(songList_[songListIndex_ + 3]));
+	// next4Song.setString(trimFilename(songList_[songListIndex_ + 4]));
 
 	return;
 }
@@ -309,32 +309,32 @@ MusicPlayer::MusicPlayer() {
 	// prevSong.setFont(font);
 	// prevSong.setCharacterSize(24);
 	// prevSong.setColor(sf::Color::Red);
-	// prevSong.setPosition(310,50);
+	// prevSong.setPosition(360,50);
 
 	currentSong.setFont(font);
 	currentSong.setCharacterSize(24);
 	currentSong.setColor(sf::Color::Red);
-	currentSong.setPosition(310,70);
+	currentSong.setPosition(360,60);
 
-	// nextSong.setFont(font);
-	// nextSong.setCharacterSize(24);
-	// nextSong.setColor(sf::Color::Red);
-	// nextSong.setPosition(310,90);
+	nextSong.setFont(font);
+	nextSong.setCharacterSize(24);
+	nextSong.setColor(sf::Color::Red);
+	nextSong.setPosition(360,80);
 
-	// next2Song.setFont(font);
-	// next2Song.setCharacterSize(24);
-	// next2Song.setColor(sf::Color::Red);
-	// next2Song.setPosition(310,110);
+	next2Song.setFont(font);
+	next2Song.setCharacterSize(24);
+	next2Song.setColor(sf::Color::Red);
+	next2Song.setPosition(360,100);
 
 	// next3Song.setFont(font);
 	// next3Song.setCharacterSize(24);
 	// next3Song.setColor(sf::Color::Red);
-	// next3Song.setPosition(310,130);
+	// next3Song.setPosition(360,130);
 
 	// next4Song.setFont(font);
 	// next4Song.setCharacterSize(24);
 	// next4Song.setColor(sf::Color::Red);
-	// next4Song.setPosition(310,150);
+	// next4Song.setPosition(360,150);
 
 	spriteVec = { 
 		playPauseButton,			// 0
