@@ -35,6 +35,7 @@ public:
 	sf::Text next3Song;
 	sf::Text next4Song;
 
+	sf::Sprite musicPlayerBG;
 	sf::Sprite playPauseButton;
 	sf::Sprite prevButton;
 	sf::Sprite nextButton;

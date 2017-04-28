@@ -37,6 +37,7 @@ void MusicPlayer::draw(const float dt) {
 	window.clear(sf::Color::Green);
 
 	// draw buttons
+	window.draw(musicPlayerBG  );
 	window.draw(playPauseButton);			//0
 	window.draw(prevButton); 				//1
 	window.draw(nextButton);				//2
@@ -230,6 +231,7 @@ void MusicPlayer::handleInput() {
 }
 
 void MusicPlayer::loadTextures() {
+	texmgr.loadTexture("musicPlayerBGTex",      "../res/background/musicplayerbg.png");
 	texmgr.loadTexture("playTex",    			"../res/icons/play.png");
 	texmgr.loadTexture("pauseTex",   			"../res/icons/pause.png");
 	texmgr.loadTexture("prevTex",    			"../res/icons/previous.png");
@@ -268,6 +270,7 @@ MusicPlayer::MusicPlayer() {
 	window.setFramerateLimit(60);
 
 	// set textures
+	musicPlayerBG.setTexture(this->texmgr.getRef("musicPlayerBGTex"));
 	playPauseButton.setTexture(this->texmgr.getRef("pauseTex"));
 	prevButton.setTexture(this->texmgr.getRef("prevTex"));
 	nextButton.setTexture(this->texmgr.getRef("nextTex"));
