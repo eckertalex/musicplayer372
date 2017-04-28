@@ -238,14 +238,14 @@ void MusicPlayer::loadTextures() {
 	texmgr.loadTexture("nextTex",    			"../res/icons/next.png");
 	texmgr.loadTexture("decreaseVolumeTex",    	"../res/icons/volume_down.png");
 	texmgr.loadTexture("increaseVolumeTex",    	"../res/icons/volume_up.png");
-	texmgr.loadTexture("muteTex",				"../res/icons/mute.png");
+	texmgr.loadTexture("muteTex",				"../res/icons/mutev2.png");
 	texmgr.loadTexture("playTex2",    			"../res/icons/play2.png");
 	texmgr.loadTexture("pauseTex2",   			"../res/icons/pause2.png");
 	texmgr.loadTexture("prevTex2",    			"../res/icons/previous2.png");
 	texmgr.loadTexture("nextTex2",    			"../res/icons/next2.png");
 	texmgr.loadTexture("decreaseVolumeTex2",    "../res/icons/volume_down2.png");
 	texmgr.loadTexture("increaseVolumeTex2",    "../res/icons/volume_up2.png");
-	texmgr.loadTexture("muteTex2",				"../res/icons/mute2.png");
+	texmgr.loadTexture("muteTex2",				"../res/icons/mutev2-2.png");
 	std::cout << "Textures loaded" << std::endl;
 }
 
