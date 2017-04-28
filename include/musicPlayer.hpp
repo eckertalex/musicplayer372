@@ -27,18 +27,20 @@ public:
 	sf::SoundBuffer buffer;
 	sf::Music music;
 
+	sf::Font font;
+	sf::Text prevSong;
+	sf::Text currentSong;
+	sf::Text nextSong;
+	sf::Text next2Song;
+	sf::Text next3Song;
+	sf::Text next4Song;
+
 	sf::Sprite playPauseButton;
-	sf::Sprite playPauseButton2;
 	sf::Sprite prevButton;
-	sf::Sprite prevButton2;
 	sf::Sprite nextButton;
-	sf::Sprite nextButton2;
 	sf::Sprite muteButton;
-	sf::Sprite muteButton2;
 	sf::Sprite decreaseVolumeButton;
-	sf::Sprite decreaseVolumeButton2;
 	sf::Sprite increaseVolumeButton;
-	sf::Sprite increaseVolumeButton2;
 
 	void playerLoop();
 
