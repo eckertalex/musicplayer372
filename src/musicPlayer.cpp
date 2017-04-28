@@ -92,20 +92,20 @@ void MusicPlayer::handleInput() {
 							}
 							//Previous song
 							if (i == 1)	{
-								// if(songList_.size() != 0) {
-								// 	music.stop();
+								if(songList_.size() != 0) {
+									music.stop();
 
-								// 	//if you're at the begining, just go to the end(if press prev)
-								// 	if(songListIndex_ == 0) {
-								// 		songListIndex_ = songList_.size()-1;
-								// 	}
-								// 	else {
-								// 		songListIndex_ =- 1;
-								// 	}
-								// 	music.openFromFile(songList_[songListIndex_]);
-								// 	music.play();
-								// 	std::cout << "prevSong: " << songList_[songListIndex_] << " vecIndex: " << songListIndex_ << std::endl;
-								// }
+									//if you're at the begining, just go to the end(if press prev)
+									if(songListIndex_ == 0) {
+										songListIndex_ = songList_.size()-1;
+									}
+									else {
+										songListIndex_ -= 1;
+									}
+									music.openFromFile(songList_[songListIndex_]);
+									music.play();
+									std::cout << "prevSong: " << songList_[songListIndex_] << " vecIndex: " << songListIndex_ << std::endl;
+								}
 							}
 							//Next Song
 							if (i == 2)	{
@@ -116,7 +116,7 @@ void MusicPlayer::handleInput() {
 										songListIndex_ = 0;
 									}
 									else {
-										songListIndex_ =+ 1;
+										songListIndex_ += 1;
 									}
 									music.openFromFile(songList_[songListIndex_]);
 									music.play();
