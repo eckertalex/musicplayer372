@@ -27,6 +27,7 @@ public:
 	sf::SoundBuffer buffer;
 	sf::Music music;
 
+	sf::Sprite musicPlayerBG;
 	sf::Sprite playPauseButton;
 	sf::Sprite playPauseButton2;
 	sf::Sprite prevButton;
