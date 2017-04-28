@@ -28,11 +28,17 @@ public:
 	sf::Music music;
 
 	sf::Sprite playPauseButton;
+	sf::Sprite playPauseButton2;
 	sf::Sprite prevButton;
+	sf::Sprite prevButton2;
 	sf::Sprite nextButton;
+	sf::Sprite nextButton2;
 	sf::Sprite muteButton;
+	sf::Sprite muteButton2;
 	sf::Sprite decreaseVolumeButton;
+	sf::Sprite decreaseVolumeButton2;
 	sf::Sprite increaseVolumeButton;
+	sf::Sprite increaseVolumeButton2;
 
 	void playerLoop();
 

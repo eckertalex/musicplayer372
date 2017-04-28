@@ -172,6 +172,44 @@ void MusicPlayer::handleInput() {
 				}
 				break;
 			}
+			case sf::Event::MouseMoved: {
+				auto mousePosX = sf::Mouse::getPosition(window).x; // x position 
+				auto mousePosY = sf::Mouse::getPosition(window).y; // y position
+				std::cout << " xPos " << mousePosX << " yPos " << mousePosY <<   std::endl;
+				//Pause/Play song
+				if ((mousePosX > 125 && mousePosX < 177) && (mousePosY > 216 && mousePosY < 268)) {
+					playPauseButton.setTexture(this->texmgr.getRef("playTex2"));
+				}
+				//Previous song
+				else if ((mousePosX > 45 && mousePosX < 76) && (mousePosY > 216 && mousePosY < 268)) {
+					prevButton.setTexture(this->texmgr.getRef("prevTex2"));
+				}
+				//Next Song
+				else if ((mousePosX > 225 && mousePosX < 257) && (mousePosY > 216 && mousePosY < 268)) {
+					nextButton.setTexture(this->texmgr.getRef("nextTex2"));
+				}
+				// mute the volume or unmute
+				else if ((mousePosX > 38 && mousePosX < 84) && (mousePosY > 128 && mousePosY < 174)) {
+				  	muteButton.setTexture(this->texmgr.getRef("muteTex2"));
+				}
+				// // decrease volume
+				else if ((mousePosX > 133 && mousePosX < 168) && (mousePosY > 128 && mousePosY < 174)) {
+				    decreaseVolumeButton.setTexture(this->texmgr.getRef("decreaseVolumeTex2"));
+				}
+				// increase volume
+				else if ((mousePosX > 218 && mousePosX < 264) && (mousePosY > 128 && mousePosY < 174)) {
+					increaseVolumeButton.setTexture(this->texmgr.getRef("increaseVolumeTex2"));
+				}
+				else {
+			  		playPauseButton.setTexture(this->texmgr.getRef("playTex"));
+					prevButton.setTexture(this->texmgr.getRef("prevTex"));
+					nextButton.setTexture(this->texmgr.getRef("nextTex"));
+					muteButton.setTexture(this->texmgr.getRef("muteTex"));
+					decreaseVolumeButton.setTexture(this->texmgr.getRef("decreaseVolumeTex"));
+					increaseVolumeButton.setTexture(this->texmgr.getRef("increaseVolumeTex"));
+				}
+			}
+			
 			default:
 			break;
 		}
@@ -187,6 +225,13 @@ void MusicPlayer::loadTextures() {
 	texmgr.loadTexture("decreaseVolumeTex",    	"../res/icons/volume_down.png");
 	texmgr.loadTexture("increaseVolumeTex",    	"../res/icons/volume_up.png");
 	texmgr.loadTexture("muteTex",				"../res/icons/mute.png");
+	texmgr.loadTexture("playTex2",    			"../res/icons/play2.png");
+	texmgr.loadTexture("pauseTex2",   			"../res/icons/pause2.png");
+	texmgr.loadTexture("prevTex2",    			"../res/icons/previous2.png");
+	texmgr.loadTexture("nextTex2",    			"../res/icons/next2.png");
+	texmgr.loadTexture("decreaseVolumeTex2",    "../res/icons/volume_down2.png");
+	texmgr.loadTexture("increaseVolumeTex2",    "../res/icons/volume_up2.png");
+	texmgr.loadTexture("muteTex2",				"../res/icons/mute2.png");
 	std::cout << "Textures loaded" << std::endl;
 }
 
@@ -217,6 +262,12 @@ MusicPlayer::MusicPlayer() {
 	muteButton.setTexture(this->texmgr.getRef("muteTex"));
 	decreaseVolumeButton.setTexture(this->texmgr.getRef("decreaseVolumeTex"));
 	increaseVolumeButton.setTexture(this->texmgr.getRef("increaseVolumeTex"));
+	// playPauseButton2.setTexture(this->texmgr.getRef("pauseTex2"));
+	// prevButton2.setTexture(this->texmgr.getRef("prevTex2"));
+	// nextButton2.setTexture(this->texmgr.getRef("nextTex2"));
+	// muteButton2.setTexture(this->texmgr.getRef("muteTex2"));
+	// decreaseVolumeButton2.setTexture(this->texmgr.getRef("decreaseVolumeTex2"));
+	// increaseVolumeButton2.setTexture(this->texmgr.getRef("increaseVolumeTex2"));
 
 	// set positions
 	playPauseButton.setPosition(120,210);
@@ -225,6 +276,12 @@ MusicPlayer::MusicPlayer() {
 	decreaseVolumeButton.setPosition(120,120);
 	muteButton.setPosition(30,120);
 	increaseVolumeButton.setPosition(210,120);
+	// playPauseButton2.setPosition(120,210);
+	// prevButton2.setPosition(30,210);
+	// nextButton2.setPosition(210,210);
+	// decreaseVolumeButton2.setPosition(120,120);
+	// muteButton2.setPosition(30,120);
+	// increaseVolumeButton2.setPosition(210,120);
 
 	spriteVec = { 
 		playPauseButton,			// 0
