@@ -26,25 +26,25 @@
 
 
 //------TEMP METHODS FOR TESTING / PRINTING (WILL BE DELETED)------
-void printVec(const std::vector<std::string> & songList);
+void printVec(std::vector<std::string> & songList);
+
 
 //------END TEMP METHODS------
 
 
 
-//------------------------------------------NOTICE------------------------------------------
-//The following global variables exist, but only in directoryManager.hpp
-//
-//	static int OPERATINGSYSTEMOVERRIDE
-//	static bool REPEATSONGSOVERRIDE
-//---------------------------------------------------------------------
+//Overrides can be accessed/changed inside DirectoryConfig.txt
 
+//OPERATINGSYSTEMOVERRIDE
+	//0 -> program returns empty vector if os not reconized
+	//1 -> program will treat your computer as "linux/MacOS" REGUARDLESS of if it knows your os
+	//2 -> program will treat your computer as "Windows" REGUARDLESS of if it knows your os
+static int OPERATINGSYSTEMOVERRIDE = 0;
 
-
-//deleteStringPaths
-//	goes through the playlist vector and adds all the songs to a new vector without the path before
-//	note: it is assumed that fileTreeMain() was used to generate pathList, so no error checking is done
-std::vector<std::string> deleteStringPaths(std::vector<std::string> &pathList, std::string &yourOS);
+//REPEATSONGSOVERRIDE
+	//false -> if program finds multiple songs of same name if different directories, will NOT add both
+	//true  -> if program finds multiple songs of same name if different directories, it adds both
+static bool REPEATSONGSOVERRIDE = false;
 
 //formatPath:
 //	removes all whitespace from a string, exept for '\ '

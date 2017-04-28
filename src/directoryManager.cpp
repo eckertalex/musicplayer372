@@ -22,7 +22,7 @@
 
 
 //------TEMP METHODS FOR TESTING / PRINTING (WILL BE DELETED)------
-void printVec(const std::vector<std::string> &songList)
+void printVec(std::vector<std::string> & songList)
 {
 	//note: strings are in form "../res/audio/(songname)"
 	std::cout << "Song List:" << std::endl;
@@ -32,58 +32,8 @@ void printVec(const std::vector<std::string> &songList)
 	std::cout << "End list;" << std::endl << std::endl;
 }
 
+
 //------END TEMP METHODS------
-
-
-//Overrides can be accessed/changed inside DirectoryConfig.txt
-
-//OPERATINGSYSTEMOVERRIDE
-	//0 -> program returns empty vector if os not reconized
-	//1 -> program will treat your computer as "linux/MacOS" REGUARDLESS of if it knows your os
-	//2 -> program will treat your computer as "Windows" REGUARDLESS of if it knows your os
-static int OPERATINGSYSTEMOVERRIDE = 0;
-
-//REPEATSONGSOVERRIDE
-	//false -> if program finds multiple songs of same name if different directories, will NOT add both
-	//true  -> if program finds multiple songs of same name if different directories, it adds both
-static bool REPEATSONGSOVERRIDE = false;
-
-
-
-
-//deleteStringPaths
-//	goes through the playlist vector and adds all the songs to a new vector without the path before
-//	note: it is assumed that fileTreeMain() was used to generate pathList, so no error checking is done
-std::vector<std::string> deleteStringPaths(std::vector<std::string> &pathList, std::string &yourOS)
-{
-	std::vector<std::string> playlist;
-	//if pathList is empty, do nothing
-	if(pathList[0] == "")
-	{
-		return playlist;
-	}
-	for(unsigned int i=0; i<pathList.size(); ++i)
-	{	
-		if(yourOS == "Windows")
-		{
-			//if windows path, remove the last char from string, should be a (")
-			pathList[i].pop_back();
-		}
-
-		std::string songName = "";
-		//search through string backwards for '/' or '\', and add everything after to playlist
-		if(yourOS == "Windows")
-		{
-			songName = pathList[i].substr( pathList[i].find_last_of('\\')+1 );
-		}
-		else // yourOS == "linux/MacOS"
-		{
-			songName = pathList[i].substr( pathList[i].find_last_of('/')+1 );
-		}
-		playlist.push_back(songName);
-	}
-	return playlist;
-}
 
 //formatPath:
 //	removes all whitespace from a string, exept for '\ '
@@ -364,11 +314,6 @@ std::vector<std::string> fileTreeMain()
 		}
 
 	}
-
-	std::cout<< "TESTING REMOVEPATH: " << std::endl;
-	printVec(deleteStringPaths(songList, yourOS));
-	std::cout<< "TESTING REMOVEPATH END" << std::endl;
-
 	
 
 //program crashes if passed an empty vector.
