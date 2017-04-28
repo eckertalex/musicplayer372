@@ -314,7 +314,6 @@ std::vector<std::string> fileTreeMain()
 		}
 
 	}
-	
 
 //program crashes if passed an empty vector.
 //temp fix: if empty, add default song
