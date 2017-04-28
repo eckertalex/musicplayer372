@@ -365,11 +365,6 @@ std::vector<std::string> fileTreeMain()
 
 	}
 
-	std::cout<< "TESTING REMOVEPATH: " << std::endl;
-	printVec(deleteStringPaths(songList, yourOS));
-	std::cout<< "TESTING REMOVEPATH END" << std::endl;
-
-	
 
 //program crashes if passed an empty vector.
 //temp fix: if empty, add default song
