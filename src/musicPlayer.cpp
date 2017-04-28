@@ -50,12 +50,12 @@ void MusicPlayer::draw(const float dt) {
 	window.draw(increaseVolumeButton);		//4
 	window.draw(decreaseVolumeButton);		//5
 
-	// window.draw(prevSong);
+	window.draw(prevSong);
 	window.draw(currentSong);
 	window.draw(nextSong);
 	window.draw(next2Song);
-	// window.draw(next3Song);
-	// window.draw(next4Song);
+	window.draw(next3Song);
+	window.draw(next4Song);
 
 	return;
 }
@@ -78,15 +78,15 @@ void MusicPlayer::update(const float dt) {
 	}
 	// mute the volume or unmute
 	if(!isMuted_) {
-		muteButton.setTexture(this->texmgr.getRef("muteTex"));
-		if ((mousePosX > 38 && mousePosX < 84) && (mousePosY > 128 && mousePosY < 174)) {
-		  	muteButton.setTexture(this->texmgr.getRef("muteTex2"));
-		}
-	}
-	else {
 		muteButton.setTexture(this->texmgr.getRef("muteTexv2"));
 		if ((mousePosX > 38 && mousePosX < 84) && (mousePosY > 128 && mousePosY < 174)) {
 		  	muteButton.setTexture(this->texmgr.getRef("muteTexv22"));
+		}
+	}
+	else {
+		muteButton.setTexture(this->texmgr.getRef("muteTex"));
+		if ((mousePosX > 38 && mousePosX < 84) && (mousePosY > 128 && mousePosY < 174)) {
+		  	muteButton.setTexture(this->texmgr.getRef("muteTex2"));
 		}
 	}
 	//Previous song
@@ -112,10 +112,15 @@ void MusicPlayer::update(const float dt) {
 		increaseVolumeButton.setTexture(this->texmgr.getRef("increaseVolumeTex"));
 	}
 
-	// prevSong.setString(trimFilename(songList_[songListIndex_ - 1]));
+	if(songListIndex_ == 0) {
+		prevSong.setString(trimFilename(songList_[songList_.size()-1]));
+	}
+	else {
+		prevSong.setString(trimFilename(songList_[songListIndex_ - 1]));
+	}
 	currentSong.setString(trimFilename(songList_[songListIndex_]));
-	nextSong.setString(trimFilename(songList_[songListIndex_ + 1]));
-	next2Song.setString(trimFilename(songList_[songListIndex_ + 2]));
+	// nextSong.setString(trimFilename(songList_[songListIndex_ + 1]));
+	// next2Song.setString(trimFilename(songList_[songListIndex_ + 2]));
 	// next3Song.setString(trimFilename(songList_[songListIndex_ + 3]));
 	// next4Song.setString(trimFilename(songList_[songListIndex_ + 4]));
 
@@ -306,35 +311,35 @@ MusicPlayer::MusicPlayer() {
 	else 
 		std::cout << "Font was found" << std::endl;
 
-	// prevSong.setFont(font);
-	// prevSong.setCharacterSize(24);
-	// prevSong.setColor(sf::Color::Red);
-	// prevSong.setPosition(360,50);
+	prevSong.setFont(font);
+	prevSong.setCharacterSize(24);
+	prevSong.setColor(sf::Color::Black);
+	prevSong.setPosition(360,35);
 
 	currentSong.setFont(font);
 	currentSong.setCharacterSize(24);
-	currentSong.setColor(sf::Color::Red);
+	currentSong.setColor(sf::Color::Blue);
 	currentSong.setPosition(360,60);
 
 	nextSong.setFont(font);
 	nextSong.setCharacterSize(24);
-	nextSong.setColor(sf::Color::Red);
-	nextSong.setPosition(360,80);
+	nextSong.setColor(sf::Color::Black);
+	nextSong.setPosition(360,85);
 
 	next2Song.setFont(font);
 	next2Song.setCharacterSize(24);
-	next2Song.setColor(sf::Color::Red);
-	next2Song.setPosition(360,100);
+	next2Song.setColor(sf::Color::Black);
+	next2Song.setPosition(360,110);
 
-	// next3Song.setFont(font);
-	// next3Song.setCharacterSize(24);
-	// next3Song.setColor(sf::Color::Red);
-	// next3Song.setPosition(360,130);
+	next3Song.setFont(font);
+	next3Song.setCharacterSize(24);
+	next3Song.setColor(sf::Color::Black);
+	next3Song.setPosition(360,135);
 
-	// next4Song.setFont(font);
-	// next4Song.setCharacterSize(24);
-	// next4Song.setColor(sf::Color::Red);
-	// next4Song.setPosition(360,150);
+	next4Song.setFont(font);
+	next4Song.setCharacterSize(24);
+	next4Song.setColor(sf::Color::Black);
+	next4Song.setPosition(360,160);
 
 	spriteVec = { 
 		playPauseButton,			// 0
