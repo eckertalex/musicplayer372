@@ -1,4 +1,4 @@
-// musicPlayer.hpp
+// musicPlayer.cpp
 // 26. April 2017
 // Created by:
 // 		Bryan Burkhardt (bmburkhardt@alaska.edu)  
@@ -19,7 +19,7 @@
 #include "config.hpp"
 #include "../include/textureManager.hpp"
 #include "../include/musicPlayer.hpp"
-#include "../include/directoryManager.hpp"
+#include "../include/directoryManager.hpp" // for fileTreeMain()
 
 
 
@@ -121,7 +121,7 @@ void MusicPlayer::handleInput() {
 									music.openFromFile(songList_[songListIndex_]);
 									music.play();
 									std::cout << "NextSong: " << songList_[songListIndex_] << " vecIndex: " << songListIndex_ << std::endl;
-									std::cout << "Playing song: " << songList_[songListIndex_] << std::endl;
+									//std::cout << "Playing song: " << songList_[songListIndex_] << std::endl;
 								}
 							}
 							// mute the volume or unmute
@@ -175,7 +175,7 @@ void MusicPlayer::handleInput() {
 			case sf::Event::MouseMoved: {
 				auto mousePosX = sf::Mouse::getPosition(window).x; // x position 
 				auto mousePosY = sf::Mouse::getPosition(window).y; // y position
-				std::cout << " xPos " << mousePosX << " yPos " << mousePosY <<   std::endl;
+				//std::cout << " xPos " << mousePosX << " yPos " << mousePosY <<   std::endl;
 				//Pause/Play song
 				if ((mousePosX > 125 && mousePosX < 177) && (mousePosY > 216 && mousePosY < 268)) {
 					playPauseButton.setTexture(this->texmgr.getRef("playTex2"));
@@ -292,13 +292,18 @@ MusicPlayer::MusicPlayer() {
 		increaseVolumeButton };		// 5
 
 	//create full songlist
-	songList_ = std::move(fileTreeMain()); //fileTreeMain inside directoryManager.hpp
-	music.openFromFile(songList_[songListIndex_]);
+	songList_ = std::move(fileTreeMain());
+	//if couldn't find song, don't try to play one
+	if( songList_[songListIndex_] != "" )
+	{
+		music.openFromFile(songList_[songListIndex_]);
+	}
+
 	//print for testing, delete later
 	printVec(songList_);
 
 	volSave_ = 100;
 	isMuted_ = false;
 
-	std::cout << "MusicPlayer initialized" << std::endl;
+	//std::cout << "MusicPlayer initialized" << std::endl;
 }

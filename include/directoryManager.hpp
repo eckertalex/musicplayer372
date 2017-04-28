@@ -12,150 +12,72 @@
 #ifndef DIRECTORYMANAGER_HPP
 #define DIRECTORYMANAGER_HPP
 
-#include <string>
-#include <vector>
-#include <iostream>
+#include <string>			// string erase
+#include <vector>			// vector
 
 
-#include <dirent.h>
-#include <sys/stat.h>
+#include <iostream>			// cout endl
+#include <fstream>			// file reading
+#include <algorithm> 		// find replace remove_if
+#include <cctype> 			// isspace
+
+#include <dirent.h> 		//directory navagation
+#include <sys/stat.h>		//directory navagation
 
 
 //------TEMP METHODS FOR TESTING / PRINTING (WILL BE DELETED)------
-void printVec(std::vector<std::string> & songList)
-{
-	//note: strings are in form "../res/audio/(songname)"
-	std::cout << "Song List:" << std::endl;
-	for(unsigned int i=0; i<songList.size(); ++i) {
-		std::cout << "   " << songList[i] << std::endl;
-	}
-	std::cout << "End list;" << std::endl << std::endl;
-}
+void printVec(std::vector<std::string> & songList);
+
+
 //------END TEMP METHODS------
 
-//returns the name of the Opperating System hopfully....
-std::string getOsName()
-{
-	#ifdef _WIN32
-		return "Windows";
-	#elif _WIN64
-		return "Windows";
-	#elif __unix
-		return "linux/MacOS";
-	#elif __unix__
-		return "linux/MacOS";
-	#elif __linux__
-		return "linux/MacOS";
-	#elif __APPLE__
-		return "linux/MacOS";	
-	#elif __MACH__
-		return "linux/MacOS";
-	#else
-		return "Other";
-	#endif
-}
 
-//returns true if filename is audio file supported by SFML
-bool isMusicFile(std::string fileName)
-{
-	if(fileName.size() > 6) {
-		fileName = fileName.substr( fileName.length() - 6 );
-		if(fileName == ".ircam" || fileName == ".mpc2k") {
-			return true;
-		}
-	}
-	if(fileName.size() > 5) {
-		fileName = fileName.substr( fileName.length() - 5 );
-		if(fileName == ".flac" || fileName == ".aiff" || fileName == ".nist" || 
-			fileName == ".mat4" || fileName == ".mat5" || fileName == ".rf64") {
-			return true;
-		}
-	}
-	if(fileName.size() > 4) {
-		fileName = fileName.substr( fileName.length() - 4 );
-		if(fileName == ".ogg" || fileName == ".wav" || fileName == ".raw" || 
-			fileName == ".paf" || fileName == ".svx" || fileName == ".voc" || 
-			fileName == ".w64" || fileName == ".pfv" || fileName == ".htk" || 
-			fileName == ".sds" || fileName == ".avr" || fileName == ".sd2" || 
-			fileName == ".caf" || fileName == ".wve") {
-			return true;
-		}
-	}
-	if(fileName.size() > 3) {
-		fileName = fileName.substr( fileName.length() - 3 );
-		if(fileName == ".au") {
-			return true;
-		}
-	}
-	return false;
-}
 
-void exploreWindows(char *dir_name, std::vector<string> & songList) {
-	return;
-}
+//Overrides can be accessed/changed inside DirectoryConfig.txt
 
-//tutorial for explorerLinux from https://www.youtube.com/watch?v=w9l8kLPQ39c
-//explorerLinux:
+//OPERATINGSYSTEMOVERRIDE
+	//0 -> program returns empty vector if os not reconized
+	//1 -> program will treat your computer as "linux/MacOS" REGUARDLESS of if it knows your os
+	//2 -> program will treat your computer as "Windows" REGUARDLESS of if it knows your os
+static int OPERATINGSYSTEMOVERRIDE = 0;
+
+//REPEATSONGSOVERRIDE
+	//false -> if program finds multiple songs of same name if different directories, will NOT add both
+	//true  -> if program finds multiple songs of same name if different directories, it adds both
+static bool REPEATSONGSOVERRIDE = false;
+
+//removeWhiteSpaceCustom:
+//	removes all whitespace from a string, exept for '\ '
+void removeWhiteSpaceCustom(std::string &str);
+
+//isFileOverride
+//checks to see if str is a override command
+//Note: will also set the override
+bool isFileOverride(std::string str);
+
+//getOsName
+//	returns the name of the user Opperating System
+//	if not found, returns "Other"
+//	can be overridden
+std::string getOsName();
+
+//note: .mp3 is not supported, and not on this list
+//isMusicFile
+//	returns true if filename is audio file supported by SFML
+//	.mp3 files will not be included
+bool isMusicFile(std::string fileName);
+
+//tutorial for a more basic explorer from https://www.youtube.com/watch?v=w9l8kLPQ39c
+//explorer:
 //		returns a vector of all song names inside directory, and recursivly calls all directorys in itself
-//		does not put directories inside vector, just strings of paths to songs
-void exploreLinux(char *dir_name, std::vector<string> & songList) {
-	DIR *dir = NULL; //pointer to an open directory
-	struct dirent *entry; //stuff in current directory
-	struct stat info; //information about each entry
-
-	//open
-	dir = opendir(dir_name);
-	if(!dir) {
-		std::cout << "Failed to Open Directory" << std::endl;
-		return;
-	}
-
-	//read
-	//keeps reading until finished
-	while(( entry = readdir(dir) ) != NULL) {
-		//if its not the name if the directory you are in
-		if(entry->d_name[0] != '.') {	
-			std::string path = std::string(dir_name) + "/" + std::string(entry->d_name);
-			if(isMusicFile(path)) {
-				songList.push_back(path); //string of directory with entry name at end
-				//std::cout << "info: " << std::string(info) << std::endl;
-			}
-			stat(path.c_str(),&info); //checks to see if file or folder
-			if(S_ISDIR(info.st_mode)) {
-				exploreLinux((char*)path.c_str(), songList); //if folder, then run this method again on that folder
-			}
-		}
-	}
-
-	//close
-	closedir(dir);
-	return;
-}
-
+//		does not put directories inside vector, just strings of paths to supported songs
+void explorer(char *dir_name, std::vector<std::string> & songList, std::vector<std::string> & uniqueSongs, std::string & yourOS);
 
 //Call this to create the vector of songs
 //if opperating system not found, returns empty vector
-std::vector<std::string> fileTreeMain() {
-	std::string yourOS = getOsName();
-	std::vector<std::string> songList;
+std::vector<std::string> fileTreeMain();
 
-	std::cout << "TESTING---> YOUR OS IS: " << yourOS  << std::endl;
 
-	if(yourOS == "Windows") {
-		//windows file tree system here...
-		std::cout<< "windows support coming soon" << std::endl;
-		//exploreWindows((char*)"../res/audio", songList);	//<---for now, set the file path here
-		return songList;
-	}
-	else if(yourOS == "linux/MacOS") {
-		//the better file tree system here...
-		exploreLinux((char*)"../res/audio", songList);	//<---for now, set the file path here
-		return songList;
-	}
-	else {
-		//no idea what you're running, take an empty vector
-		return songList;
-	}
-}
 
-#endif // #ifndef DIRECTORYMANAGER_HPP
+
+#endif // DIRECTORYMANAGER_HPP
