@@ -226,7 +226,7 @@ void MusicPlayer::handleInput() {
 						music.pause();
 					}
 				}
-				else if(event.key.code == sf::Keyboard::Dash) {
+				else if(event.key.code == sf::Keyboard::Down) {
 					if(isMuted_ == true)
 					{
 						isMuted_=  false;
@@ -238,7 +238,7 @@ void MusicPlayer::handleInput() {
 						std::cout << "The volume is " << music.getVolume() << std::endl;
 					}
 				}
-				else if(event.key.code == sf::Keyboard::Equal) {
+				else if(event.key.code == sf::Keyboard::Up) {
 					if(isMuted_ == true)
 					{
 						isMuted_=  false;
@@ -248,6 +248,19 @@ void MusicPlayer::handleInput() {
 					if(music.getVolume() <= 99){
 						music.setVolume(music.getVolume() + 1);
 						std::cout << "The volume is " << music.getVolume() << std::endl;
+					}
+				}
+				else if(event.key.code == sf::Keyboard::BackSpace) {
+					if (isMuted_ == false) {
+						isMuted_ = true;
+						volSave_ = music.getVolume();
+						music.setVolume(0);
+						std::cout << "Muted player." << std::endl;
+					}
+					else {
+						isMuted_=  false;
+						music.setVolume(volSave_); // unmute the music by restoring the volume to previous value
+						std::cout << "Unmuted player." << std::endl;
 					}
 				}
 			}
