@@ -57,8 +57,8 @@ public:
 	MusicPlayer();
 	~MusicPlayer() = default;
 
-	void draw(const float dt);
-	void update(const float dt);
+	void draw();
+	void update();
 	void handleInput();
 	bool clickInSprite(sf::Sprite s, int x , int y);
 

@@ -37,7 +37,7 @@ bool MusicPlayer::clickInSprite(sf::Sprite s, int x , int y) {
 	return false;
 }
 
-void MusicPlayer::draw(const float dt) {
+void MusicPlayer::draw() {
 	window.clear(sf::Color::Green);
 
 	// draw buttons
@@ -59,7 +59,7 @@ void MusicPlayer::draw(const float dt) {
 	return;
 }
 
-void MusicPlayer::update(const float dt) {
+void MusicPlayer::update() {
 	auto mousePosX = sf::Mouse::getPosition(window).x; // x position 
 	auto mousePosY = sf::Mouse::getPosition(window).y; // y position
 	//Pause/Play song
@@ -392,12 +392,10 @@ void MusicPlayer::playerLoop() {
 	sf::Clock clock;
 
 	while(window.isOpen()) {
-		sf::Time elapsed = clock.restart();
-		float dt = elapsed.asSeconds();
 		handleInput();
-		update(dt);
+		update();
 		window.clear(sf::Color::White);
-		draw(dt);
+		draw();
 		window.display();
 	}
 }
