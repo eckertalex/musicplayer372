@@ -142,8 +142,7 @@ void MusicPlayer::callMuteUnmute() {
 	}
 }
 
-void MusicPlayer::update(const float dt) {
-	
+void MusicPlayer::update() {
 	
 	mouseOverHighlight();
 	displayPlaylist();
