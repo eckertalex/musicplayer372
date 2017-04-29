@@ -62,6 +62,18 @@ public:
 	void handleInput();
 	bool clickInSprite(sf::Sprite s, int x , int y);
 
+	/****** Functionality Functions ******/
+	void callPlayPause();
+	void callNextSong();
+	void callPrevSong();
+	void callIncreaseVolume();
+	void callDecreaseVolume();
+	void callMuteUnmute();
+
+	/****** Update Functions ******/
+	void mouseOverHighlight();
+	void displayPlaylist();
+
 private:
 	void loadTextures();
 

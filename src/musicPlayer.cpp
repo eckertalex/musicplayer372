@@ -59,112 +59,100 @@ void MusicPlayer::draw(const float dt) {
 	return;
 }
 
+/****** Functionality Function Definitions ******/
+
+void MusicPlayer::callPlayPause() {
+	if (music.getStatus() != music.Playing) {
+		music.play();
+		std::cout << "Playing song: " << songList_[songListIndex_] << std::endl;
+	}
+	else {
+		music.pause();
+	}
+}
+void MusicPlayer::callNextSong() {
+	if(songList_.size() != 0) {
+		music.stop();
+		//if you're at the end, just go to the begining(if press next)
+		if(songListIndex_ == songList_.size()-1) {
+			songListIndex_ = 0;
+		}
+		else {
+			songListIndex_ += 1;
+		}
+		music.openFromFile(songList_[songListIndex_]);
+		music.play();
+		std::cout << "Next song: " << songList_[songListIndex_] << " vecIndex: " << songListIndex_ << std::endl;
+	}
+}
+void MusicPlayer::callPrevSong() {
+	if(songList_.size() != 0) {
+		music.stop();
+
+		//if you're at the begining, just go to the end(if press prev)
+		if(songListIndex_ == 0) {
+			songListIndex_ = songList_.size()-1;
+		}
+		else {
+			songListIndex_ -= 1;
+		}
+		music.openFromFile(songList_[songListIndex_]);
+		music.play();
+		std::cout << "Previous song: " << songList_[songListIndex_] << " vecIndex: " << songListIndex_ << std::endl;
+	}
+}
+void MusicPlayer::callIncreaseVolume() {
+	//first unmutes if muted
+	if(isMuted_ == true)
+	{
+		isMuted_=  false;
+		music.setVolume(volSave_); // unmute the music by restoring the volume to previous value
+	}
+	//if we change the " +1" for music.getVolume, make sure to reduce the "<= 99" in the if statement (100 - number) -CS
+	if(music.getVolume() <= 99){
+		music.setVolume(music.getVolume() + 1);
+		std::cout << "The volume is " << music.getVolume() << std::endl;
+	}
+}
+void MusicPlayer::callDecreaseVolume() {
+	//first unmutes if muted
+	if(isMuted_ == true)
+	{
+		isMuted_=  false;
+		music.setVolume(volSave_); // unmute the music by restoring the volume to previous value
+	}
+	//if we change the " -1" for music.getVolume, make sure to change the ">= 1" in the if statement to the same value -CS
+	if(music.getVolume() >= 1){
+		music.setVolume(music.getVolume() - 1);
+		std::cout << "The volume is " << music.getVolume() << std::endl;
+	}
+}
+void MusicPlayer::callMuteUnmute() {
+	//if its not muted than set the volume to 0
+	if (isMuted_ == false) {
+		isMuted_ = true;
+		volSave_ = music.getVolume();
+		music.setVolume(0);
+		std::cout << "Muted player." << std::endl;
+	}
+	else {
+		isMuted_=  false;
+		music.setVolume(volSave_); // unmute the music by restoring the volume to previous value
+		std::cout << "Unmuted player." << std::endl;
+	}
+}
+
+
+
+
+
+
+
 void MusicPlayer::update(const float dt) {
-	auto mousePosX = sf::Mouse::getPosition(window).x; // x position 
-	auto mousePosY = sf::Mouse::getPosition(window).y; // y position
-	//Pause/Play song
-	if (music.getStatus() != sf::SoundSource::Status::Playing) {
-		playPauseButton.setTexture(this->texmgr.getRef("playTex"));
-		if ((mousePosX > 125 && mousePosX < 177) && (mousePosY > 216 && mousePosY < 268)) {
-			playPauseButton.setTexture(this->texmgr.getRef("playTex2"));
-		}
-	}
-	else {
-		playPauseButton.setTexture(this->texmgr.getRef("pauseTex"));
-		if ((mousePosX > 125 && mousePosX < 177) && (mousePosY > 216 && mousePosY < 268)) {
-			playPauseButton.setTexture(this->texmgr.getRef("pauseTex2"));
-		}
-	}
-	// mute the volume or unmute
-	if(!isMuted_) {
-		muteButton.setTexture(this->texmgr.getRef("muteTexv2"));
-		if ((mousePosX > 38 && mousePosX < 84) && (mousePosY > 128 && mousePosY < 174)) {
-		  	muteButton.setTexture(this->texmgr.getRef("muteTexv22"));
-		}
-	}
-	else {
-		muteButton.setTexture(this->texmgr.getRef("muteTex"));
-		if ((mousePosX > 38 && mousePosX < 84) && (mousePosY > 128 && mousePosY < 174)) {
-		  	muteButton.setTexture(this->texmgr.getRef("muteTex2"));
-		}
-	}
-	//Previous song
-	if ((mousePosX > 45 && mousePosX < 76) && (mousePosY > 216 && mousePosY < 268)) {
-		prevButton.setTexture(this->texmgr.getRef("prevTex2"));
-	}
-	//Next Song
-	else if ((mousePosX > 225 && mousePosX < 257) && (mousePosY > 216 && mousePosY < 268)) {
-		nextButton.setTexture(this->texmgr.getRef("nextTex2"));
-	}
-	// // decrease volume
-	else if ((mousePosX > 133 && mousePosX < 168) && (mousePosY > 128 && mousePosY < 174)) {
-	    decreaseVolumeButton.setTexture(this->texmgr.getRef("decreaseVolumeTex2"));
-	}
-	// increase volume
-	else if ((mousePosX > 218 && mousePosX < 264) && (mousePosY > 128 && mousePosY < 174)) {
-		increaseVolumeButton.setTexture(this->texmgr.getRef("increaseVolumeTex2"));
-	}
-	else {
-		prevButton.setTexture(this->texmgr.getRef("prevTex"));
-		nextButton.setTexture(this->texmgr.getRef("nextTex"));
-		decreaseVolumeButton.setTexture(this->texmgr.getRef("decreaseVolumeTex"));
-		increaseVolumeButton.setTexture(this->texmgr.getRef("increaseVolumeTex"));
-	}
-
-	if(songListIndex_ == 0) {
-		prevSong.setString(trimFilename(songList_[songList_.size()-1]));
-	}
-	else {
-		prevSong.setString(trimFilename(songList_[songListIndex_ - 1]));
-	}
-
-	currentSong.setString(trimFilename(songList_[songListIndex_]));
-
-	if(songListIndex_ == songList_.size()-1) { 
-		nextSong.setString(trimFilename(songList_[0]));
-	}
-	else {
-		nextSong.setString(trimFilename(songList_[songListIndex_ + 1]));
-	}
-
-	if(songListIndex_ == songList_.size()-2) { 
-		next2Song.setString(trimFilename(songList_[0]));
-	}
-	else if(songListIndex_ == songList_.size()-1) {
-		next2Song.setString(trimFilename(songList_[1]));
-	}
-	else {
-		next2Song.setString(trimFilename(songList_[songListIndex_ +2]));
-	}
-
-	if(songListIndex_ == songList_.size()-3) { 
-		next3Song.setString(trimFilename(songList_[0]));
-	}
-	else if(songListIndex_ == songList_.size()-2) {
-		next3Song.setString(trimFilename(songList_[1]));
-	}
-	else if(songListIndex_ == songList_.size()-1) {
-		next3Song.setString(trimFilename(songList_[2]));
-	}
-	else {
-		next3Song.setString(trimFilename(songList_[songListIndex_ + 3]));
-	}
-
-	if(songListIndex_ == songList_.size()-4) { 
-		next4Song.setString(trimFilename(songList_[0]));
-	}
-	else if(songListIndex_ == songList_.size()-3) { 
-		next4Song.setString(trimFilename(songList_[1]));
-	}
-	else if(songListIndex_ == songList_.size()-2) { 
-		next4Song.setString(trimFilename(songList_[2]));
-	}
-	else if(songListIndex_ == songList_.size()-1) { 
-		next4Song.setString(trimFilename(songList_[3]));
-	}
-	else {
-		next4Song.setString(trimFilename(songList_[songListIndex_ + 4]));
-	}
+	
+	
+	mouseOverHighlight();
+	displayPlaylist();
 
 	return;
 }
@@ -181,185 +169,38 @@ void MusicPlayer::handleInput() {
 				std::cout << "Closed MusicPlayer372\nGood Bye!" << std::endl;
 				break;
 			}
+			
+			// Key Pressed
 			case sf::Event::KeyPressed: {
 				if(event.key.code == sf::Keyboard::Escape) {
 					window.close();
 					std::cout << "Closed MusicPlayer372\nGood Bye!" << std::endl;
 				}
-				else if(event.key.code == sf::Keyboard::Right) {
-					if(songList_.size() != 0) {
-						music.stop();
-						//if you're at the end, just go to the begining(if press next)
-						if(songListIndex_ == songList_.size()-1) {
-							songListIndex_ = 0;
-						}
-						else {
-							songListIndex_ += 1;
-						}
-						music.openFromFile(songList_[songListIndex_]);
-						music.play();
-						std::cout << "Next song: " << songList_[songListIndex_] << " vecIndex: " << songListIndex_ << std::endl;
-					}
-				}
-				else if(event.key.code == sf::Keyboard::Left) {
-					if(songList_.size() != 0) {
-						music.stop();
-
-						//if you're at the begining, just go to the end(if press prev)
-						if(songListIndex_ == 0) {
-							songListIndex_ = songList_.size()-1;
-						}
-						else {
-							songListIndex_ -= 1;
-						}
-						music.openFromFile(songList_[songListIndex_]);
-						music.play();
-						std::cout << "Previous song: " << songList_[songListIndex_] << " vecIndex: " << songListIndex_ << std::endl;
-					}
-				}
-				else if(event.key.code == sf::Keyboard::Space) {
-					if (music.getStatus() != music.Playing) {
-						music.play();
-						std::cout << "Playing song: " << songList_[songListIndex_] << std::endl;
-					}
-					else {
-						music.pause();
-					}
-				}
-				else if(event.key.code == sf::Keyboard::Down) {
-					if(isMuted_ == true)
-					{
-						isMuted_=  false;
-						music.setVolume(volSave_); // unmute the music by restoring the volume to previous value
-					}
-					//if we change the " -1" for music.getVolume, make sure to change the ">= 1" in the if statement to the same value -CS
-					if(music.getVolume() >= 1){
-						music.setVolume(music.getVolume() - 1);
-						std::cout << "The volume is " << music.getVolume() << std::endl;
-					}
-				}
-				else if(event.key.code == sf::Keyboard::Up) {
-					if(isMuted_ == true)
-					{
-						isMuted_=  false;
-						music.setVolume(volSave_); // unmute the music by restoring the volume to previous value
-					}
-					//if we change the " +1" for music.getVolume, make sure to reduce the "<= 99" in the if statement (100 - number) -CS
-					if(music.getVolume() <= 99){
-						music.setVolume(music.getVolume() + 1);
-						std::cout << "The volume is " << music.getVolume() << std::endl;
-					}
-				}
-				else if(event.key.code == sf::Keyboard::BackSpace) {
-					if (isMuted_ == false) {
-						isMuted_ = true;
-						volSave_ = music.getVolume();
-						music.setVolume(0);
-						std::cout << "Muted player." << std::endl;
-					}
-					else {
-						isMuted_=  false;
-						music.setVolume(volSave_); // unmute the music by restoring the volume to previous value
-						std::cout << "Unmuted player." << std::endl;
-					}
-				}
+			 	if(event.key.code == sf::Keyboard::Right) { callNextSong(); }			// Next song
+			 	if(event.key.code == sf::Keyboard::Left) { callPrevSong(); }			// Previous song
+			 	if(event.key.code == sf::Keyboard::Space) { callPlayPause(); }			// Play/Pause song
+			 	if(event.key.code == sf::Keyboard::Down) { callDecreaseVolume(); }		// Decrease volume
+			 	if(event.key.code == sf::Keyboard::Up) { callIncreaseVolume(); }		// increse volume
+			 	if(event.key.code == sf::Keyboard::BackSpace) { callMuteUnmute(); }		// Mute/Unmute volume
 			}
+			
+			// Mouse Button Pressed
 			case sf::Event::MouseButtonPressed: {
 				if(event.mouseButton.button == sf::Mouse::Left) {
 					for (unsigned int i = 0; i < spriteVec.size(); ++i)	{
 						//std::cout << " xPos " << mousePosX << " yPos " << mousePosY <<   std::endl;
 						if (clickInSprite(spriteVec[i], mousePosX, mousePosY) == true) {
-							//Pause/Play song
-							if (i == 0)	{
-								if (music.getStatus() != music.Playing) {
-									music.play();
-									std::cout << "Playing song: " << songList_[songListIndex_] << std::endl;
-								}
-								else {
-									music.pause();
-								}
-							}
-							//Previous song
-							if (i == 1)	{
-								if(songList_.size() != 0) {
-									music.stop();
-
-									//if you're at the begining, just go to the end(if press prev)
-									if(songListIndex_ == 0) {
-										songListIndex_ = songList_.size()-1;
-									}
-									else {
-										songListIndex_ -= 1;
-									}
-									music.openFromFile(songList_[songListIndex_]);
-									music.play();
-									std::cout << "Previous song: " << songList_[songListIndex_] << " vecIndex: " << songListIndex_ << std::endl;
-								}
-							}
-							//Next Song
-							if (i == 2)	{
-								if(songList_.size() != 0) {
-									music.stop();
-									//if you're at the end, just go to the begining(if press next)
-									if(songListIndex_ == songList_.size()-1) {
-										songListIndex_ = 0;
-									}
-									else {
-										songListIndex_ += 1;
-									}
-									music.openFromFile(songList_[songListIndex_]);
-									music.play();
-									std::cout << "Next song: " << songList_[songListIndex_] << " vecIndex: " << songListIndex_ << std::endl;
-								}
-							}
-							// mute the volume or unmute
-							if (i == 3) {
-								//if its not muted than set the volume to 0
-								if (isMuted_ == false) {
-									isMuted_ = true;
-									volSave_ = music.getVolume();
-									music.setVolume(0);
-									std::cout << "Muted player." << std::endl;
-								}
-								else {
-									isMuted_=  false;
-									music.setVolume(volSave_); // unmute the music by restoring the volume to previous value
-									std::cout << "Unmuted player." << std::endl;
-								}
-							}
-							// decrease volume
-							if (i == 4 ) {
-								//first unmutes if muted
-								if(isMuted_ == true)
-								{
-									isMuted_=  false;
-									music.setVolume(volSave_); // unmute the music by restoring the volume to previous value
-								}
-								//if we change the " -1" for music.getVolume, make sure to change the ">= 1" in the if statement to the same value -CS
-								if(music.getVolume() >= 1){
-									music.setVolume(music.getVolume() - 1);
-									std::cout << "The volume is " << music.getVolume() << std::endl;
-								}
-							}
-							// increase volume
-							if (i == 5) {
-								//first unmutes if muted
-								if(isMuted_ == true)
-								{
-									isMuted_=  false;
-									music.setVolume(volSave_); // unmute the music by restoring the volume to previous value
-								}
-								//if we change the " +1" for music.getVolume, make sure to reduce the "<= 99" in the if statement (100 - number) -CS
-								if(music.getVolume() <= 99){
-									music.setVolume(music.getVolume() + 1);
-									std::cout << "The volume is " << music.getVolume() << std::endl;
-								}
-							}	
+							if (i == 0)	{ callPlayPause(); } 		// Play/Pause song
+							if (i == 1)	{ callPrevSong(); } 		// Previous song
+							if (i == 2)	{ callNextSong(); }			// Next Song
+							if (i == 3) { callMuteUnmute(); } 		// Mute/Unmute volume
+							if (i == 4 ) { callDecreaseVolume(); } 	// Decrease volume
+							if (i == 5) { callIncreaseVolume(); }	// Increase volume
 						}
 					}
 				}
 				break;
-			}	
+			}
 			default:
 			break;
 		}
@@ -483,4 +324,115 @@ MusicPlayer::MusicPlayer() {
 	isMuted_ = false;
 
 	std::cout << "MusicPlayer initialized" << std::endl;
+}
+
+/****** Update Functions ******/
+void MusicPlayer::mouseOverHighlight() {
+	auto mousePosX = sf::Mouse::getPosition(window).x; // x position 
+	auto mousePosY = sf::Mouse::getPosition(window).y; // y position
+
+	if (music.getStatus() != sf::SoundSource::Status::Playing) {
+		playPauseButton.setTexture(this->texmgr.getRef("playTex"));
+		if ((mousePosX > 125 && mousePosX < 177) && (mousePosY > 216 && mousePosY < 268)) {
+			playPauseButton.setTexture(this->texmgr.getRef("playTex2"));
+		}
+	}
+	else {
+		playPauseButton.setTexture(this->texmgr.getRef("pauseTex"));
+		if ((mousePosX > 125 && mousePosX < 177) && (mousePosY > 216 && mousePosY < 268)) {
+			playPauseButton.setTexture(this->texmgr.getRef("pauseTex2"));
+		}
+	}
+	// mute the volume or unmute
+	if(!isMuted_) {
+		muteButton.setTexture(this->texmgr.getRef("muteTexv2"));
+		if ((mousePosX > 38 && mousePosX < 84) && (mousePosY > 128 && mousePosY < 174)) {
+		  	muteButton.setTexture(this->texmgr.getRef("muteTexv22"));
+		}
+	}
+	else {
+		muteButton.setTexture(this->texmgr.getRef("muteTex"));
+		if ((mousePosX > 38 && mousePosX < 84) && (mousePosY > 128 && mousePosY < 174)) {
+		  	muteButton.setTexture(this->texmgr.getRef("muteTex2"));
+		}
+	}
+	//Previous song
+	if ((mousePosX > 45 && mousePosX < 76) && (mousePosY > 216 && mousePosY < 268)) {
+		prevButton.setTexture(this->texmgr.getRef("prevTex2"));
+	}
+	//Next Song
+	else if ((mousePosX > 225 && mousePosX < 257) && (mousePosY > 216 && mousePosY < 268)) {
+		nextButton.setTexture(this->texmgr.getRef("nextTex2"));
+	}
+	// // decrease volume
+	else if ((mousePosX > 133 && mousePosX < 168) && (mousePosY > 128 && mousePosY < 174)) {
+	    decreaseVolumeButton.setTexture(this->texmgr.getRef("decreaseVolumeTex2"));
+	}
+	// increase volume
+	else if ((mousePosX > 218 && mousePosX < 264) && (mousePosY > 128 && mousePosY < 174)) {
+		increaseVolumeButton.setTexture(this->texmgr.getRef("increaseVolumeTex2"));
+	}
+	else {
+		prevButton.setTexture(this->texmgr.getRef("prevTex"));
+		nextButton.setTexture(this->texmgr.getRef("nextTex"));
+		decreaseVolumeButton.setTexture(this->texmgr.getRef("decreaseVolumeTex"));
+		increaseVolumeButton.setTexture(this->texmgr.getRef("increaseVolumeTex"));
+	}
+}
+
+void MusicPlayer::displayPlaylist() {
+	if(songListIndex_ == 0) {
+		prevSong.setString(trimFilename(songList_[songList_.size()-1]));
+	}
+	else {
+		prevSong.setString(trimFilename(songList_[songListIndex_ - 1]));
+	}
+
+	currentSong.setString(trimFilename(songList_[songListIndex_]));
+
+	if(songListIndex_ == songList_.size()-1) { 
+		nextSong.setString(trimFilename(songList_[0]));
+	}
+	else {
+		nextSong.setString(trimFilename(songList_[songListIndex_ + 1]));
+	}
+
+	if(songListIndex_ == songList_.size()-2) { 
+		next2Song.setString(trimFilename(songList_[0]));
+	}
+	else if(songListIndex_ == songList_.size()-1) {
+		next2Song.setString(trimFilename(songList_[1]));
+	}
+	else {
+		next2Song.setString(trimFilename(songList_[songListIndex_ +2]));
+	}
+
+	if(songListIndex_ == songList_.size()-3) { 
+		next3Song.setString(trimFilename(songList_[0]));
+	}
+	else if(songListIndex_ == songList_.size()-2) {
+		next3Song.setString(trimFilename(songList_[1]));
+	}
+	else if(songListIndex_ == songList_.size()-1) {
+		next3Song.setString(trimFilename(songList_[2]));
+	}
+	else {
+		next3Song.setString(trimFilename(songList_[songListIndex_ + 3]));
+	}
+
+	if(songListIndex_ == songList_.size()-4) { 
+		next4Song.setString(trimFilename(songList_[0]));
+	}
+	else if(songListIndex_ == songList_.size()-3) { 
+		next4Song.setString(trimFilename(songList_[1]));
+	}
+	else if(songListIndex_ == songList_.size()-2) { 
+		next4Song.setString(trimFilename(songList_[2]));
+	}
+	else if(songListIndex_ == songList_.size()-1) { 
+		next4Song.setString(trimFilename(songList_[3]));
+	}
+	else {
+		next4Song.setString(trimFilename(songList_[songListIndex_ + 4]));
+	}
 }
