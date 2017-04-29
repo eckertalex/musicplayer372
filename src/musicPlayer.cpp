@@ -186,6 +186,70 @@ void MusicPlayer::handleInput() {
 					window.close();
 					std::cout << "Closed MusicPlayer372\nGood Bye!" << std::endl;
 				}
+				else if(event.key.code == sf::Keyboard::Right) {
+					if(songList_.size() != 0) {
+						music.stop();
+						//if you're at the end, just go to the begining(if press next)
+						if(songListIndex_ == songList_.size()-1) {
+							songListIndex_ = 0;
+						}
+						else {
+							songListIndex_ += 1;
+						}
+						music.openFromFile(songList_[songListIndex_]);
+						music.play();
+						std::cout << "Next song: " << songList_[songListIndex_] << " vecIndex: " << songListIndex_ << std::endl;
+					}
+				}
+				else if(event.key.code == sf::Keyboard::Left) {
+					if(songList_.size() != 0) {
+						music.stop();
+
+						//if you're at the begining, just go to the end(if press prev)
+						if(songListIndex_ == 0) {
+							songListIndex_ = songList_.size()-1;
+						}
+						else {
+							songListIndex_ -= 1;
+						}
+						music.openFromFile(songList_[songListIndex_]);
+						music.play();
+						std::cout << "Previous song: " << songList_[songListIndex_] << " vecIndex: " << songListIndex_ << std::endl;
+					}
+				}
+				else if(event.key.code == sf::Keyboard::Space) {
+					if (music.getStatus() != music.Playing) {
+						music.play();
+						std::cout << "Playing song: " << songList_[songListIndex_] << std::endl;
+					}
+					else {
+						music.pause();
+					}
+				}
+				else if(event.key.code == sf::Keyboard::Dash) {
+					if(isMuted_ == true)
+					{
+						isMuted_=  false;
+						music.setVolume(volSave_); // unmute the music by restoring the volume to previous value
+					}
+					//if we change the " -1" for music.getVolume, make sure to change the ">= 1" in the if statement to the same value -CS
+					if(music.getVolume() >= 1){
+						music.setVolume(music.getVolume() - 1);
+						std::cout << "The volume is " << music.getVolume() << std::endl;
+					}
+				}
+				else if(event.key.code == sf::Keyboard::Equal) {
+					if(isMuted_ == true)
+					{
+						isMuted_=  false;
+						music.setVolume(volSave_); // unmute the music by restoring the volume to previous value
+					}
+					//if we change the " +1" for music.getVolume, make sure to reduce the "<= 99" in the if statement (100 - number) -CS
+					if(music.getVolume() <= 99){
+						music.setVolume(music.getVolume() + 1);
+						std::cout << "The volume is " << music.getVolume() << std::endl;
+					}
+				}
 			}
 			case sf::Event::MouseButtonPressed: {
 				if(event.mouseButton.button == sf::Mouse::Left) {
