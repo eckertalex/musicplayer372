@@ -36,14 +36,21 @@ public:
 	void update();
 	void handleInput();
 private:
-	/****** Functionality Functions ******/
+
 	void callPlayPause();
 	void callNextSong();
 	void callPrevSong();
 	void callIncreaseVolume();
 	void callDecreaseVolume();
 	void callMuteUnmute();
+	void closeProgram();
 	
+	/****** Update Functions ******/
+	void mouseOverHighlight();
+	void displayPlaylist();
+
+private:
+	void loadTextures();
 	std::vector<std::string> songList_;
 	unsigned int songListIndex_ = 0;
 
