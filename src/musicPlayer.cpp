@@ -175,16 +175,14 @@ void MusicPlayer::handleInput() {
 		auto mousePosY = sf::Mouse::getPosition(window).y; // y position
 		switch(event.type) {
 			case sf::Event::Closed: {
-				window.close();
-				std::cout << "Closed MusicPlayer372\nGood Bye!" << std::endl;
+				closeProgram();
 				break;
 			}
 			
 			// Key Pressed
 			case sf::Event::KeyPressed: {
 				if(event.key.code == sf::Keyboard::Escape) {
-					window.close();
-					std::cout << "Closed MusicPlayer372\nGood Bye!" << std::endl;
+					closeProgram();
 				}
 			 	if(event.key.code == sf::Keyboard::Right) { callNextSong(); }			// Next song
 			 	if(event.key.code == sf::Keyboard::Left) { callPrevSong(); }			// Previous song
@@ -453,4 +451,10 @@ void MusicPlayer::displayPlaylist() {
 	else {
 		next4Song.setString(trimFilename(songList_[songListIndex_ + 4]));
 	}
+}
+
+void MusicPlayer::closeProgram()
+{
+	window.close();
+	std::cout << "Closed MusicPlayer372\nGood Bye!" << std::endl;
 }

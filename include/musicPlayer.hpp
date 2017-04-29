@@ -80,7 +80,8 @@ public:
 	void callIncreaseVolume();
 	void callDecreaseVolume();
 	void callMuteUnmute();
-
+	void closeProgram();
+	
 	/****** Update Functions ******/
 	void mouseOverHighlight();
 	void displayPlaylist();
