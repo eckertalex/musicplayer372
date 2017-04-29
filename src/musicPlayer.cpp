@@ -18,7 +18,6 @@
 #include <string>
 #include <cstddef>
 
-#include "config.hpp"
 #include "../include/textureManager.hpp"
 #include "../include/musicPlayer.hpp"
 #include "../include/directoryManager.hpp" // for fileTreeMain()
@@ -118,11 +117,54 @@ void MusicPlayer::update(const float dt) {
 	else {
 		prevSong.setString(trimFilename(songList_[songListIndex_ - 1]));
 	}
+
 	currentSong.setString(trimFilename(songList_[songListIndex_]));
-	// nextSong.setString(trimFilename(songList_[songListIndex_ + 1]));
-	// next2Song.setString(trimFilename(songList_[songListIndex_ + 2]));
-	// next3Song.setString(trimFilename(songList_[songListIndex_ + 3]));
-	// next4Song.setString(trimFilename(songList_[songListIndex_ + 4]));
+
+	if(songListIndex_ == songList_.size()-1) { 
+		nextSong.setString(trimFilename(songList_[0]));
+	}
+	else {
+		nextSong.setString(trimFilename(songList_[songListIndex_ + 1]));
+	}
+
+	if(songListIndex_ == songList_.size()-2) { 
+		next2Song.setString(trimFilename(songList_[0]));
+	}
+	else if(songListIndex_ == songList_.size()-1) {
+		next2Song.setString(trimFilename(songList_[1]));
+	}
+	else {
+		next2Song.setString(trimFilename(songList_[songListIndex_ +2]));
+	}
+
+	if(songListIndex_ == songList_.size()-3) { 
+		next3Song.setString(trimFilename(songList_[0]));
+	}
+	else if(songListIndex_ == songList_.size()-2) {
+		next3Song.setString(trimFilename(songList_[1]));
+	}
+	else if(songListIndex_ == songList_.size()-1) {
+		next3Song.setString(trimFilename(songList_[2]));
+	}
+	else {
+		next3Song.setString(trimFilename(songList_[songListIndex_ + 3]));
+	}
+
+	if(songListIndex_ == songList_.size()-4) { 
+		next4Song.setString(trimFilename(songList_[0]));
+	}
+	else if(songListIndex_ == songList_.size()-3) { 
+		next4Song.setString(trimFilename(songList_[1]));
+	}
+	else if(songListIndex_ == songList_.size()-2) { 
+		next4Song.setString(trimFilename(songList_[2]));
+	}
+	else if(songListIndex_ == songList_.size()-1) { 
+		next4Song.setString(trimFilename(songList_[3]));
+	}
+	else {
+		next4Song.setString(trimFilename(songList_[songListIndex_ + 4]));
+	}
 
 	return;
 }

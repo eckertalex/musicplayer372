@@ -11,13 +11,6 @@ project(musicplayer372)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++11 -Wall")
 
-# Set version information in a config.hpp file
-set(myproject_VERSION_MAJOR 0)
-set(myproject_VERSION_MINOR 1)
-configure_file(
-  "${PROJECT_SOURCE_DIR}/config.hpp.in"
-  "${PROJECT_BINARY_DIR}/config.hpp"
-  )
 include_directories("${PROJECT_BINARY_DIR}")
 
 set(SOURCE_FILES 

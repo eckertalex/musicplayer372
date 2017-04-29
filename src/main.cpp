@@ -14,7 +14,6 @@
 #include <SFML/Audio.hpp>
 #include <iostream>
 
-#include "config.hpp"
 #include "../include/musicPlayer.hpp"
 
 

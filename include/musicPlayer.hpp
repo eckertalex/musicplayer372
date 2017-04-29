@@ -17,6 +17,15 @@
 
 #include "textureManager.hpp"
 
+// define version numbers
+// set in CMakeLists.txt file
+#define myproject_VERSION_MAJOR 0
+#define myproject_VERSION_MINOR 1
+
+// define window size
+#define WINDOW_WIDTH 700
+#define WINDOW_HEIGHT 300
+
 class MusicPlayer {
 public:
 	sf::RenderWindow window;
