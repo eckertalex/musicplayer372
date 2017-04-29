@@ -264,21 +264,7 @@ std::vector<std::string> fileTreeMain()
 		filePath = "\"" + filePath + "\"";
 	}
 	//else if not "Windows" and not "Other", then yourOS = "linux/MacOS"
-	//failed to find/open file. Only looks in default audio file. Even if audio file is deleted, program won't break,
-	//	It will just return an empty vector
-	else
-	{
-		std::cout << "Failed to find \"DirectoryConfig.txt\", looked inside \"" << filePath << "\"" << std::endl;
-		std::cout << "Switched to default: only looking for music in \"musicplayer372/res/audio\"" << std::endl;
-
-		if(yourOS == "Windows"){
-			explorer( (char*) "..\\res\\audio", songList, uniqueSongs, yourOS);
-		}
-		else{// "linux/MacOS"
-			explorer( (char*) "../res/audio", songList, uniqueSongs, yourOS);
-		}
-
-	}
+	
 
 	//file open, start running through all directories inside it
 	std::ifstream file (filePath);
@@ -319,7 +305,21 @@ std::vector<std::string> fileTreeMain()
 		file.close();
 
 	}
+	//failed to find/open file. Only looks in default audio file. Even if audio file is deleted, program won't break,
+	//	It will just return an empty vector
+	else
+	{
+		std::cout << "Failed to find \"DirectoryConfig.txt\", looked inside \"" << filePath << "\"" << std::endl;
+		std::cout << "Switched to default: only looking for music in \"musicplayer372/res/audio\"" << std::endl;
 
+		if(yourOS == "Windows"){
+			explorer( (char*) "..\\res\\audio", songList, uniqueSongs, yourOS);
+		}
+		else{// "linux/MacOS"
+			explorer( (char*) "../res/audio", songList, uniqueSongs, yourOS);
+		}
+
+	}
 
 //program crashes if passed an empty vector.
 //temp fix: if empty, add default song
