@@ -17,6 +17,8 @@
 #include <vector>
 #include <string>
 #include <cstddef>
+#include <math.h>
+#include <iomanip>
 
 #include "../include/textureManager.hpp"
 #include "../include/musicPlayer.hpp"
@@ -55,6 +57,9 @@ void MusicPlayer::draw() {
 	window.draw(next2Song);
 	window.draw(next3Song);
 	window.draw(next4Song);
+
+	window.draw(currentTimerText);
+	window.draw(totalLength);
 
 	return;
 }
@@ -146,6 +151,18 @@ void MusicPlayer::update() {
 	
 	mouseOverHighlight();
 	displayPlaylist();
+	
+	currentTimer = music.getPlayingOffset();
+	currentTimeSeconds = (int)currentTimer.asSeconds();
+	//currentTimerStream << std::fixed << std::setprecision(0) << currentTimeSeconds;
+	//currentTimerText.setString(currentTimerStream.str());
+	//currentTimerString = currentTimerStream;
+	//currentTimerText.setString(currentTimerString);
+	currentTimerText.setString(std::to_string(currentTimeSeconds));
+
+	totalDuration = music.getDuration();
+	totalDurationSec = totalDuration.asSeconds();
+	totalLength.setString(std::to_string(totalDurationSec));
 
 	return;
 }
@@ -291,6 +308,16 @@ MusicPlayer::MusicPlayer() {
 	next4Song.setCharacterSize(24);
 	next4Song.setColor(sf::Color::Black);
 	next4Song.setPosition(360,160);
+
+	currentTimerText.setFont(font);
+	currentTimerText.setCharacterSize(24);
+	currentTimerText.setColor(sf::Color::Red);
+	currentTimerText.setPosition(10,0);
+	
+	totalLength.setFont(font);
+	totalLength.setCharacterSize(24);
+	totalLength.setColor(sf::Color::Red);
+	totalLength.setPosition(10, 20);
 
 	spriteVec = { 
 		playPauseButton,			// 0

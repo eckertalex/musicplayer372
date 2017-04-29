@@ -14,6 +14,7 @@
 
 #include <vector>
 #include <memory>
+#include <sstream>
 
 #include "textureManager.hpp"
 
@@ -51,6 +52,16 @@ public:
 	sf::Sprite muteButton;
 	sf::Sprite decreaseVolumeButton;
 	sf::Sprite increaseVolumeButton;
+
+	
+	sf::Text currentTimerText;
+	std::stringstream currentTimerStream;
+	std::string currentTimerString;
+	sf::Time currentTimer;
+	float currentTimeSeconds;
+	sf::Text totalLength;
+	sf::Time totalDuration;
+	float totalDurationSec;
 
 	void playerLoop();
 
