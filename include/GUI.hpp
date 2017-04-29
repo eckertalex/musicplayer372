@@ -12,7 +12,8 @@
 #ifndef GUI_HPP
 #define GUI_HPP
 
-#include "textureManager.hpp"
+#include "../include/textureManager.hpp"
+#include "../include/Music.hpp"
 
 // define window size
 #define WINDOW_WIDTH 700
@@ -22,7 +23,7 @@ class GUI {
 public:
 	sf::RenderWindow window;
 
-	GUI(sf::Music music);
+	GUI(Music & music);
 	~GUI() = default;
 
 	void draw();
@@ -41,6 +42,7 @@ private:
 	std::string trimFilename(const std::string& str);
 
 	TextureManager texmgr;
+	Music music;
 
 	std::vector<sf::Sprite> spriteVec;
 	std::vector<sf::Text> textVec;

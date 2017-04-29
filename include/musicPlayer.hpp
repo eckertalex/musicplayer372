@@ -28,6 +28,7 @@
 
 class MusicPlayer {
 public:
+<<<<<<< Updated upstream
 	sf::RenderWindow window;
 	TextureManager texmgr;
 	
@@ -52,6 +53,8 @@ public:
 	sf::Sprite decreaseVolumeButton;
 	sf::Sprite increaseVolumeButton;
 
+=======
+>>>>>>> Stashed changes
 	void playerLoop();
 
 	MusicPlayer();
@@ -59,6 +62,7 @@ public:
 
 	void draw();
 	void update();
+<<<<<<< Updated upstream
 	void handleInput();
 	bool clickInSprite(sf::Sprite s, int x , int y);
 
@@ -84,6 +88,16 @@ private:
 	bool isMuted_;
 
 	std::unique_ptr<MusicPlayer> musicPlayer;
+=======
+
+private:
+	
+	/****** Update Functions ******/
+	void mouseOverHighlight();
+	void displayPlaylist();
+	std::unique_ptr<GUI> gui;
+	Music music;
+>>>>>>> Stashed changes
 };
 
 #endif // #ifndef MUSICPLAYER_HPP
