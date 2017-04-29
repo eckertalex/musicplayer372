@@ -18,7 +18,6 @@ set(SOURCE_FILES
 			src/musicPlayer.cpp
 			src/textureManager.cpp
 			src/directoryManager.cpp
-			src/GUI.cpp
 )
 
 # Define sources and executable

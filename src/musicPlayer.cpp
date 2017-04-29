@@ -22,45 +22,41 @@
 #include "../include/musicPlayer.hpp"
 #include "../include/directoryManager.hpp" // for fileTreeMain()
 
+std::string trimFilename(const std::string& str) {
+  std::size_t found = str.find_last_of("/\\");
+  return str.substr(found+1);
+}
+
+bool MusicPlayer::clickInSprite(sf::Sprite s, int x , int y) {
+	if (x > s.getGlobalBounds().left && x <
+			(s.getGlobalBounds().left + s.getGlobalBounds().width) && 
+			y > s.getGlobalBounds().top && y < (s.getGlobalBounds().top 
+			+ s.getGlobalBounds().height)) {
+		return true;
+	}
+	return false;
+}
+
 void MusicPlayer::draw() {
-	gui->draw();
+	window.clear(sf::Color::Green);
+
+	// draw buttons
+	window.draw(musicPlayerBG  );
+	window.draw(playPauseButton);			//0
+	window.draw(prevButton); 				//1
+	window.draw(nextButton);				//2
+	window.draw(muteButton); 				//3
+	window.draw(increaseVolumeButton);		//4
+	window.draw(decreaseVolumeButton);		//5
+
+	window.draw(prevSong);
+	window.draw(currentSong);
+	window.draw(nextSong);
+	window.draw(next2Song);
+	window.draw(next3Song);
+	window.draw(next4Song);
+
 	return;
-}
-
-void MusicPlayer::update() {
-	gui->update();
-	return;
-}
-
-void MusicPlayer::handleInput() {
-	gui->handleInput();
-	return;
-}
-
-void MusicPlayer::playerLoop() {
-	while(gui->window.isOpen()) {
-		gui->handleInput();
-		gui->update();
-		gui->draw();
-	}
-}
-
-MusicPlayer::MusicPlayer() {
-	//create full songlist
-	songList_ = std::move(fileTreeMain());
-	//if couldn't find song, don't try to play one
-	if( songList_[songListIndex_] != "" )
-	{
-		music.openFromFile(songList_[songListIndex_]);
-	}
-
-	//print for testing, delete later
-	printVec(songList_);
-
-	volSave_ = 100;
-	isMuted_ = false;
-
-	std::cout << "MusicPlayer initialized" << std::endl;
 }
 
 /****** Functionality Function Definitions ******/
@@ -74,7 +70,6 @@ void MusicPlayer::callPlayPause() {
 		music.pause();
 	}
 }
-
 void MusicPlayer::callNextSong() {
 	if(songList_.size() != 0) {
 		music.stop();
@@ -90,7 +85,6 @@ void MusicPlayer::callNextSong() {
 		std::cout << "Next song: " << songList_[songListIndex_] << " vecIndex: " << songListIndex_ << std::endl;
 	}
 }
-
 void MusicPlayer::callPrevSong() {
 	if(songList_.size() != 0) {
 		music.stop();
@@ -107,7 +101,6 @@ void MusicPlayer::callPrevSong() {
 		std::cout << "Previous song: " << songList_[songListIndex_] << " vecIndex: " << songListIndex_ << std::endl;
 	}
 }
-
 void MusicPlayer::callIncreaseVolume() {
 	//first unmutes if muted
 	if(isMuted_ == true)
@@ -121,7 +114,6 @@ void MusicPlayer::callIncreaseVolume() {
 		std::cout << "The volume is " << music.getVolume() << std::endl;
 	}
 }
-
 void MusicPlayer::callDecreaseVolume() {
 	//first unmutes if muted
 	if(isMuted_ == true)
@@ -135,7 +127,6 @@ void MusicPlayer::callDecreaseVolume() {
 		std::cout << "The volume is " << music.getVolume() << std::endl;
 	}
 }
-
 void MusicPlayer::callMuteUnmute() {
 	//if its not muted than set the volume to 0
 	if (isMuted_ == false) {
