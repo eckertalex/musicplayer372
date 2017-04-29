@@ -15,80 +15,22 @@
 #include <vector>
 #include <memory>
 
-#include "textureManager.hpp"
+#include "GUI.hpp"
 
 // define version numbers
 // set in CMakeLists.txt file
 #define myproject_VERSION_MAJOR 0
 #define myproject_VERSION_MINOR 1
 
-// define window size
-#define WINDOW_WIDTH 700
-#define WINDOW_HEIGHT 300
-
 class MusicPlayer {
 public:
-<<<<<<< Updated upstream
-	sf::RenderWindow window;
-	TextureManager texmgr;
-	
-	std::vector<sf::Sprite> spriteVec;
-
-	sf::SoundBuffer buffer;
-	sf::Music music;
-
-	sf::Font font;
-	sf::Text prevSong;
-	sf::Text currentSong;
-	sf::Text nextSong;
-	sf::Text next2Song;
-	sf::Text next3Song;
-	sf::Text next4Song;
-
-	sf::Sprite musicPlayerBG;
-	sf::Sprite playPauseButton;
-	sf::Sprite prevButton;
-	sf::Sprite nextButton;
-	sf::Sprite muteButton;
-	sf::Sprite decreaseVolumeButton;
-	sf::Sprite increaseVolumeButton;
-
-=======
->>>>>>> Stashed changes
 	void playerLoop();
 
 	MusicPlayer();
 	~MusicPlayer() = default;
 
-	void draw();
 	void update();
-<<<<<<< Updated upstream
 	void handleInput();
-	bool clickInSprite(sf::Sprite s, int x , int y);
-
-	/****** Functionality Functions ******/
-	void callPlayPause();
-	void callNextSong();
-	void callPrevSong();
-	void callIncreaseVolume();
-	void callDecreaseVolume();
-	void callMuteUnmute();
-
-	/****** Update Functions ******/
-	void mouseOverHighlight();
-	void displayPlaylist();
-
-private:
-	void loadTextures();
-
-	std::vector<std::string> songList_;
-	unsigned int songListIndex_ = 0;
-
-	unsigned int volSave_;
-	bool isMuted_;
-
-	std::unique_ptr<MusicPlayer> musicPlayer;
-=======
 
 private:
 	
@@ -96,8 +38,7 @@ private:
 	void mouseOverHighlight();
 	void displayPlaylist();
 	std::unique_ptr<GUI> gui;
-	Music music;
->>>>>>> Stashed changes
+	std::unique_ptr<Music> music;
 };
 
 #endif // #ifndef MUSICPLAYER_HPP
