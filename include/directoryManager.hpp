@@ -21,7 +21,11 @@
 #include <algorithm> 		// find replace remove_if
 #include <cctype> 			// isspace
 
-#include <dirent.h> 		//directory navagation
+#ifdef _MSC_VER
+#include "../include/dirent.h"
+#else
+#include <dirent.h> 
+#endif		
 #include <sys/stat.h>		//directory navagation
 
 

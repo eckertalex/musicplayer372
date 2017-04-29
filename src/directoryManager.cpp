@@ -20,7 +20,7 @@
 //dirent.h used for navigtion
 //if using VisualS, include one, else include the other
 #ifdef _MSC_VER
-#include "dirent.h"
+#include "../include/dirent.h"
 #else
 #include <dirent.h> 
 #endif		
