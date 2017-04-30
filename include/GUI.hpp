@@ -12,8 +12,10 @@
 #ifndef GUI_HPP
 #define GUI_HPP
 
+#include "../include/InputManager.hpp"
 #include "../include/textureManager.hpp"
 #include "../include/Music.hpp"
+#include <memory>
 
 // define window size
 #define WINDOW_WIDTH 700
@@ -23,7 +25,7 @@ class GUI {
 public:
 	sf::RenderWindow window;
 
-	GUI(Music & music);
+	GUI();
 	~GUI() = default;
 
 	void draw();
@@ -34,15 +36,11 @@ private:
 	void loadTextures();
 	void setTextures();
 	void stylePlaylist();
-
-	/****** Update Functions ******/
-	void mouseOverHighlight();
-	void displayPlaylist();
 	
 	std::string trimFilename(const std::string& str);
 
-	TextureManager texmgr;
-	Music music;
+	std::shared_ptr<TextureManager> texmgr;
+	std::shared_ptr<InputManager> inputmgr;
 
 	std::vector<sf::Sprite> spriteVec;
 	std::vector<sf::Text> textVec;
