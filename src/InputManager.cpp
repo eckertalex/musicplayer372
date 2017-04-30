@@ -14,7 +14,6 @@
 #include <iostream>
 
 #include "../include/InputManager.hpp"
-#include "../include/GUI.hpp"
 
 InputManager::InputManager() {
 	music = std::make_unique<Music>();
@@ -105,10 +104,9 @@ void InputManager::handleInput() {
 		case sf::Event::MouseButtonPressed: {
 			if (event.mouseButton.button == sf::Mouse::Left) {
 				for (unsigned int i = 0; i < gui->spriteVec.size(); ++i) {
-					//std::cout << " xPos " << mousePosX << " yPos " << mousePosY <<   std::endl;
-					if (gui->clickInSprite(gui->spriteVec[i], mousePosX, mousePosY) == true) {
+					if (gui->clickInSprite(gui->spriteVec[i], mousePosX, mousePosY)) {
 						if (i == 0) { music->callPlayPause(); } 		// Play/Pause song
-						if (i == 1) { music->callPrevSong(); } 		// Previous song
+						if (i == 1) { music->callPrevSong(); } 			// Previous song
 						if (i == 2) { music->callNextSong(); }			// Next Song
 						if (i == 3) { music->callMuteUnmute(); } 		// Mute/Unmute volume
 						if (i == 4) { music->callDecreaseVolume(); } 	// Decrease volume

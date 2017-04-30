@@ -26,6 +26,7 @@ MusicPlayer::MusicPlayer() {
 void MusicPlayer::playerLoop() {
 	while(inputmgr->gui->window.isOpen()) {
 		inputmgr->handleInput();
+		inputmgr->mouseOverHighlight();
 		inputmgr->gui->update();
 		inputmgr->gui->draw();
 	}

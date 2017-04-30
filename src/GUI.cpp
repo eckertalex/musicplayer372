@@ -10,13 +10,11 @@
 // Source file for GUI class
 
 #include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
 
 #include "../include/textureManager.hpp"
 #include "../include/GUI.hpp"
-#include "../include/InputManager.hpp"
 
 GUI::GUI(std::shared_ptr<Music> music) : music(music) {
 	std::cout << "ctor GUI\n";
@@ -24,12 +22,14 @@ GUI::GUI(std::shared_ptr<Music> music) : music(music) {
 	loadTextures();
 	window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "MusicPlayer",
 		sf::Style::Titlebar | sf::Style::Close);
+	setTextures();
+
 }
 
 bool GUI::clickInSprite(sf::Sprite s, int x , int y) {
 	if (x > s.getGlobalBounds().left && x <
-			(s.getGlobalBounds().left + s.getGlobalBounds().width) && 
-			y > s.getGlobalBounds().top && y < (s.getGlobalBounds().top 
+			(s.getGlobalBounds().left + s.getGlobalBounds().width) &&
+			y > s.getGlobalBounds().top && y < (s.getGlobalBounds().top
 			+ s.getGlobalBounds().height)) {
 		return true;
 	}
@@ -199,6 +199,7 @@ void GUI::displayPlaylist() {
 }
 
 void GUI::update() {
+	//stylePlaylist();
 	displayPlaylist();
 	return;
 }
