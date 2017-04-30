@@ -16,7 +16,6 @@
 #include <cstddef>
 
 #include "../include/musicPlayer.hpp"
-#include "../include/directoryManager.hpp" // for fileTreeMain()
 
 MusicPlayer::MusicPlayer() {
 	inputmgr = std::make_unique<InputManager>();

@@ -86,7 +86,7 @@ void InputManager::handleInput() {
 			break;
 		}
 
-								// Key Pressed
+		// Key Pressed
 		case sf::Event::KeyPressed: {
 			if (event.key.code == sf::Keyboard::Escape) {
 				gui->window.close();
@@ -100,7 +100,7 @@ void InputManager::handleInput() {
 			if (event.key.code == sf::Keyboard::BackSpace) { music->callMuteUnmute(); }		// Mute/Unmute volume
 		}
 
-									// Mouse Button Pressed
+		// Mouse Button Pressed
 		case sf::Event::MouseButtonPressed: {
 			if (event.mouseButton.button == sf::Mouse::Left) {
 				for (unsigned int i = 0; i < gui->spriteVec.size(); ++i) {

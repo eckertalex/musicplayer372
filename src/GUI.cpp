@@ -17,7 +17,6 @@
 #include "../include/GUI.hpp"
 
 GUI::GUI(std::shared_ptr<Music> music) : music(music) {
-	std::cout << "ctor GUI\n";
 	texmgr = std::make_unique<TextureManager>();
 	loadTextures();
 	window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "MusicPlayer",
@@ -31,13 +30,14 @@ GUI::GUI(std::shared_ptr<Music> music) : music(music) {
 }
 
 bool GUI::clickInSprite(sf::Sprite s, int x , int y) {
-	if (x > s.getGlobalBounds().left && x <
-			(s.getGlobalBounds().left + s.getGlobalBounds().width) &&
-			y > s.getGlobalBounds().top && y < (s.getGlobalBounds().top
-			+ s.getGlobalBounds().height)) {
-		return true;
+	if (s.getGlobalBounds().top
+		+ s.getGlobalBounds().height > y) {
+		return s.getGlobalBounds().left + s.getGlobalBounds().width > x && x > s.getGlobalBounds().left &&
+			   y > s.getGlobalBounds().top;
 	}
-	return false;
+	else {
+		return x >= s.getGlobalBounds().left + s.getGlobalBounds().width && false;
+	}
 }
 
 std::string GUI::trimFilename(const std::string& str) {
@@ -90,15 +90,6 @@ void GUI::loadTextures() {
 }
 
 void GUI::setTextures() {
-	spriteVec = { 
-		playPauseButton,			// 0
-		prevButton, 				// 1
-		nextButton, 				// 2
-		muteButton, 				// 3
-		decreaseVolumeButton, 		// 4
-		increaseVolumeButton
-	};
-
 	// set textures
 	musicPlayerBG.setTexture(this->texmgr->getRef("musicPlayerBGTex"));
 	playPauseButton.setTexture(this->texmgr->getRef("pauseTex"));
@@ -115,6 +106,15 @@ void GUI::setTextures() {
 	decreaseVolumeButton.setPosition(120,120);
 	muteButton.setPosition(30,120);
 	increaseVolumeButton.setPosition(210,120);
+
+	spriteVec = {
+			playPauseButton,			// 0
+			prevButton, 				// 1
+			nextButton, 				// 2
+			muteButton, 				// 3
+			decreaseVolumeButton, 		// 4
+			increaseVolumeButton
+	};
 }
 
 void GUI::stylePlaylist() {
