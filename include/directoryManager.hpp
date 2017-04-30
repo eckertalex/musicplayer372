@@ -4,7 +4,7 @@
 // 		Bryan Burkhardt (bmburkhardt@alaska.edu)  
 // 		Alexander Eckert (aeckert@alaska.edu)  
 // 		Jeremiah Jacobson (jjjacobson2@alaska.edu)  
-// 		Jarye Murphy (@alaska.edu)
+// 		Jarye Maurphy (@alaska.edu)  
 // 		Cameron Showalter (cjshowalter@alaska.edu) 
 //
 // Header for the Directory Manager
@@ -14,72 +14,66 @@
 
 #include <string>			// string erase
 #include <vector>			// vector
-
-
 #include <iostream>			// cout endl
-#include <fstream>			// file reading
-#include <algorithm> 		// find replace remove_if
-#include <cctype> 			// isspace
-
-#ifdef _MSC_VER
-#include "../include/dirent.h"
-#else
-#include <dirent.h> 
-#endif		
-#include <sys/stat.h>		//directory navigation
+#include <fstream>			// ifstream
 
 
-//------TEMP METHODS FOR TESTING / PRINTING (WILL BE DELETED)------
+
+//note: printVec will be deleted once testing is done
 void printVec(std::vector<std::string> & songList);
 
+class DirectoryManager
+{
+public:
+	DirectoryManager();
 
-//------END TEMP METHODS------
+	void handleFile();
+
+	std::string getOsName();
+
+	void configFileFound();
+
+	bool handleFileOverride(std::string currLine);
+
+	void formatPathForCorrectOS(std::string & path);
+
+	void explorer(char *dir_name);
+
+	std::vector<std::string> getPlaylist();
+
+	bool isMusicFile(std::string fileName);
+
+private:
+	//Overrides can be accessed/changed inside DirectoryConfig.txt
+
+	int operatingSystemOverride;
+	//0 -> program will automatically detect the OS running the program
+	//1 -> program will format directories for "linux/MacOS"
+	//2 -> program will format directories for "Windows"
+	//3 -> program has no idea what path system to use, so "Other"
+	//		Note: if "Other", program will not find any songs. Added for testing purposes
+
+	int uniqueSongOverride;
+	//true - > If songs with same name are found in different directories, includes both in playlist
+	//false -> If songs with same name are found in different directories, only adds the first one to playlist
+
+	std::string yourOS;
+	//returns your operating system. IS affected by oppereatingSystemOveride
+	//possible returns: "Windows" "linux/MacOS" "Other"
 
 
+	std::vector<std::string> songList;
+	//it's a list of songs...
 
-//Overrides can be accessed/changed inside DirectoryConfig.txt
+	std::vector<std::string> uniqueSongs;
+	//private because no reason for others to use this. it's not equal to songList if
+	//uniqueSongOverride is ever set to true
 
-//OPERATINGSYSTEMOVERRIDE
-	//0 -> program returns empty vector if os not recognized
-	//1 -> program will treat your computer as "linux/MacOS" REGARDLESS of if it knows your os
-	//2 -> program will treat your computer as "Windows" REGARDLESS of if it knows your os
-static int OPERATINGSYSTEMOVERRIDE = 0;
+	std::ifstream file;
+	//used in multiple methods. Added to private so i don't have to pass it around.
 
-//REPEATSONGSOVERRIDE
-	//false -> if program finds multiple songs of same name if different directories, will NOT add both
-	//true  -> if program finds multiple songs of same name if different directories, it adds both
-static bool REPEATSONGSOVERRIDE = false;
+};
 
-//formatPath:
-//	removes all whitespace from a string, except for '\ '
-//	if yourOS = "Windows", removes '\' from '\ ' and puts quotes around currLine
-void formatPath(std::string &str, std::string &yourOS);
 
-//isFileOverride
-//checks to see if str is a override command
-//Note: will also set the override
-bool isFileOverride(std::string str);
-
-//getOsName
-//	returns the name of the user Operating System
-//	if not found, returns "Other"
-//	can be overridden
-std::string getOsName();
-
-//note: .mp3 is not supported, and not on this list
-//isMusicFile
-//	returns true if filename is audio file supported by SFML
-//	.mp3 files will not be included
-bool isMusicFile(std::string fileName);
-
-//tutorial for a more basic explorer from https://www.youtube.com/watch?v=w9l8kLPQ39c
-//explorer:
-//		returns a vector of all song names inside directory, and recursively calls all directories in itself
-//		does not put directories inside vector, just strings of paths to supported songs
-void explorer(char *dir_name, std::vector<std::string> & songList, std::vector<std::string> & uniqueSongs, std::string & yourOS);
-
-//Call this to create the vector of songs
-//if operating system not found, returns empty vector
-std::vector<std::string> fileTreeMain();
 
 #endif // DIRECTORYMANAGER_HPP

@@ -223,7 +223,9 @@ MusicPlayer::MusicPlayer() {
 		increaseVolumeButton };		// 5
 
 	//create full songlist
-	songList_ = std::move(fileTreeMain());
+	//create full songlist
+	DirectoryManager Playlist;
+	songList_ = std::move(Playlist.getPlaylist());
 	//if couldn't find song, don't try to play one
 	if( songList_[songListIndex_] != "" ) {
 		music.openFromFile(songList_[songListIndex_]);
