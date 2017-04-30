@@ -22,16 +22,6 @@
 #include "../include/musicPlayer.hpp"
 #include "../include/directoryManager.hpp" // for fileTreeMain()
 
-void MusicPlayer::draw() {
-	gui->draw();
-	return;
-}
-
-void MusicPlayer::update() {
-	gui->update();
-	return;
-}
-
 void MusicPlayer::playerLoop() {
 	while(gui->window.isOpen()) {
 		gui->handleInput();
@@ -47,7 +37,6 @@ MusicPlayer::MusicPlayer() {
 
 
 void MusicPlayer::update() {
-	
 	mouseOverHighlight();
 	displayPlaylist();
 
