@@ -43,7 +43,7 @@ void MusicPlayer::draw() {
 	window.clear(sf::Color::Green);
 
 	// draw buttons
-	window.draw(musicPlayerBG  );
+	window.draw(musicPlayerBG);
 	window.draw(playPauseButton);			//0
 	window.draw(prevButton); 				//1
 	window.draw(nextButton);				//2
@@ -58,8 +58,9 @@ void MusicPlayer::draw() {
 	window.draw(next3Song);
 	window.draw(next4Song);
 
+	//window.draw(timerSlash);
 	window.draw(currentTimerText);
-	window.draw(totalLength);
+	//window.draw(totalTimerText);
 
 	return;
 }
@@ -151,18 +152,8 @@ void MusicPlayer::update() {
 	
 	mouseOverHighlight();
 	displayPlaylist();
-	
-	currentTimer = music.getPlayingOffset();
-	currentTimeSeconds = (int)currentTimer.asSeconds();
-	//currentTimerStream << std::fixed << std::setprecision(0) << currentTimeSeconds;
-	//currentTimerText.setString(currentTimerStream.str());
-	//currentTimerString = currentTimerStream;
-	//currentTimerText.setString(currentTimerString);
-	currentTimerText.setString(std::to_string(currentTimeSeconds));
-
-	totalDuration = music.getDuration();
-	totalDurationSec = totalDuration.asSeconds();
-	totalLength.setString(std::to_string(totalDurationSec));
+	displayCurrentTimer();
+	displayTotalTimer();
 
 	return;
 }
@@ -307,15 +298,22 @@ MusicPlayer::MusicPlayer() {
 	next4Song.setColor(sf::Color::Black);
 	next4Song.setPosition(360,160);
 
+	timerSlash.setFont(font);
+	timerSlash.setCharacterSize(24);
+	timerSlash.setColor(sf::Color::Red);
+	timerSlash.setPosition(50,75);
+	timerSlash.setString("/");
+
+
 	currentTimerText.setFont(font);
 	currentTimerText.setCharacterSize(24);
 	currentTimerText.setColor(sf::Color::Red);
-	currentTimerText.setPosition(10,0);
+	currentTimerText.setPosition(38,75);
 	
-	totalLength.setFont(font);
-	totalLength.setCharacterSize(24);
-	totalLength.setColor(sf::Color::Red);
-	totalLength.setPosition(10, 20);
+	totalTimerText.setFont(font);
+	totalTimerText.setCharacterSize(24);
+	totalTimerText.setColor(sf::Color::Red);
+	totalTimerText.setPosition(62,75);
 
 	spriteVec = { 
 		playPauseButton,			// 0
@@ -343,6 +341,7 @@ MusicPlayer::MusicPlayer() {
 }
 
 /****** Update Functions ******/
+
 void MusicPlayer::mouseOverHighlight() {
 	auto mousePosX = sf::Mouse::getPosition(window).x; // x position 
 	auto mousePosY = sf::Mouse::getPosition(window).y; // y position
@@ -451,6 +450,46 @@ void MusicPlayer::displayPlaylist() {
 	else {
 		next4Song.setString(trimFilename(songList_[songListIndex_ + 4]));
 	}
+}
+
+/****** Timer Functions ******/
+
+void MusicPlayer::displayCurrentTimer() {
+	currentTimer = music.getPlayingOffset();
+	currentTimeSeconds = (int)currentTimer.asSeconds();
+	currentTimeMinutes = convertToMinutes((int)currentTimer.asSeconds());
+	currentTimerStreamSeconds.str("");
+	currentTimerStreamMinutes.str("");
+	
+	if(fakeSeconds < 60) {
+		fakeSeconds = (int)currentTimeSeconds;
+		currentTimerBool = false;
+	}
+	else if(fakeSeconds > 59) {
+		if((((int)currentTimeSeconds%60 == 0) && currentTimerBool == false)) {
+			std::cout << "minutecounter++\n";
+			currentTimerBool = true;
+			minuteCounter++;
+		}
+		fakeSeconds = (int)currentTimeSeconds - (60*minuteCounter);
+	}
+	//std::cout << "minutecounter: " << minuteCounter << "\n";
+	//std::cout << "fakeseconds: " << fakeSeconds << "\n";
+	//std::cout << "currentseconds: " << currentTimeSeconds << "\n\n";
+	currentTimerStreamSeconds << std::fixed << std::setprecision(0) << fakeSeconds;
+	currentTimerStreamMinutes << std::fixed << std::setprecision(0) << currentTimeMinutes;
+	currentTimerText.setString(currentTimerStreamMinutes.str() + ":" + currentTimerStreamSeconds.str() + " / ");
+}
+
+void MusicPlayer::displayTotalTimer() {
+	totalTimer = music.getDuration();
+	totalTimeSeconds = (int)totalTimer.asSeconds();
+	totalTimerStream.str("");
+	totalTimerStream << std::fixed << std::setprecision(0) << totalTimeSeconds;
+	totalTimerText.setString(totalTimerStream.str());
+}
+int MusicPlayer::convertToMinutes(int seconds) {
+	return seconds/60;
 }
 
 void MusicPlayer::closeProgram()
