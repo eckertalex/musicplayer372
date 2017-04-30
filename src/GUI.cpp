@@ -129,7 +129,7 @@ void GUI::stylePlaylist() {
 	};
 
 	int counter = 35;
-	for(auto i=0; textVec.size()-1; ++i) {
+	for(auto i = 0; i < textVec.size(); ++i) {
 		textVec[i].setFont(font);
 		textVec[i].setCharacterSize(24);
 		if(i == 1)
@@ -199,7 +199,7 @@ void GUI::displayPlaylist() {
 }
 
 void GUI::update() {
-	//stylePlaylist();
+	stylePlaylist();
 	displayPlaylist();
 	return;
 }
