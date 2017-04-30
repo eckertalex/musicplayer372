@@ -15,6 +15,7 @@
 #include "GUI.hpp"
 #include "Music.hpp"
 #include <memory>
+#include <SFML/Graphics.hpp>
 
 class GUI;
 
@@ -24,6 +25,7 @@ public:
 	void handleInput();
 
 	void mouseOverHighlight();
+	bool clickInSprite(sf::Sprite s, int x, int y);
 	std::shared_ptr<Music> music;
 	std::shared_ptr<GUI> gui;
 };
