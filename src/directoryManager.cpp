@@ -305,7 +305,7 @@ void DirectoryManager::explorer(char *dir_name)
 					songList.push_back(path);
 				}
 				//else it has the song in uniqueSongs already, check flag to see if it gets added to songlist
-				else if(uniqueSongOverride != 0)
+				else if(uniqueSongOverride)
 				{
 					songList.push_back(std::string(path));
 				}

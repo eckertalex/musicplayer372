@@ -147,9 +147,6 @@ void MusicPlayer::playerLoop() {
 	}
 }
 
-// For Alex' compiler not to complain about setColor
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 MusicPlayer::MusicPlayer() {
 	loadTextures();
 	window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "MusicPlayer", 
@@ -236,7 +233,6 @@ MusicPlayer::MusicPlayer() {
 
 	std::cout << "MusicPlayer initialized" << std::endl;
 }
-#pragma clang diagnostic pop
 
 /****** Functionality Function Definitions ******/
 

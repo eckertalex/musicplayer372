@@ -17,8 +17,6 @@
 #include <iostream>			// cout endl
 #include <fstream>			// ifstream
 
-
-
 //note: printVec will be deleted once testing is done
 void printVec(std::vector<std::string> & songList);
 
