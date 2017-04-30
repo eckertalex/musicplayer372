@@ -12,17 +12,17 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
-#include <string>
-#include <cstddef>
 #include <iostream>
 
 #include "../include/textureManager.hpp"
 #include "../include/GUI.hpp"
+#include "../include/InputManager.hpp"
 
-GUI::GUI(Music & music) : music(music) {
+GUI::GUI() {
 	loadTextures();
 	window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "MusicPlayer",
 		sf::Style::Titlebar | sf::Style::Close);
+	inputmgr = std::make_shared<InputManager>();
 }
 
 bool GUI::clickInSprite(sf::Sprite s, int x , int y) {
@@ -64,23 +64,23 @@ void GUI::draw() {
 }
 
 void GUI::loadTextures() {
-	texmgr.loadTexture("musicPlayerBGTex", "../res/background/musicplayerbg.png");
-	texmgr.loadTexture("playTex", "../res/icons/play.png");
-	texmgr.loadTexture("pauseTex", "../res/icons/pause.png");
-	texmgr.loadTexture("prevTex", "../res/icons/previous.png");
-	texmgr.loadTexture("nextTex", "../res/icons/next.png");
-	texmgr.loadTexture("decreaseVolumeTex", "../res/icons/volume_down.png");
-	texmgr.loadTexture("increaseVolumeTex", "../res/icons/volume_up.png");
-	texmgr.loadTexture("muteTex", "../res/icons/mute.png");
-	texmgr.loadTexture("playTex2", "../res/icons/play2.png");
-	texmgr.loadTexture("pauseTex2", "../res/icons/pause2.png");
-	texmgr.loadTexture("prevTex2", "../res/icons/previous2.png");
-	texmgr.loadTexture("nextTex2", "../res/icons/next2.png");
-	texmgr.loadTexture("decreaseVolumeTex2", "../res/icons/volume_down2.png");
-	texmgr.loadTexture("increaseVolumeTex2", "../res/icons/volume_up2.png");
-	texmgr.loadTexture("muteTexv2", "../res/icons/mutev2.png");
-	texmgr.loadTexture("muteTex2", "../res/icons/mute2.png");
-	texmgr.loadTexture("muteTexv22", "../res/icons/mutev2-2.png");
+	texmgr->loadTexture("musicPlayerBGTex", "../res/background/musicplayerbg.png");
+	texmgr->loadTexture("playTex", "../res/icons/play.png");
+	texmgr->loadTexture("pauseTex", "../res/icons/pause.png");
+	texmgr->loadTexture("prevTex", "../res/icons/previous.png");
+	texmgr->loadTexture("nextTex", "../res/icons/next.png");
+	texmgr->loadTexture("decreaseVolumeTex", "../res/icons/volume_down.png");
+	texmgr->loadTexture("increaseVolumeTex", "../res/icons/volume_up.png");
+	texmgr->loadTexture("muteTex", "../res/icons/mute.png");
+	texmgr->loadTexture("playTex2", "../res/icons/play2.png");
+	texmgr->loadTexture("pauseTex2", "../res/icons/pause2.png");
+	texmgr->loadTexture("prevTex2", "../res/icons/previous2.png");
+	texmgr->loadTexture("nextTex2", "../res/icons/next2.png");
+	texmgr->loadTexture("decreaseVolumeTex2", "../res/icons/volume_down2.png");
+	texmgr->loadTexture("increaseVolumeTex2", "../res/icons/volume_up2.png");
+	texmgr->loadTexture("muteTexv2", "../res/icons/mutev2.png");
+	texmgr->loadTexture("muteTex2", "../res/icons/mute2.png");
+	texmgr->loadTexture("muteTexv22", "../res/icons/mutev2-2.png");
 	std::cout << "Textures loaded" << std::endl;
 }
 
@@ -95,13 +95,13 @@ void GUI::setTextures() {
 	};
 
 	// set textures
-	musicPlayerBG.setTexture(this->texmgr.getRef("musicPlayerBGTex"));
-	playPauseButton.setTexture(this->texmgr.getRef("pauseTex"));
-	prevButton.setTexture(this->texmgr.getRef("prevTex"));
-	nextButton.setTexture(this->texmgr.getRef("nextTex"));
-	muteButton.setTexture(this->texmgr.getRef("muteTex"));
-	decreaseVolumeButton.setTexture(this->texmgr.getRef("decreaseVolumeTex"));
-	increaseVolumeButton.setTexture(this->texmgr.getRef("increaseVolumeTex"));
+	musicPlayerBG.setTexture(this->texmgr->getRef("musicPlayerBGTex"));
+	playPauseButton.setTexture(this->texmgr->getRef("pauseTex"));
+	prevButton.setTexture(this->texmgr->getRef("prevTex"));
+	nextButton.setTexture(this->texmgr->getRef("nextTex"));
+	muteButton.setTexture(this->texmgr->getRef("muteTex"));
+	decreaseVolumeButton.setTexture(this->texmgr->getRef("decreaseVolumeTex"));
+	increaseVolumeButton.setTexture(this->texmgr->getRef("increaseVolumeTex"));
 
 	// set positions
 	playPauseButton.setPosition(120,210);
@@ -140,59 +140,65 @@ void GUI::stylePlaylist() {
 	}
 }
 
+void GUI::displayPlaylist() {
+	if (songListIndex_ == 0) {
+		prevSong.setString(trimFilename(songList_[songList_.size() - 1]));
+	}
+	else {
+		prevSong.setString(trimFilename(songList_[songListIndex_ - 1]));
+	}
+
+	currentSong.setString(trimFilename(songList_[songListIndex_]));
+
+	if (songListIndex_ == songList_.size() - 1) {
+		nextSong.setString(trimFilename(songList_[0]));
+	}
+	else {
+		nextSong.setString(trimFilename(songList_[songListIndex_ + 1]));
+	}
+
+	if (songListIndex_ == songList_.size() - 2) {
+		next2Song.setString(trimFilename(songList_[0]));
+	}
+	else if (songListIndex_ == songList_.size() - 1) {
+		next2Song.setString(trimFilename(songList_[1]));
+	}
+	else {
+		next2Song.setString(trimFilename(songList_[songListIndex_ + 2]));
+	}
+
+	if (songListIndex_ == songList_.size() - 3) {
+		next3Song.setString(trimFilename(songList_[0]));
+	}
+	else if (songListIndex_ == songList_.size() - 2) {
+		next3Song.setString(trimFilename(songList_[1]));
+	}
+	else if (songListIndex_ == songList_.size() - 1) {
+		next3Song.setString(trimFilename(songList_[2]));
+	}
+	else {
+		next3Song.setString(trimFilename(songList_[songListIndex_ + 3]));
+	}
+
+	if (songListIndex_ == songList_.size() - 4) {
+		next4Song.setString(trimFilename(songList_[0]));
+	}
+	else if (songListIndex_ == songList_.size() - 3) {
+		next4Song.setString(trimFilename(songList_[1]));
+	}
+	else if (songListIndex_ == songList_.size() - 2) {
+		next4Song.setString(trimFilename(songList_[2]));
+	}
+	else if (songListIndex_ == songList_.size() - 1) {
+		next4Song.setString(trimFilename(songList_[3]));
+	}
+	else {
+		next4Song.setString(trimFilename(songList_[songListIndex_ + 4]));
+	}
+}
+
 void GUI::update() {
 	mouseOverHighlight();
 	displayPlaylist();
-	return;
-}
-
-void GUI::handleInput() {
-	sf::Event event;
-	while(window.pollEvent(event))
-	{
-		auto mousePosX = sf::Mouse::getPosition(window).x; // x position 
-		auto mousePosY = sf::Mouse::getPosition(window).y; // y position
-		switch(event.type) {
-			case sf::Event::Closed: {
-				window.close();
-				std::cout << "Closed MusicPlayer372\nGood Bye!" << std::endl;
-				break;
-			}
-			
-			// Key Pressed
-			case sf::Event::KeyPressed: {
-				if(event.key.code == sf::Keyboard::Escape) {
-					window.close();
-					std::cout << "Closed MusicPlayer372\nGood Bye!" << std::endl;
-				}
-			 	if(event.key.code == sf::Keyboard::Right) { music.callNextSong(); }			// Next song
-			 	if(event.key.code == sf::Keyboard::Left) { music.callPrevSong(); }			// Previous song
-			 	if(event.key.code == sf::Keyboard::Space) { music.callPlayPause(); }			// Play/Pause song
-			 	if(event.key.code == sf::Keyboard::Down) { music.callDecreaseVolume(); }		// Decrease volume
-			 	if(event.key.code == sf::Keyboard::Up) { music.callIncreaseVolume(); }		// increse volume
-			 	if(event.key.code == sf::Keyboard::BackSpace) { music.callMuteUnmute(); }		// Mute/Unmute volume
-			}
-			
-			// Mouse Button Pressed
-			case sf::Event::MouseButtonPressed: {
-				if(event.mouseButton.button == sf::Mouse::Left) {
-					for (unsigned int i = 0; i < spriteVec.size(); ++i)	{
-						//std::cout << " xPos " << mousePosX << " yPos " << mousePosY <<   std::endl;
-						if (clickInSprite(spriteVec[i], mousePosX, mousePosY) == true) {
-							if (i == 0)	{ music.callPlayPause(); } 		// Play/Pause song
-							if (i == 1)	{ music.callPrevSong(); } 		// Previous song
-							if (i == 2)	{ music.callNextSong(); }			// Next Song
-							if (i == 3) { music.callMuteUnmute(); } 		// Mute/Unmute volume
-							if (i == 4 ) { music.callDecreaseVolume(); } 	// Decrease volume
-							if (i == 5) { music.callIncreaseVolume(); }	// Increase volume
-						}
-					}
-				}
-				break;
-			}
-			default:
-			break;
-		}
-	}
 	return;
 }

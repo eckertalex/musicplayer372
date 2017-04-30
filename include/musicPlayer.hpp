@@ -30,15 +30,11 @@ public:
 	~MusicPlayer() = default;
 
 	void update();
-	void handleInput();
 
 private:
-	
-	/****** Update Functions ******/
-	void mouseOverHighlight();
-	void displayPlaylist();
-	std::unique_ptr<GUI> gui;
-	std::unique_ptr<Music> music;
+
+	std::shared_ptr<GUI> gui;
+	std::shared_ptr<Music> music;
 };
 
 #endif // #ifndef MUSICPLAYER_HPP
