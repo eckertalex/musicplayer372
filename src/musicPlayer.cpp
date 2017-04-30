@@ -19,7 +19,6 @@
 #include "../include/directoryManager.hpp" // for fileTreeMain()
 
 MusicPlayer::MusicPlayer() {
-	//create full songlist
 	inputmgr = std::make_unique<InputManager>();
 	return;
 }

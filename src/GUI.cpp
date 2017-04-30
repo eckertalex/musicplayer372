@@ -4,7 +4,7 @@
 // 		Bryan Burkhardt (bmburkhardt@alaska.edu)  
 // 		Alexander Eckert (aeckert@alaska.edu)  
 // 		Jeremiah Jacobson (jjjacobson2@alaska.edu)  
-// 		Jarye Maurphy (@alaska.edu)  
+// 		Jarye Murphy (@alaska.edu)
 // 		Cameron Showalter (@alaska.edu) 
 //
 // Source file for GUI class
@@ -19,6 +19,8 @@
 #include "../include/InputManager.hpp"
 
 GUI::GUI(std::shared_ptr<Music> music) : music(music) {
+	std::cout << "ctor GUI\n";
+	texmgr = std::make_unique<TextureManager>();
 	loadTextures();
 	window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "MusicPlayer",
 		sf::Style::Titlebar | sf::Style::Close);

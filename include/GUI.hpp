@@ -17,10 +17,6 @@
 #include "Music.hpp"
 #include <memory>
 
-// define window size
-#define WINDOW_WIDTH 700
-#define WINDOW_HEIGHT 300
-
 class GUI {
 public:
 	sf::RenderWindow window;
@@ -41,6 +37,7 @@ public:
 
 	std::unique_ptr<TextureManager> texmgr;
 	std::shared_ptr<Music> music;
+
 	std::vector<sf::Sprite> spriteVec;
 	std::vector<sf::Text> textVec;
 	sf::Font font;
@@ -59,5 +56,9 @@ public:
 	sf::Sprite decreaseVolumeButton;
 	sf::Sprite increaseVolumeButton;
 };
+
+// define window size
+#define WINDOW_WIDTH 700
+#define WINDOW_HEIGHT 300
 
 #endif // GUI_HPP
