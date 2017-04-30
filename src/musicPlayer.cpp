@@ -19,7 +19,6 @@
 
 #include "../include/textureManager.hpp"
 #include "../include/musicPlayer.hpp"
-#include "../include/directoryManager.hpp" // for fileTreeMain()
 
 std::string trimFilename(const std::string& str) {
   std::size_t found = str.find_last_of("/\\");
@@ -223,9 +222,7 @@ MusicPlayer::MusicPlayer() {
 		increaseVolumeButton };		// 5
 
 	//create full songlist
-	//create full songlist
-	DirectoryManager Playlist;
-	songList_ = std::move(Playlist.getPlaylist());
+	songList_ = std::move(dirmgr.getPlaylist());
 	//if couldn't find song, don't try to play one
 	if( songList_[songListIndex_] != "" ) {
 		music.openFromFile(songList_[songListIndex_]);

@@ -18,6 +18,7 @@
 #include <SFML/Audio.hpp>
 
 #include "textureManager.hpp"
+#include "directoryManager.hpp"
 
 // define version numbers
 // set in CMakeLists.txt file
@@ -32,6 +33,7 @@ class MusicPlayer {
 public:
 	sf::RenderWindow window;
 	TextureManager texmgr;
+	DirectoryManager dirmgr;
 	
 	std::vector<sf::Sprite> spriteVec;
 

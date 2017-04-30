@@ -4,18 +4,14 @@
 // 		Bryan Burkhardt (bmburkhardt@alaska.edu)  
 // 		Alexander Eckert (aeckert@alaska.edu)  
 // 		Jeremiah Jacobson (jjacobson2@alaska.edu)  
-// 		Jarye Maurphy (jmurphy11@alaska.edu)  
+// 		Jarye Murphy (jmurphy11@alaska.edu)
 // 		Cameron Showalter (cjshowalter@alaska.edu) 
 //
 // Source file for directoryManager
 #include "../include/directoryManager.hpp" 
 
-#include <string>			// string erase
-#include <vector>			// vector
-#include <iostream>			// cout endl
-#include <fstream>			// file reading
+
 #include <algorithm> 		// find replace remove_if
-#include <cctype> 			// isspace
 #include <locale>        	// tolower
 #include <sys/stat.h>		// used in explorer()
 
@@ -221,7 +217,7 @@ bool DirectoryManager::handleFileOverride(std::string currLine)
 	//convert currLine to all lowercase
 	for(unsigned int i = 0; i < currLine.length(); ++i)
 	{
-    	currLine[i] = tolower(currLine[i]);
+    	currLine[i] = (char) tolower(currLine[i]);
 	}
 	//check for if it equals any override options
 	if( currLine == "uniquesongoverride=false" )
@@ -309,7 +305,7 @@ void DirectoryManager::explorer(char *dir_name)
 					songList.push_back(path);
 				}
 				//else it has the song in uniqueSongs already, check flag to see if it gets added to songlist
-				else if(uniqueSongOverride == true)
+				else if(uniqueSongOverride != 0)
 				{
 					songList.push_back(std::string(path));
 				}
