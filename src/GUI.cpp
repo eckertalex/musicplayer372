@@ -27,6 +27,24 @@ GUI::GUI(std::shared_ptr<Music> music) : music(music) {
 		std::cout << "Font couldn't be found" << std::endl;
 	else
 		std::cout << "Font was found" << std::endl;
+
+	textVec = {
+			prevSong,
+			currentSong,
+			nextSong,
+			next2Song,
+			next3Song,
+			next4Song
+	};
+
+	spriteVec = {
+			playPauseButton,			// 0
+			prevButton, 				// 1
+			nextButton, 				// 2
+			muteButton, 				// 3
+			decreaseVolumeButton, 		// 4
+			increaseVolumeButton
+	};
 }
 
 bool GUI::clickInSprite(sf::Sprite s, int x , int y) {
@@ -63,9 +81,8 @@ void GUI::draw() {
 	window.draw(next2Song);
 	window.draw(next3Song);
 	window.draw(next4Song);
-	window.display();
 
-	return;
+	window.display();
 }
 
 void GUI::loadTextures() {
@@ -106,27 +123,9 @@ void GUI::setTextures() {
 	decreaseVolumeButton.setPosition(120,120);
 	muteButton.setPosition(30,120);
 	increaseVolumeButton.setPosition(210,120);
-
-	spriteVec = {
-			playPauseButton,			// 0
-			prevButton, 				// 1
-			nextButton, 				// 2
-			muteButton, 				// 3
-			decreaseVolumeButton, 		// 4
-			increaseVolumeButton
-	};
 }
 
 void GUI::stylePlaylist() {
-	textVec = {
-		prevSong,
-		currentSong,
-		nextSong,
-		next2Song,
-		next3Song,
-		next4Song
-	};
-
 	int counter = 35;
 	for(auto i = 0; i < textVec.size(); ++i) {
 		textVec[i].setFont(font);
@@ -200,5 +199,4 @@ void GUI::displayPlaylist() {
 void GUI::update() {
 	stylePlaylist();
 	displayPlaylist();
-	return;
 }
