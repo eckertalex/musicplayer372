@@ -4,21 +4,25 @@
 // 		Bryan Burkhardt (bmburkhardt@alaska.edu)  
 // 		Alexander Eckert (aeckert@alaska.edu)  
 // 		Jeremiah Jacobson (jjjacobson2@alaska.edu)  
-// 		Jarye Maurphy (@alaska.edu)  
+// 		Jarye Murphy (@alaska.edu)
 // 		Cameron Showalter (@alaska.edu) 
 //
 // Header for Music class
 
 #ifndef MUSIC_HPP
 #define MUSIC_HPP
+
 #include <vector>
+#include <memory>
 #include <SFML/Audio/Music.hpp>
+
+#include "directoryManager.hpp"
 
 class Music {
 public:
 	Music();
 
-	sf::Music music;
+	sf::Music _music;
 
 	void callPlayPause();
 	void callNextSong();
@@ -28,8 +32,8 @@ public:
 	void callMuteUnmute();
 	void closeProgram();
 
-private:
 
+	std::unique_ptr<DirectoryManager> dirmgr;
 	std::vector<std::string> songList_;
 	unsigned int songListIndex_ = 0;
 

@@ -12,27 +12,22 @@
 #include <iostream>
 
 #include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
-#include <vector>
-#include <string>
 #include <cstddef>
 
-#include "../include/textureManager.hpp"
 #include "../include/musicPlayer.hpp"
 #include "../include/directoryManager.hpp" // for fileTreeMain()
 
 MusicPlayer::MusicPlayer() {
 	//create full songlist
-	music = std::make_shared<Music>();
-	gui = std::make_shared<GUI>(music);
+	inputmgr = std::make_unique<InputManager>();
 	return;
 }
 
 void MusicPlayer::playerLoop() {
-	while(gui->window.isOpen()) {
-		gui->handleInput();
-		gui->update();
-		gui->draw();
+	while(inputmgr->gui->window.isOpen()) {
+		inputmgr->handleInput();
+		inputmgr->gui->update();
+		inputmgr->gui->draw();
 	}
 }

@@ -20,9 +20,10 @@ class GUI;
 
 class InputManager {
 public:
-	InputManager(std::shared_ptr<GUI> gui, std::shared_ptr<Music> music);
+	InputManager();
+	void handleInput();
+
 	void mouseOverHighlight();
-private:
 	std::shared_ptr<Music> music;
 	std::shared_ptr<GUI> gui;
 };

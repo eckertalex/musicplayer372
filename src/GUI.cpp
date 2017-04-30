@@ -18,11 +18,10 @@
 #include "../include/GUI.hpp"
 #include "../include/InputManager.hpp"
 
-GUI::GUI() {
+GUI::GUI(std::shared_ptr<Music> music) : music(music) {
 	loadTextures();
 	window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "MusicPlayer",
 		sf::Style::Titlebar | sf::Style::Close);
-	inputmgr = std::make_shared<InputManager>();
 }
 
 bool GUI::clickInSprite(sf::Sprite s, int x , int y) {
@@ -141,64 +140,63 @@ void GUI::stylePlaylist() {
 }
 
 void GUI::displayPlaylist() {
-	if (songListIndex_ == 0) {
-		prevSong.setString(trimFilename(songList_[songList_.size() - 1]));
+	if (music->songListIndex_ == 0) {
+		prevSong.setString(trimFilename(music->songList_[music->songList_.size() - 1]));
 	}
 	else {
-		prevSong.setString(trimFilename(songList_[songListIndex_ - 1]));
+		prevSong.setString(trimFilename(music->songList_[music->songListIndex_ - 1]));
 	}
 
-	currentSong.setString(trimFilename(songList_[songListIndex_]));
+	currentSong.setString(trimFilename(music->songList_[music->songListIndex_]));
 
-	if (songListIndex_ == songList_.size() - 1) {
-		nextSong.setString(trimFilename(songList_[0]));
+	if (music->songListIndex_ == music->songList_.size() - 1) {
+		nextSong.setString(trimFilename(music->songList_[0]));
 	}
 	else {
-		nextSong.setString(trimFilename(songList_[songListIndex_ + 1]));
+		nextSong.setString(trimFilename(music->songList_[music->songListIndex_ + 1]));
 	}
 
-	if (songListIndex_ == songList_.size() - 2) {
-		next2Song.setString(trimFilename(songList_[0]));
+	if (music->songListIndex_ == music->songList_.size() - 2) {
+		next2Song.setString(trimFilename(music->songList_[0]));
 	}
-	else if (songListIndex_ == songList_.size() - 1) {
-		next2Song.setString(trimFilename(songList_[1]));
+	else if (music->songListIndex_ == music->songList_.size() - 1) {
+		next2Song.setString(trimFilename(music->songList_[1]));
 	}
 	else {
-		next2Song.setString(trimFilename(songList_[songListIndex_ + 2]));
+		next2Song.setString(trimFilename(music->songList_[music->songListIndex_ + 2]));
 	}
 
-	if (songListIndex_ == songList_.size() - 3) {
-		next3Song.setString(trimFilename(songList_[0]));
+	if (music->songListIndex_ == music->songList_.size() - 3) {
+		next3Song.setString(trimFilename(music->songList_[0]));
 	}
-	else if (songListIndex_ == songList_.size() - 2) {
-		next3Song.setString(trimFilename(songList_[1]));
+	else if (music->songListIndex_ == music->songList_.size() - 2) {
+		next3Song.setString(trimFilename(music->songList_[1]));
 	}
-	else if (songListIndex_ == songList_.size() - 1) {
-		next3Song.setString(trimFilename(songList_[2]));
+	else if (music->songListIndex_ == music->songList_.size() - 1) {
+		next3Song.setString(trimFilename(music->songList_[2]));
 	}
 	else {
-		next3Song.setString(trimFilename(songList_[songListIndex_ + 3]));
+		next3Song.setString(trimFilename(music->songList_[music->songListIndex_ + 3]));
 	}
 
-	if (songListIndex_ == songList_.size() - 4) {
-		next4Song.setString(trimFilename(songList_[0]));
+	if (music->songListIndex_ == music->songList_.size() - 4) {
+		next4Song.setString(trimFilename(music->songList_[0]));
 	}
-	else if (songListIndex_ == songList_.size() - 3) {
-		next4Song.setString(trimFilename(songList_[1]));
+	else if (music->songListIndex_ == music->songList_.size() - 3) {
+		next4Song.setString(trimFilename(music->songList_[1]));
 	}
-	else if (songListIndex_ == songList_.size() - 2) {
-		next4Song.setString(trimFilename(songList_[2]));
+	else if (music->songListIndex_ == music->songList_.size() - 2) {
+		next4Song.setString(trimFilename(music->songList_[2]));
 	}
-	else if (songListIndex_ == songList_.size() - 1) {
-		next4Song.setString(trimFilename(songList_[3]));
+	else if (music->songListIndex_ == music->songList_.size() - 1) {
+		next4Song.setString(trimFilename(music->songList_[3]));
 	}
 	else {
-		next4Song.setString(trimFilename(songList_[songListIndex_ + 4]));
+		next4Song.setString(trimFilename(music->songList_[music->songListIndex_ + 4]));
 	}
 }
 
 void GUI::update() {
-	mouseOverHighlight();
 	displayPlaylist();
 	return;
 }

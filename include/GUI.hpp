@@ -25,23 +25,22 @@ class GUI {
 public:
 	sf::RenderWindow window;
 
-	GUI();
+	GUI(std::shared_ptr<Music> music);
 	~GUI() = default;
 
 	void draw();
 	void update();
 	void handleInput();
-private:
 	bool clickInSprite(sf::Sprite s, int x , int y);
 	void loadTextures();
 	void setTextures();
 	void stylePlaylist();
+	void displayPlaylist();
 	
 	std::string trimFilename(const std::string& str);
 
-	std::shared_ptr<TextureManager> texmgr;
-	std::shared_ptr<InputManager> inputmgr;
-
+	std::unique_ptr<TextureManager> texmgr;
+	std::shared_ptr<Music> music;
 	std::vector<sf::Sprite> spriteVec;
 	std::vector<sf::Text> textVec;
 	sf::Font font;

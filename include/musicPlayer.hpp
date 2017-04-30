@@ -16,6 +16,8 @@
 #include <memory>
 #include "GUI.hpp"
 
+#include "InputManager.hpp"
+
 // define version numbers
 // set in CMakeLists.txt file
 #define myproject_VERSION_MAJOR 0
@@ -32,8 +34,7 @@ public:
 
 private:
 
-	std::shared_ptr<GUI> gui;
-	std::shared_ptr<Music> music;
+	std::unique_ptr<InputManager> inputmgr;
 };
 
 #endif // #ifndef MUSICPLAYER_HPP

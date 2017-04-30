@@ -16,73 +16,73 @@
 #include "../include/InputManager.hpp"
 #include "../include/GUI.hpp"
 
-InputManager::InputManager(std::shared_ptr<GUI> gui, std::shared_ptr<Music> music) : gui(gui), music(music)
-{
-	
+InputManager::InputManager() {
+	music = std::make_unique<Music>();
+	gui = std::make_unique<GUI>(music);
 }
 
 void InputManager::mouseOverHighlight() {
-	auto mousePosX = sf::Mouse::getPosition(window).x; // x position 
-	auto mousePosY = sf::Mouse::getPosition(window).y; // y position
+	auto mousePosX = sf::Mouse::getPosition(gui->window).x; // x position
+	auto mousePosY = sf::Mouse::getPosition(gui->window).y; // y position
 
-	if (music.getStatus() != sf::SoundSource::Status::Playing) {
-		playPauseButton.setTexture(this->texmgr.getRef("playTex"));
+	if (music->_music.getStatus() != sf::SoundSource::Status::Playing) {
+		gui->playPauseButton.setTexture(gui->texmgr->getRef("playTex"));
 		if ((mousePosX > 125 && mousePosX < 177) && (mousePosY > 216 && mousePosY < 268)) {
-			playPauseButton.setTexture(this->texmgr.getRef("playTex2"));
+			gui->playPauseButton.setTexture(gui->texmgr->getRef("playTex2"));
 		}
 	}
 	else {
-		playPauseButton.setTexture(this->texmgr.getRef("pauseTex"));
+		gui->playPauseButton.setTexture(gui->texmgr->getRef("pauseTex"));
 		if ((mousePosX > 125 && mousePosX < 177) && (mousePosY > 216 && mousePosY < 268)) {
-			playPauseButton.setTexture(this->texmgr.getRef("pauseTex2"));
+			gui->playPauseButton.setTexture(gui->texmgr->getRef("pauseTex2"));
 		}
 	}
 	// mute the volume or unmute
-	if (!isMuted_) {
-		muteButton.setTexture(this->texmgr.getRef("muteTexv2"));
+	if (!music->isMuted_) {
+		gui->muteButton.setTexture(gui->texmgr->getRef("muteTexv2"));
 		if ((mousePosX > 38 && mousePosX < 84) && (mousePosY > 128 && mousePosY < 174)) {
-			muteButton.setTexture(this->texmgr.getRef("muteTexv22"));
+			gui->muteButton.setTexture(gui->texmgr->getRef("muteTexv22"));
 		}
 	}
 	else {
-		muteButton.setTexture(this->texmgr.getRef("muteTex"));
+		gui->muteButton.setTexture(gui->texmgr->getRef("muteTex"));
 		if ((mousePosX > 38 && mousePosX < 84) && (mousePosY > 128 && mousePosY < 174)) {
-			muteButton.setTexture(this->texmgr.getRef("muteTex2"));
+			gui->muteButton.setTexture(gui->texmgr->getRef("muteTex2"));
 		}
 	}
 	//Previous song
 	if ((mousePosX > 45 && mousePosX < 76) && (mousePosY > 216 && mousePosY < 268)) {
-		prevButton.setTexture(this->texmgr.getRef("prevTex2"));
+		gui->prevButton.setTexture(gui->texmgr->getRef("prevTex2"));
 	}
 	//Next Song
 	else if ((mousePosX > 225 && mousePosX < 257) && (mousePosY > 216 && mousePosY < 268)) {
-		nextButton.setTexture(this->texmgr.getRef("nextTex2"));
+		gui->nextButton.setTexture(gui->texmgr->getRef("nextTex2"));
 	}
 	// // decrease volume
 	else if ((mousePosX > 133 && mousePosX < 168) && (mousePosY > 128 && mousePosY < 174)) {
-		decreaseVolumeButton.setTexture(this->texmgr.getRef("decreaseVolumeTex2"));
+		gui->decreaseVolumeButton.setTexture(gui->texmgr->getRef("decreaseVolumeTex2"));
 	}
 	// increase volume
 	else if ((mousePosX > 218 && mousePosX < 264) && (mousePosY > 128 && mousePosY < 174)) {
-		increaseVolumeButton.setTexture(this->texmgr.getRef("increaseVolumeTex2"));
+		gui->increaseVolumeButton.setTexture(gui->texmgr->getRef("increaseVolumeTex2"));
 	}
 	else {
-		prevButton.setTexture(this->texmgr.getRef("prevTex"));
-		nextButton.setTexture(this->texmgr.getRef("nextTex"));
-		decreaseVolumeButton.setTexture(this->texmgr.getRef("decreaseVolumeTex"));
-		increaseVolumeButton.setTexture(this->texmgr.getRef("increaseVolumeTex"));
+		gui->prevButton.setTexture(gui->texmgr->getRef("prevTex"));
+		gui->nextButton.setTexture(gui->texmgr->getRef("nextTex"));
+		gui->decreaseVolumeButton.setTexture(gui->texmgr->getRef("decreaseVolumeTex"));
+		gui->increaseVolumeButton.setTexture(gui->texmgr->getRef("increaseVolumeTex"));
 	}
 }
 
 void InputManager::handleInput() {
 	sf::Event event;
-	while (window.pollEvent(event))
+	while (gui->window.pollEvent(event))
 	{
-		auto mousePosX = sf::Mouse::getPosition(window).x; // x position 
-		auto mousePosY = sf::Mouse::getPosition(window).y; // y position
+		auto mousePosX = sf::Mouse::getPosition(gui->window).x; // x position
+		auto mousePosY = sf::Mouse::getPosition(gui->window).y; // y position
 		switch (event.type) {
 		case sf::Event::Closed: {
-			window.close();
+			gui->window.close();
 			std::cout << "Closed MusicPlayer372\nGood Bye!" << std::endl;
 			break;
 		}
@@ -90,7 +90,7 @@ void InputManager::handleInput() {
 								// Key Pressed
 		case sf::Event::KeyPressed: {
 			if (event.key.code == sf::Keyboard::Escape) {
-				window.close();
+				gui->window.close();
 				std::cout << "Closed MusicPlayer372\nGood Bye!" << std::endl;
 			}
 			if (event.key.code == sf::Keyboard::Right) { music->callNextSong(); }			// Next song
@@ -104,9 +104,9 @@ void InputManager::handleInput() {
 									// Mouse Button Pressed
 		case sf::Event::MouseButtonPressed: {
 			if (event.mouseButton.button == sf::Mouse::Left) {
-				for (unsigned int i = 0; i < spriteVec.size(); ++i) {
+				for (unsigned int i = 0; i < gui->spriteVec.size(); ++i) {
 					//std::cout << " xPos " << mousePosX << " yPos " << mousePosY <<   std::endl;
-					if (clickInSprite(spriteVec[i], mousePosX, mousePosY) == true) {
+					if (gui->clickInSprite(gui->spriteVec[i], mousePosX, mousePosY) == true) {
 						if (i == 0) { music->callPlayPause(); } 		// Play/Pause song
 						if (i == 1) { music->callPrevSong(); } 		// Previous song
 						if (i == 2) { music->callNextSong(); }			// Next Song
