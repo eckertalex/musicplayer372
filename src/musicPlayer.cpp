@@ -12,10 +12,7 @@
 #include <iostream>
 
 #include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
-#include <vector>
-#include <string>
 #include <cstddef>
 #include <math.h>
 #include <iomanip>
@@ -30,13 +27,13 @@ std::string trimFilename(const std::string& str) {
 }
 
 bool MusicPlayer::clickInSprite(sf::Sprite s, int x , int y) {
-	if (x > s.getGlobalBounds().left && x <
-			(s.getGlobalBounds().left + s.getGlobalBounds().width) && 
-			y > s.getGlobalBounds().top && y < (s.getGlobalBounds().top 
-			+ s.getGlobalBounds().height)) {
-		return true;
+	if (s.getGlobalBounds().top
+		+ s.getGlobalBounds().height > y) {
+		return s.getGlobalBounds().left + s.getGlobalBounds().width > x && x > s.getGlobalBounds().left &&
+			   y > s.getGlobalBounds().top;
+	} else {
+		return x >= s.getGlobalBounds().left + s.getGlobalBounds().width && false;
 	}
-	return false;
 }
 
 void MusicPlayer::draw() {
@@ -102,7 +99,7 @@ void MusicPlayer::handleInput() {
 				if(event.mouseButton.button == sf::Mouse::Left) {
 					for (unsigned int i = 0; i < spriteVec.size(); ++i)	{
 						//std::cout << " xPos " << mousePosX << " yPos " << mousePosY <<   std::endl;
-						if (clickInSprite(spriteVec[i], mousePosX, mousePosY) == true) {
+						if (clickInSprite(spriteVec[i], mousePosX, mousePosY)) {
 							if (i == 0)	{ callPlayPause(); } 		// Play/Pause song
 							if (i == 1)	{ callPrevSong(); } 		// Previous song
 							if (i == 2)	{ callNextSong(); }			// Next Song
@@ -143,8 +140,6 @@ void MusicPlayer::loadTextures() {
 }
 
 void MusicPlayer::playerLoop() {
-	sf::Clock clock;
-
 	while(window.isOpen()) {
 		handleInput();
 		update();
@@ -154,6 +149,8 @@ void MusicPlayer::playerLoop() {
 	}
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 MusicPlayer::MusicPlayer() {
 	loadTextures();
 	window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "MusicPlayer", 
@@ -241,6 +238,7 @@ MusicPlayer::MusicPlayer() {
 
 	std::cout << "MusicPlayer initialized" << std::endl;
 }
+#pragma clang diagnostic pop
 
 /****** Functionality Function Definitions ******/
 
@@ -274,7 +272,7 @@ void MusicPlayer::callPrevSong() {
 
 		//if you're at the begining, just go to the end(if press prev)
 		if(songListIndex_ == 0) {
-			songListIndex_ = songList_.size()-1;
+			songListIndex_ = (unsigned int) (songList_.size() - 1);
 		}
 		else {
 			songListIndex_ -= 1;
@@ -286,7 +284,7 @@ void MusicPlayer::callPrevSong() {
 }
 void MusicPlayer::callIncreaseVolume() {
 	//first unmutes if muted
-	if(isMuted_ == true)
+	if(isMuted_)
 	{
 		isMuted_=  false;
 		music.setVolume(volSave_); // unmute the music by restoring the volume to previous value
@@ -299,7 +297,7 @@ void MusicPlayer::callIncreaseVolume() {
 }
 void MusicPlayer::callDecreaseVolume() {
 	//first unmutes if muted
-	if(isMuted_ == true)
+	if(isMuted_)
 	{
 		isMuted_=  false;
 		music.setVolume(volSave_); // unmute the music by restoring the volume to previous value
@@ -312,9 +310,9 @@ void MusicPlayer::callDecreaseVolume() {
 }
 void MusicPlayer::callMuteUnmute() {
 	//if its not muted than set the volume to 0
-	if (isMuted_ == false) {
+	if (!isMuted_) {
 		isMuted_ = true;
-		volSave_ = music.getVolume();
+		volSave_ = (unsigned int) music.getVolume();
 		music.setVolume(0);
 		std::cout << "Muted player." << std::endl;
 	}
@@ -478,7 +476,7 @@ void MusicPlayer::updateCurrentTimer() {
 void MusicPlayer::updateTotalTimer() {
 	totalTimer = music.getDuration();
 	totalTimeSeconds = (int)totalTimer.asSeconds();
-	totalTimeMinutes = convertToMinutes(totalTimeSeconds);
+	totalTimeMinutes = convertToMinutes((int) totalTimeSeconds);
 	totalTimeHours = convertToHours(totalTimeSeconds);
 	totalTimerStreamSeconds.str("");
 	totalTimerStreamMinutes.str("");

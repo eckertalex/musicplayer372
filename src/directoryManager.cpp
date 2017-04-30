@@ -8,24 +8,7 @@
 // 		Cameron Showalter (cjshowalter@alaska.edu) 
 //
 // Source file for directoryManager
-#include "../include/directoryManager.hpp" 
-
-#include <string>			// string erase
-#include <vector>			// vector
-#include <iostream>			// cout endl
-#include <fstream>			// file reading
-#include <algorithm> 		// find replace remove_if
-#include <cctype> 			// isspace
-
-//dirent.h used for navigtion
-//if using VisualS, include one, else include the other
-#ifdef _MSC_VER
-#include "../include/dirent.h"
-#else
-#include <dirent.h> 
-#endif		
-#include <sys/stat.h>
-
+#include "../include/directoryManager.hpp"
 
 //------TEMP METHODS FOR TESTING / PRINTING (WILL BE DELETED)------
 void printVec(std::vector<std::string> & songList)
@@ -61,7 +44,7 @@ void formatPath(std::string &str, std::string & yourOS)
 			continue;
 		}
 		//now that '\ ' has been ignored, remove all other whitespace
-		if( std::isspace(str.at(i)) == true )
+		if(std::isspace(str.at(i)) != 0)
 		{
 			str.erase(str.begin()+i);
 		}
@@ -217,7 +200,7 @@ void explorer(char *dir_name, std::vector<std::string> & songList, std::vector<s
 				 //push baack a string of directory with entry name at end
 				songList.push_back(path);
 				//if REPEATSONGOVERIDE is true, it never can pushback so uniqueSongs stays empty;
-				if(REPEATSONGSOVERRIDE == false){
+				if(!REPEATSONGSOVERRIDE){
 					uniqueSongs.push_back(std::string(entry->d_name));
 				}
 			}

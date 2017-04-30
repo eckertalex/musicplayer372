@@ -82,7 +82,4 @@ void explorer(char *dir_name, std::vector<std::string> & songList, std::vector<s
 //if opperating system not found, returns empty vector
 std::vector<std::string> fileTreeMain();
 
-
-
-
 #endif // DIRECTORYMANAGER_HPP
