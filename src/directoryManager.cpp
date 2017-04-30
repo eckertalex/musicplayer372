@@ -4,15 +4,15 @@
 // 		Bryan Burkhardt (bmburkhardt@alaska.edu)  
 // 		Alexander Eckert (aeckert@alaska.edu)  
 // 		Jeremiah Jacobson (jjacobson2@alaska.edu)  
-// 		Jarye Maurphy (jmurphy11@alaska.edu)  
+// 		Jarye Murphy (jmurphy11@alaska.edu)
 // 		Cameron Showalter (cjshowalter@alaska.edu) 
 //
 // Source file for directoryManager
+
 #include "../include/directoryManager.hpp"
 
 //------TEMP METHODS FOR TESTING / PRINTING (WILL BE DELETED)------
-void printVec(std::vector<std::string> & songList)
-{
+void printVec(std::vector<std::string> & songList) {
 	//note: strings are in form "../res/audio/(songname)"
 	std::cout << "Song List:" << std::endl;
 	for(unsigned int i=0; i<songList.size(); ++i) {
@@ -27,14 +27,12 @@ void printVec(std::vector<std::string> & songList)
 //formatPath:
 //	removes all whitespace from a string, exept for '\ '
 //	if yourOS = "Windows", removes '\' from '\ ' and puts quotes around currLine
-void formatPath(std::string &str, std::string & yourOS)
-{
-	if(yourOS == "Windows"){
+void formatPath(std::string &str, std::string & yourOS) {
+	if(yourOS == "Windows") {
 		//if on Windows, put quotes around possible paths to read spaces
 		str = "\"" + str + "\"";
 	}
-	for(unsigned int i=0; i<str.size(); ++i)
-	{
+	for(unsigned int i=0; i<str.size(); ++i) {
 		// i!=0 to keep str.at(i) from being out of range
 		if( i!=0 && str.at(i) == ' ' && str.at(i-1) == '\\'){
 			if(yourOS == "Windows"){
@@ -44,8 +42,7 @@ void formatPath(std::string &str, std::string & yourOS)
 			continue;
 		}
 		//now that '\ ' has been ignored, remove all other whitespace
-		if(std::isspace(str.at(i)) != 0)
-		{
+		if(std::isspace(str.at(i)) != 0) {
 			str.erase(str.begin()+i);
 		}
 	}
@@ -54,32 +51,26 @@ void formatPath(std::string &str, std::string & yourOS)
 //isFileOverride
 //checks to see if str is a override command
 //Note: will also set the override
-bool isFileOverride(std::string str)
-{
-	if(str == "REPEATSONGSOVERRIDE=false")
-	{
+bool isFileOverride(std::string str) {
+	if(str == "REPEATSONGSOVERRIDE=false") {
 		REPEATSONGSOVERRIDE = false;
 		return true;
 	}
-	else if (str == "REPEATSONGSOVERRIDE=true")
-	{
+	else if (str == "REPEATSONGSOVERRIDE=true") {
 		REPEATSONGSOVERRIDE = true;
 		std::cout << "Override Detected: Will add repeat songs to playlist" << std::endl;
 		return true;
 	}
-	else if (str == "OPERATINGSYSTEMOVERRIDE=0")
-	{
+	else if (str == "OPERATINGSYSTEMOVERRIDE=0") {
 		OPERATINGSYSTEMOVERRIDE = 0;
 		return true;
 	}
-	else if (str == "OPERATINGSYSTEMOVERRIDE=1")
-	{
+	else if (str == "OPERATINGSYSTEMOVERRIDE=1") {
 		OPERATINGSYSTEMOVERRIDE = 1;
 		std::cout << "Override Detected: OS is \"linux/MacOS\"" << std::endl;
 		return true;
 	}
-	else if (str == "OPERATINGSYSTEMOVERRIDE=2")
-	{
+	else if (str == "OPERATINGSYSTEMOVERRIDE=2") {
 		OPERATINGSYSTEMOVERRIDE = 2;
 		std::cout << "Override Detected: OS is \"Windows\"" << std::endl;
 		return true;
@@ -88,16 +79,15 @@ bool isFileOverride(std::string str)
 }
 
 //getOsName
-//	returns the name of the user Opperating System
+//	returns the name of the user Operating System
 //	if not found, returns "Other"
 //	can be overridden
-std::string getOsName()
-{
+std::string getOsName() {
 	//If override is set:
-	if(OPERATINGSYSTEMOVERRIDE == 1){
+	if(OPERATINGSYSTEMOVERRIDE == 1) {
 		return "linux/MacOS";
 	}
-	else if(OPERATINGSYSTEMOVERRIDE == 2){
+	else if(OPERATINGSYSTEMOVERRIDE == 2) {
 		return "Windows";
 	}
 
@@ -125,9 +115,8 @@ std::string getOsName()
 //isMusicFile
 //	returns true if fileName is audio file supported by SFML
 //	.mp3 files will not be included
-bool isMusicFile(std::string fileName)
-{
-	//check size incase fileName is a.au, it won't break with fileName.substr( fileName.length()-6 )
+bool isMusicFile(std::string fileName) {
+	//check size in case fileName is a.au, it won't break with fileName.substr( fileName.length()-6 )
 	if(fileName.size() > 6) {
 		fileName = fileName.substr( fileName.length() - 6 );
 		if(fileName == ".ircam" || fileName == ".mpc2k") {
@@ -164,8 +153,8 @@ bool isMusicFile(std::string fileName)
 //explorer:
 //		returns a vector of all song names inside directory, and recursivly calls all directorys in itself
 //		does not put directories inside vector, just strings of paths to supported songs
-void explorer(char *dir_name, std::vector<std::string> & songList, std::vector<std::string> & uniqueSongs, std::string & yourOS)
-{
+void explorer(char *dir_name, std::vector<std::string> & songList,
+			  std::vector<std::string> & uniqueSongs, std::string & yourOS) {
 	DIR *dir = NULL; //pointer to an open directory
 	struct dirent *entry; //stuff in current directory
 	struct stat info; //information about each entry
@@ -186,17 +175,15 @@ void explorer(char *dir_name, std::vector<std::string> & songList, std::vector<s
 	while(( entry = readdir(dir) ) != NULL) {
 		//if its not the name if the directory you are in
 		if(entry->d_name[0] != '.') {	
-			if(yourOS == "linux/MacOS")
-			{
+			if(yourOS == "linux/MacOS") {
 				path = std::string(dir_name) + "/" + std::string(entry->d_name);
 			}
-			else // if(yourOS == "Windows")
-			{
+			else { // if(yourOS == "Windows")
 				path = std::string(dir_name) + "\\" + std::string(entry->d_name);
 			}
 			//if the current path a song and the song is not in unique,add path/song to songlist and song to unique
-			if( isMusicFile(path) && !(find(uniqueSongs.begin(), uniqueSongs.end(), std::string(entry->d_name)) != uniqueSongs.end()) )
-			{
+			if( isMusicFile(path) && !(find(uniqueSongs.begin(), uniqueSongs.end(),
+											std::string(entry->d_name)) != uniqueSongs.end()) ) {
 				 //push baack a string of directory with entry name at end
 				songList.push_back(path);
 				//if REPEATSONGOVERIDE is true, it never can pushback so uniqueSongs stays empty;
@@ -220,8 +207,7 @@ void explorer(char *dir_name, std::vector<std::string> & songList, std::vector<s
 
 //Call this to create the vector of songs
 //if opperating system not found, returns empty vector
-std::vector<std::string> fileTreeMain() 
-{
+std::vector<std::string> fileTreeMain() {
 	//where DirectoryConfig.txt file is located, only declared here
 	//	Windows users: still use forward slash below. if Windows is detected, "/" is autochanged to "\\"
 	std::string filePath = "../res/DirectoryConfig.txt";
@@ -234,13 +220,11 @@ std::vector<std::string> fileTreeMain()
 	//try to open the file. if can't, only look in "../res/audio"
 	std::string yourOS = getOsName();
 	std::cout << "TESTING---> YOUR OS IS: " << yourOS  << std::endl;
-	if(yourOS == "Other")
-	{
+	if(yourOS == "Other") {
 		std::cout << "UNKNOWN OS: set override located inside \"" << filePath <<"\"" << std::endl;
 		return songList;
 	}
-	else if( yourOS == "Windows" )
-	{
+	else if( yourOS == "Windows" ) {
 		//changes all '/' in file path to '\\'
 		std::replace( filePath.begin(), filePath.end(), '/', '\\');
 		//add quotes around of path incase of spaces 
@@ -252,14 +236,12 @@ std::vector<std::string> fileTreeMain()
 	//file open, start running through all directories inside it
 	std::ifstream file (filePath);
 
-	if(file.is_open())
-	{	
+	if(file.is_open()) {
 
 		//go through file line by line with currLine
 		std::string currLine;
 
-		while(!file.eof())
-		{
+		while(!file.eof()) {
 			getline(file, currLine);
 
 			//	removes all whitespace from a string, exept for '\ '
@@ -277,7 +259,7 @@ std::vector<std::string> fileTreeMain()
 			}
 			//else try to run everything else as a directory
 			//if it's not, should still not crash
-			else{
+			else {
 				if(yourOS == "Windows")
 				{	//if you're on windows, change to back slashes
 					std::replace( currLine.begin(), currLine.end(), '/', '\\');
@@ -290,29 +272,27 @@ std::vector<std::string> fileTreeMain()
 	}
 	//failed to find/open file. Only looks in default audio file. Even if audio file is deleted, program won't break,
 	//	It will just return an empty vector
-	else
-	{
+	else {
 		std::cout << "Failed to find \"DirectoryConfig.txt\", looked inside \"" << filePath << "\"" << std::endl;
 		std::cout << "Switched to default: only looking for music in \"musicplayer372/res/audio\"" << std::endl;
 
-		if(yourOS == "Windows"){
+		if(yourOS == "Windows") {
 			explorer( (char*) "..\\res\\audio", songList, uniqueSongs, yourOS);
 		}
-		else{// "linux/MacOS"
+		else { // "linux/MacOS"
 			explorer( (char*) "../res/audio", songList, uniqueSongs, yourOS);
 		}
 
 	}
 
-//program crashes if passed an empty vector.
-//temp fix: if empty, add default song
-	if(songList[0] == "")
-	{
+	//program crashes if passed an empty vector.
+	// temp fix: if empty, add default song
+	if(songList[0] == "") {
 		std::cout << "SONGLIST RETURNED EMPTY: adding default song to prevent program from crashing. do real fix later" << std::endl;
-		if(yourOS == "Windows"){
+		if(yourOS == "Windows") {
 			songList.push_back("..\\res\\audio\\AMemoryAway.ogg");
 		}
-		else{
+		else {
 			songList.push_back("../res/audio/AMemoryAway.ogg");
 		}
 	}

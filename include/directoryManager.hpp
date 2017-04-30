@@ -4,7 +4,7 @@
 // 		Bryan Burkhardt (bmburkhardt@alaska.edu)  
 // 		Alexander Eckert (aeckert@alaska.edu)  
 // 		Jeremiah Jacobson (jjjacobson2@alaska.edu)  
-// 		Jarye Maurphy (@alaska.edu)  
+// 		Jarye Murphy (@alaska.edu)
 // 		Cameron Showalter (cjshowalter@alaska.edu) 
 //
 // Header for the Directory Manager
@@ -26,7 +26,7 @@
 #else
 #include <dirent.h> 
 #endif		
-#include <sys/stat.h>		//directory navagation
+#include <sys/stat.h>		//directory navigation
 
 
 //------TEMP METHODS FOR TESTING / PRINTING (WILL BE DELETED)------
@@ -40,9 +40,9 @@ void printVec(std::vector<std::string> & songList);
 //Overrides can be accessed/changed inside DirectoryConfig.txt
 
 //OPERATINGSYSTEMOVERRIDE
-	//0 -> program returns empty vector if os not reconized
-	//1 -> program will treat your computer as "linux/MacOS" REGUARDLESS of if it knows your os
-	//2 -> program will treat your computer as "Windows" REGUARDLESS of if it knows your os
+	//0 -> program returns empty vector if os not recognized
+	//1 -> program will treat your computer as "linux/MacOS" REGARDLESS of if it knows your os
+	//2 -> program will treat your computer as "Windows" REGARDLESS of if it knows your os
 static int OPERATINGSYSTEMOVERRIDE = 0;
 
 //REPEATSONGSOVERRIDE
@@ -51,7 +51,7 @@ static int OPERATINGSYSTEMOVERRIDE = 0;
 static bool REPEATSONGSOVERRIDE = false;
 
 //formatPath:
-//	removes all whitespace from a string, exept for '\ '
+//	removes all whitespace from a string, except for '\ '
 //	if yourOS = "Windows", removes '\' from '\ ' and puts quotes around currLine
 void formatPath(std::string &str, std::string &yourOS);
 
@@ -61,7 +61,7 @@ void formatPath(std::string &str, std::string &yourOS);
 bool isFileOverride(std::string str);
 
 //getOsName
-//	returns the name of the user Opperating System
+//	returns the name of the user Operating System
 //	if not found, returns "Other"
 //	can be overridden
 std::string getOsName();
@@ -74,12 +74,12 @@ bool isMusicFile(std::string fileName);
 
 //tutorial for a more basic explorer from https://www.youtube.com/watch?v=w9l8kLPQ39c
 //explorer:
-//		returns a vector of all song names inside directory, and recursivly calls all directorys in itself
+//		returns a vector of all song names inside directory, and recursively calls all directories in itself
 //		does not put directories inside vector, just strings of paths to supported songs
 void explorer(char *dir_name, std::vector<std::string> & songList, std::vector<std::string> & uniqueSongs, std::string & yourOS);
 
 //Call this to create the vector of songs
-//if opperating system not found, returns empty vector
+//if operating system not found, returns empty vector
 std::vector<std::string> fileTreeMain();
 
 #endif // DIRECTORYMANAGER_HPP

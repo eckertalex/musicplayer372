@@ -4,7 +4,7 @@
 // 		Bryan Burkhardt (bmburkhardt@alaska.edu)  
 // 		Alexander Eckert (aeckert@alaska.edu)  
 // 		Jeremiah Jacobson (jjacobson2@alaska.edu)  
-// 		Jarye Maurphy (jmurphy11@alaska.edu)  
+// 		Jarye Murphy (jmurphy11@alaska.edu)
 // 		Cameron Showalter (cjshowalter@alaska.edu) 
 //
 // Source file for MusicPlayer class
@@ -31,7 +31,8 @@ bool MusicPlayer::clickInSprite(sf::Sprite s, int x , int y) {
 		+ s.getGlobalBounds().height > y) {
 		return s.getGlobalBounds().left + s.getGlobalBounds().width > x && x > s.getGlobalBounds().left &&
 			   y > s.getGlobalBounds().top;
-	} else {
+	}
+	else {
 		return x >= s.getGlobalBounds().left + s.getGlobalBounds().width && false;
 	}
 }
@@ -61,7 +62,6 @@ void MusicPlayer::draw() {
 }
 
 void MusicPlayer::update() {
-	
 	mouseOverHighlight();
 	displayPlaylist();
 	displayTimer();
@@ -71,8 +71,7 @@ void MusicPlayer::update() {
 
 void MusicPlayer::handleInput() {
 	sf::Event event;
-	while(window.pollEvent(event))
-	{
+	while(window.pollEvent(event)) {
 		auto mousePosX = sf::Mouse::getPosition(window).x; // x position 
 		auto mousePosY = sf::Mouse::getPosition(window).y; // y position
 		switch(event.type) {
@@ -149,6 +148,7 @@ void MusicPlayer::playerLoop() {
 	}
 }
 
+// For Alex' compiler not to complain about setColor
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 MusicPlayer::MusicPlayer() {
@@ -225,8 +225,7 @@ MusicPlayer::MusicPlayer() {
 	//create full songlist
 	songList_ = std::move(fileTreeMain());
 	//if couldn't find song, don't try to play one
-	if( songList_[songListIndex_] != "" )
-	{
+	if( songList_[songListIndex_] != "" ) {
 		music.openFromFile(songList_[songListIndex_]);
 	}
 
@@ -284,26 +283,24 @@ void MusicPlayer::callPrevSong() {
 }
 void MusicPlayer::callIncreaseVolume() {
 	//first unmutes if muted
-	if(isMuted_)
-	{
+	if(isMuted_) {
 		isMuted_=  false;
 		music.setVolume(volSave_); // unmute the music by restoring the volume to previous value
 	}
 	//if we change the " +1" for music.getVolume, make sure to reduce the "<= 99" in the if statement (100 - number) -CS
-	if(music.getVolume() <= 99){
+	if(music.getVolume() <= 99) {
 		music.setVolume(music.getVolume() + 1);
 		std::cout << "The volume is " << music.getVolume() << std::endl;
 	}
 }
 void MusicPlayer::callDecreaseVolume() {
 	//first unmutes if muted
-	if(isMuted_)
-	{
+	if(isMuted_) {
 		isMuted_=  false;
 		music.setVolume(volSave_); // unmute the music by restoring the volume to previous value
 	}
 	//if we change the " -1" for music.getVolume, make sure to change the ">= 1" in the if statement to the same value -CS
-	if(music.getVolume() >= 1){
+	if(music.getVolume() >= 1) {
 		music.setVolume(music.getVolume() - 1);
 		std::cout << "The volume is " << music.getVolume() << std::endl;
 	}
@@ -442,11 +439,11 @@ void MusicPlayer::updateCurrentTimer() {
 	currentTimer = music.getPlayingOffset();
 	currentTimeSeconds = (int)currentTimer.asSeconds();
 	currentTimeMinutes = convertToMinutes((int)currentTimer.asSeconds());
-	currentTimeHours = convertToHours(currentTimeSeconds);
+	currentTimeHours = convertToHours((int) currentTimeSeconds);
 	currentTimerStreamSeconds.str("");
 	currentTimerStreamMinutes.str("");
 	currentTimerStreamHours.str("");
-	currentTimerStreamSeconds << std::fixed << std::setprecision(0) << ((int)currentTimeSeconds%60);
+	currentTimerStreamSeconds << std::fixed << std::setprecision(0) << (int) currentTimeSeconds % 60;
 	currentTimerStreamMinutes << std::fixed << std::setprecision(0) << ((int)currentTimeMinutes%60);
 	currentTimerStreamHours << std::fixed << std::setprecision(0) << (currentTimeHours);
 
@@ -477,11 +474,11 @@ void MusicPlayer::updateTotalTimer() {
 	totalTimer = music.getDuration();
 	totalTimeSeconds = (int)totalTimer.asSeconds();
 	totalTimeMinutes = convertToMinutes((int) totalTimeSeconds);
-	totalTimeHours = convertToHours(totalTimeSeconds);
+	totalTimeHours = convertToHours((int) totalTimeSeconds);
 	totalTimerStreamSeconds.str("");
 	totalTimerStreamMinutes.str("");
 	totalTimerStreamHours.str("");
-	totalTimerStreamSeconds << std::fixed << std::setprecision(0) << ((int)totalTimeSeconds%60);
+	totalTimerStreamSeconds << std::fixed << std::setprecision(0) << (int) totalTimeSeconds % 60;
 	totalTimerStreamMinutes << std::fixed << std::setprecision(0) << ((int)totalTimeMinutes%60);
 	totalTimerStreamHours << std::fixed << std::setprecision(0) << (totalTimeHours);
 	
@@ -537,8 +534,7 @@ int MusicPlayer::convertToHours(int seconds) {
 	return (seconds/(60*60));
 }
 
-void MusicPlayer::closeProgram()
-{
+void MusicPlayer::closeProgram() {
 	window.close();
 	std::cout << "Closed MusicPlayer372\nGood Bye!" << std::endl;
 }

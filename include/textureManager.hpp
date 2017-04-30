@@ -4,7 +4,7 @@
 // 		Bryan Burkhardt (bmburkhardt@alaska.edu)  
 // 		Alexander Eckert (aeckert@alaska.edu)  
 // 		Jeremiah Jacobson (jjjacobson2@alaska.edu)  
-// 		Jarye Maurphy (@alaska.edu)  
+// 		Jarye Murphy (@alaska.edu)
 // 		Cameron Showalter (@alaska.edu) 
 //
 // Header for textureManager
@@ -14,24 +14,21 @@
 
 #include <SFML/Graphics.hpp>
 #include <string>
-using std::string;
 #include <map>
-using std::map;
 
-class TextureManager
-{
+class TextureManager {
 public:
 	// Add a texture from a file
-	void loadTexture(const string &name, const string &filename);
+	void loadTexture(const std::string &name, const std::string &filename);
 
 	// translate an id into a reference
-	sf::Texture &getRef(const string &texture);
+	sf::Texture &getRef(const std::string &texture);
 
 	TextureManager() {}
 
 private:
 	// Array for textures used
-	map<string, sf::Texture> textures;
+	std::map<std::string, sf::Texture> textures;
 };
 
 

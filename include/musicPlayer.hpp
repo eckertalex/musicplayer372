@@ -4,7 +4,7 @@
 // 		Bryan Burkhardt (bmburkhardt@alaska.edu)  
 // 		Alexander Eckert (aeckert@alaska.edu)  
 // 		Jeremiah Jacobson (jjjacobson2@alaska.edu)  
-// 		Jarye Maurphy (@alaska.edu)  
+// 		Jarye Murphy (@alaska.edu)
 // 		Cameron Showalter (@alaska.edu) 
 //
 // Header for MusicPlayer class
@@ -15,6 +15,7 @@
 #include <vector>
 #include <memory>
 #include <sstream>
+#include <SFML/Audio.hpp>
 
 #include "textureManager.hpp"
 

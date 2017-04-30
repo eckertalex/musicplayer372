@@ -4,7 +4,7 @@
 // 		Bryan Burkhardt (bmburkhardt@alaska.edu)  
 // 		Alexander Eckert (aeckert@alaska.edu)  
 // 		Jeremiah Jacobson (jjjacobson2@alaska.edu)  
-// 		Jarye Maurphy (@alaska.edu)  
+// 		Jarye Murphy (@alaska.edu)
 // 		Cameron Showalter (@alaska.edu) 
 //
 // Source file for textureManager
@@ -13,7 +13,7 @@
 
 #include "../include/textureManager.hpp"
 
-void TextureManager::loadTexture(const string &name, const string &filename) {
+void TextureManager::loadTexture(const std::string &name, const std::string &filename) {
 	// Load the texture
 	sf::Texture tex;
 	tex.loadFromFile(filename);
@@ -24,6 +24,6 @@ void TextureManager::loadTexture(const string &name, const string &filename) {
 	return;
 }
 
-sf::Texture & TextureManager::getRef(const string &texture) {
+sf::Texture & TextureManager::getRef(const std::string &texture) {
 	return this->textures.at(texture);
 }
