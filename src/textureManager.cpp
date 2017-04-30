@@ -10,10 +10,6 @@
 // Source file for textureManager
 
 #include <SFML/Graphics.hpp>
-#include <map>
-using std::map;
-#include <string>
-using std::string;
 
 #include "../include/textureManager.hpp"
 
