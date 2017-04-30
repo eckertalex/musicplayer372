@@ -514,7 +514,7 @@ void MusicPlayer::selectDisplayTimer() {
 		displayTimerText.setString(currentHour + currentMin + currentSec + totalHour + totalMin + totalSec);
 	}
 
-	if(currentTimeSeconds == totalTimeSeconds) {
+	if(music.getStatus() == 0) {
 		callNextSong();
 	}
 }
