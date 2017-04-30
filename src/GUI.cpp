@@ -12,6 +12,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
+#include <string>
 
 #include "../include/textureManager.hpp"
 #include "../include/GUI.hpp"
@@ -27,15 +28,6 @@ GUI::GUI(std::shared_ptr<Music> music) : music(music) {
 		std::cout << "Font couldn't be found" << std::endl;
 	else
 		std::cout << "Font was found" << std::endl;
-
-	textVec = {
-			prevSong,
-			currentSong,
-			nextSong,
-			next2Song,
-			next3Song,
-			next4Song
-	};
 
 	spriteVec = {
 			playPauseButton,			// 0
@@ -126,17 +118,35 @@ void GUI::setTextures() {
 }
 
 void GUI::stylePlaylist() {
-	int counter = 35;
-	for(auto i = 0; i < textVec.size(); ++i) {
-		textVec[i].setFont(font);
-		textVec[i].setCharacterSize(24);
-		if(i == 1)
-			textVec[i].setColor(sf::Color::Blue);
-		else
-			textVec[i].setColor(sf::Color::Black);
-		textVec[i].setPosition(360,counter);
-		counter += 25;
-	}
+	prevSong.setFont(font);
+	prevSong.setCharacterSize(24);
+	prevSong.setColor(sf::Color::Black);
+	prevSong.setPosition(360,35);
+
+	currentSong.setFont(font);
+	currentSong.setCharacterSize(24);
+	currentSong.setColor(sf::Color::Blue);
+	currentSong.setPosition(360,60);
+
+	nextSong.setFont(font);
+	nextSong.setCharacterSize(24);
+	nextSong.setColor(sf::Color::Black);
+	nextSong.setPosition(360,85);
+
+	next2Song.setFont(font);
+	next2Song.setCharacterSize(24);
+	next2Song.setColor(sf::Color::Black);
+	next2Song.setPosition(360,110);
+
+	next3Song.setFont(font);
+	next3Song.setCharacterSize(24);
+	next3Song.setColor(sf::Color::Black);
+	next3Song.setPosition(360,135);
+
+	next4Song.setFont(font);
+	next4Song.setCharacterSize(24);
+	next4Song.setColor(sf::Color::Black);
+	next4Song.setPosition(360,160);
 }
 
 void GUI::displayPlaylist() {

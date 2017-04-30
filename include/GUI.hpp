@@ -39,7 +39,6 @@ public:
 	std::shared_ptr<Music> music;
 
 	std::vector<sf::Sprite> spriteVec;
-	std::vector<sf::Text> textVec;
 	sf::Font font;
 	sf::Text prevSong;
 	sf::Text currentSong;
