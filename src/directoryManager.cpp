@@ -52,6 +52,7 @@ DirectoryManager::DirectoryManager()
 	//read from file and set overide there
 	handleFile();
 	printVec(songList);
+	std::cout << "Size of Playlist: " << songList.size() << std::endl;
 }
 
 //getOsName

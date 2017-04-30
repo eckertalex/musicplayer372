@@ -8,7 +8,7 @@ Created by:
 Bryan Burkhardt (bmburkhardt@alaska.edu)  
 Alexander Eckert (aeckert@alaska.edu)  
 Jeremiah Jacobson (jjjacobson2@alaska.edu)  
-Jarye Maurphy (jmurphy11@alaska.edu)  
+Jarye Murphy (jmurphy11@alaska.edu)  
 Cameron Showalter (cjshowalter@alaska.edu)  
 
 
