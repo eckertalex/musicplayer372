@@ -444,15 +444,34 @@ void MusicPlayer::updateCurrentTimer() {
 	currentTimer = music.getPlayingOffset();
 	currentTimeSeconds = (int)currentTimer.asSeconds();
 	currentTimeMinutes = convertToMinutes((int)currentTimer.asSeconds());
+	currentTimeHours = convertToHours(currentTimeSeconds);
 	currentTimerStreamSeconds.str("");
 	currentTimerStreamMinutes.str("");
+	currentTimerStreamHours.str("");
 	currentTimerStreamSeconds << std::fixed << std::setprecision(0) << ((int)currentTimeSeconds%60);
-	currentTimerStreamMinutes << std::fixed << std::setprecision(0) << currentTimeMinutes;
-	if(((int)currentTimeSeconds%60) < 10) {
-		current = currentTimerStreamMinutes.str() + ":0" + currentTimerStreamSeconds.str() + "/";
+	currentTimerStreamMinutes << std::fixed << std::setprecision(0) << ((int)currentTimeMinutes%60);
+	currentTimerStreamHours << std::fixed << std::setprecision(0) << (currentTimeHours);
+
+	// Seconds
+	if ((int)currentTimeSeconds%60 < 10) {
+		currentSec = "0" + currentTimerStreamSeconds.str() + "/";
 	}
 	else {
-		current = currentTimerStreamMinutes.str() + ":" + currentTimerStreamSeconds.str() + "/";
+		currentSec = currentTimerStreamSeconds.str() + "/";
+	}
+	// Minutes
+	if((int)currentTimeMinutes%60 < 10) {
+		currentMin = "0" + currentTimerStreamMinutes.str() + ":";
+	}
+	else {
+		currentMin = currentTimerStreamMinutes.str() + ":";
+	}
+	// Hours
+	if((int)currentTimeHours < 10) {
+		currentHour = "0" + currentTimerStreamHours.str() + ":";
+	}
+	else {
+		currentHour = currentTimerStreamHours.str() + ":";
 	}
 }
 
@@ -460,25 +479,64 @@ void MusicPlayer::updateTotalTimer() {
 	totalTimer = music.getDuration();
 	totalTimeSeconds = (int)totalTimer.asSeconds();
 	totalTimeMinutes = convertToMinutes(totalTimeSeconds);
+	totalTimeHours = convertToHours(totalTimeSeconds);
 	totalTimerStreamSeconds.str("");
 	totalTimerStreamMinutes.str("");
+	totalTimerStreamHours.str("");
 	totalTimerStreamSeconds << std::fixed << std::setprecision(0) << ((int)totalTimeSeconds%60);
-	totalTimerStreamMinutes << std::fixed << std::setprecision(0) << (totalTimeMinutes);
-	if(((int)totalTimeSeconds%60) < 10) {
-		total = totalTimerStreamMinutes.str() + ":0" + totalTimerStreamSeconds.str();
+	totalTimerStreamMinutes << std::fixed << std::setprecision(0) << ((int)totalTimeMinutes%60);
+	totalTimerStreamHours << std::fixed << std::setprecision(0) << (totalTimeHours);
+	
+	// Seconds
+	if ((int)totalTimeSeconds%60 < 10) {
+		totalSec = "0" + totalTimerStreamSeconds.str();
 	}
 	else {
-		total = totalTimerStreamMinutes.str() + ":" + totalTimerStreamSeconds.str();
+		totalSec = totalTimerStreamSeconds.str();
+	}
+	// Minutes
+	if((int)totalTimeMinutes%60 < 10) {
+		totalMin = "0" + totalTimerStreamMinutes.str() + ":";
+	}
+	else {
+		totalMin = totalTimerStreamMinutes.str() + ":";
+	}
+	// Hours
+	if((int)totalTimeHours < 10) {
+		totalHour = "0" + totalTimerStreamHours.str() + ":";
+	}
+	else {
+		totalHour = totalTimerStreamHours.str() + ":";
+	}
+}
+
+void MusicPlayer::selectDisplayTimer() {
+	// 0:xx
+	if(totalTimeMinutes < 1) {
+		displayTimerText.setString("0:" + currentSec + "0:" + totalSec);
+	}
+	// xx:xx
+	else if(currentTimeHours < 1 && totalTimeHours < 1 && totalTimeMinutes > 0) {
+		displayTimerText.setString(currentMin + currentSec + totalMin + totalSec);
+	}
+	// xx:xx:xx
+	else {
+		displayTimerText.setString(currentHour + currentMin + currentSec + totalHour + totalMin + totalSec);
 	}
 }
 
 void MusicPlayer::displayTimer() {
 	updateCurrentTimer();
 	updateTotalTimer();
-	displayTimerText.setString(current + total);
+	selectDisplayTimer();
+	
 }
 int MusicPlayer::convertToMinutes(int seconds) {
 	return seconds/60;
+}
+
+int MusicPlayer::convertToHours(int seconds) {
+	return (seconds/(60*60));
 }
 
 void MusicPlayer::closeProgram()

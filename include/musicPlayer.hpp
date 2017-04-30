@@ -57,20 +57,28 @@ public:
 	// Current Time Elapsed Stuff
 	std::stringstream currentTimerStreamSeconds;
 	std::stringstream currentTimerStreamMinutes;
+	std::stringstream currentTimerStreamHours;
 	sf::Time currentTimer;
 	float currentTimeSeconds;
 	float currentTimeMinutes;
+	float currentTimeHours;
 	
 	// Total Time Stuff
 	std::stringstream totalTimerStreamSeconds;
 	std::stringstream totalTimerStreamMinutes;
+	std::stringstream totalTimerStreamHours;
 	sf::Time totalTimer;
 	float totalTimeSeconds;
 	float totalTimeMinutes;
+	float totalTimeHours;
 
 	// Onscreen Timer Display Stuff
-	std::string total;
-	std::string current;
+	std::string currentSec;
+	std::string currentMin;
+	std::string currentHour;
+	std::string totalSec;
+	std::string totalMin;
+	std::string totalHour;
 	sf::Text displayTimerText;
 
 	void playerLoop();
@@ -99,8 +107,10 @@ public:
 	/****** Timer Functions ******/
 	void updateCurrentTimer();
 	void updateTotalTimer();
+	void selectDisplayTimer();
 	void displayTimer();
 	int convertToMinutes(int seconds);
+	int convertToHours(int seconds);
 
 private:
 	void loadTextures();
