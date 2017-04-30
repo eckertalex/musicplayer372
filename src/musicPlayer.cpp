@@ -513,6 +513,10 @@ void MusicPlayer::selectDisplayTimer() {
 	else {
 		displayTimerText.setString(currentHour + currentMin + currentSec + totalHour + totalMin + totalSec);
 	}
+
+	if(currentTimeSeconds == totalTimeSeconds) {
+		callNextSong();
+	}
 }
 
 void MusicPlayer::displayTimer() {
