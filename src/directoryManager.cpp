@@ -170,33 +170,12 @@ void DirectoryManager::formatPathForCorrectOS(std::string &currLine)
 	{
 		return;
 	}
-	//remove all whitespace but '\ '
+	//remove all whitespace but '\ ', incase there is whitespace on either side of currLine
 	currLine.erase( std::remove_if(currLine.begin(), currLine.end(), isspace), currLine.end() );
-	/*
-	for(unsigned int i=0; i<currLine.size(); ++i)
-	{
-		// i!=0 to keep str.at(i) from being out of range
-		if( i!=0 && currLine.at(i) == ' ' && currLine.at(i-1) == '\\')
-		{
-			//Windows needs to remove the backslash, Linux/Mac doesn't
-			if(yourOS == "Windows")
-			{
-				currLine.erase( currLine.begin()+(i-1) );
-			}
-		}
-		else if( yourOS == "Windows" && currLine.at(i) == '/')
-		{
-			currLine.at(i) = '\\';
-		}
-		//now that '\ ' has been skipped, remove all other whitespace
-		else if( std::isspace(currLine.at(i)) == true )
-		{
-			currLine.erase(currLine.begin()+i);
-		}
-	}
-	*/
+
 	if(yourOS == "Windows")
 	{
+		std::replace( currLine.begin(), currLine.end(), '/', '\\' );
 		currLine = "\"" + currLine + "\"";
 	}
 }
@@ -319,17 +298,18 @@ void DirectoryManager::explorer(char *dir_name)
 				path = std::string(dir_name) + "\\" + std::string(entry->d_name);
 			}
 			//if the current path a song and the song is not in unique,add path/song to songlist and song to unique
+			//std::cout << "Path: " << dir_name << " song: " << std::string(entry->d_name) << std::endl;
 			if( isMusicFile(std::string(entry->d_name)) )
 			{
 
-				//if the song is not already in unique songs, always add it to both
-				if( find(uniqueSongs.begin(), uniqueSongs.end(), std::string(entry->d_name)) != uniqueSongs.end() )
+				//if find reaches the end, the song is not already in uniquesongs, add it to both
+				if( find(uniqueSongs.begin(), uniqueSongs.end(), std::string(entry->d_name)) == uniqueSongs.end() )
 				{
 					uniqueSongs.push_back(std::string(entry->d_name));
 					songList.push_back(path);
 				}
 				//else it has the song in uniqueSongs already, check flag to see if it gets added to songlist
-				else if(uniqueSongOverride == false)
+				else if(uniqueSongOverride == true)
 				{
 					songList.push_back(std::string(path));
 				}
