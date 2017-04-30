@@ -53,24 +53,25 @@ public:
 	sf::Sprite decreaseVolumeButton;
 	sf::Sprite increaseVolumeButton;
 
-	
-	sf::Text timerSlash;
-
-	//sf::Text
-	sf::Text currentTimerText;
+	/****** Timer Variables ******/
+	// Current Time Elapsed Stuff
 	std::stringstream currentTimerStreamSeconds;
 	std::stringstream currentTimerStreamMinutes;
 	sf::Time currentTimer;
 	float currentTimeSeconds;
 	float currentTimeMinutes;
-	int fakeSeconds = 0;
-	int minuteCounter = 1;
-	bool currentTimerBool = false;
 	
-	sf::Text totalTimerText;
-	std::stringstream totalTimerStream;
+	// Total Time Stuff
+	std::stringstream totalTimerStreamSeconds;
+	std::stringstream totalTimerStreamMinutes;
 	sf::Time totalTimer;
 	float totalTimeSeconds;
+	float totalTimeMinutes;
+
+	// Onscreen Timer Display Stuff
+	std::string total;
+	std::string current;
+	sf::Text displayTimerText;
 
 	void playerLoop();
 
@@ -96,10 +97,10 @@ public:
 	void displayPlaylist();
 
 	/****** Timer Functions ******/
-	void displayCurrentTimer();
-	void displayTotalTimer();
+	void updateCurrentTimer();
+	void updateTotalTimer();
+	void displayTimer();
 	int convertToMinutes(int seconds);
-	//int fakeSeconds
 
 private:
 	void loadTextures();
