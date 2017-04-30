@@ -22,8 +22,12 @@ GUI::GUI(std::shared_ptr<Music> music) : music(music) {
 	loadTextures();
 	window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "MusicPlayer",
 		sf::Style::Titlebar | sf::Style::Close);
+	window.setFramerateLimit(60);
 	setTextures();
-
+	if(!font.loadFromFile("../res/fonts/TravelingTypewriter.ttf"))
+		std::cout << "Font couldn't be found" << std::endl;
+	else
+		std::cout << "Font was found" << std::endl;
 }
 
 bool GUI::clickInSprite(sf::Sprite s, int x , int y) {
@@ -114,11 +118,6 @@ void GUI::setTextures() {
 }
 
 void GUI::stylePlaylist() {
-	if(!font.loadFromFile("../res/fonts/TravelingTypewriter.ttf"))
-		std::cout << "Font couldn't be found" << std::endl;
-	else 
-		std::cout << "Font was found" << std::endl;
-
 	textVec = {
 		prevSong,
 		currentSong,
@@ -129,7 +128,7 @@ void GUI::stylePlaylist() {
 	};
 
 	int counter = 35;
-	for(auto i=0; textVec.size()-1; ++i) {
+	for(auto i=0; i <= textVec.size()-1; ++i) {
 		textVec[i].setFont(font);
 		textVec[i].setCharacterSize(24);
 		if(i == 1)
@@ -199,7 +198,7 @@ void GUI::displayPlaylist() {
 }
 
 void GUI::update() {
-	//stylePlaylist();
+	stylePlaylist();
 	displayPlaylist();
 	return;
 }
