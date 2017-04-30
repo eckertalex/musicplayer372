@@ -16,8 +16,6 @@
 
 #include "../include/musicPlayer.hpp"
 
-
-
 int main()
 {	
 	std::cout << "MusicPlayer372" << std::endl;

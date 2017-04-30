@@ -1,10 +1,20 @@
+// Music.hpp
+// 29. April 2017
+// Created by:
+// 		Bryan Burkhardt (bmburkhardt@alaska.edu)  
+// 		Alexander Eckert (aeckert@alaska.edu)  
+// 		Jeremiah Jacobson (jjjacobson2@alaska.edu)  
+// 		Jarye Maurphy (@alaska.edu)  
+// 		Cameron Showalter (@alaska.edu) 
+//
+// Header for Music class
+
 #ifndef MUSIC_HPP
 #define MUSIC_HPP
 #include <vector>
 #include <SFML/Audio/Music.hpp>
 
-class Music
-{
+class Music {
 public:
 	Music();
 

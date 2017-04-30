@@ -1,7 +1,17 @@
-/****** Functionality Function Definitions ******/
+// Music.cpp
+// 29. April 2017
+// Created by:
+// 		Bryan Burkhardt (bmburkhardt@alaska.edu)  
+// 		Alexander Eckert (aeckert@alaska.edu)  
+// 		Jeremiah Jacobson (jjjacobson2@alaska.edu)  
+// 		Jarye Maurphy (@alaska.edu)  
+// 		Cameron Showalter (@alaska.edu) 
+//
+// Source file for Music class
+
+#include <iostream>
 
 #include "../include/Music.hpp"
-#include <iostream>
 #include "../include/directoryManager.hpp"
 
 Music::Music()

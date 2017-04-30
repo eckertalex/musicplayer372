@@ -1,7 +1,19 @@
-#include "../include/InputManager.hpp"
+// InputManager.cpp
+// 29. April 2017
+// Created by:
+// 		Bryan Burkhardt (bmburkhardt@alaska.edu)  
+// 		Alexander Eckert (aeckert@alaska.edu)  
+// 		Jeremiah Jacobson (jjjacobson2@alaska.edu)  
+// 		Jarye Maurphy (@alaska.edu)  
+// 		Cameron Showalter (@alaska.edu) 
+//
+// Source file for InputManager class
+
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Window/Event.hpp>
 #include <iostream>
+
+#include "../include/InputManager.hpp"
 #include "../include/GUI.hpp"
 
 InputManager::InputManager(std::shared_ptr<GUI> gui, std::shared_ptr<Music> music) : gui(gui), music(music)

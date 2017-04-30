@@ -14,7 +14,7 @@
 
 #include <vector>
 #include <memory>
-#include "../include/GUI.hpp"
+#include "GUI.hpp"
 
 // define version numbers
 // set in CMakeLists.txt file

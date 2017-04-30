@@ -12,9 +12,9 @@
 #ifndef GUI_HPP
 #define GUI_HPP
 
-#include "../include/InputManager.hpp"
-#include "../include/textureManager.hpp"
-#include "../include/Music.hpp"
+#include "InputManager.hpp"
+#include "textureManager.hpp"
+#include "Music.hpp"
 #include <memory>
 
 // define window size

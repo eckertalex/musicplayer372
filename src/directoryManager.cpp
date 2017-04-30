@@ -8,7 +8,6 @@
 // 		Cameron Showalter (cjshowalter@alaska.edu) 
 //
 // Source file for directoryManager
-#include "../include/directoryManager.hpp" 
 
 #include <string>			// string erase
 #include <vector>			// vector
@@ -16,6 +15,8 @@
 #include <fstream>			// file reading
 #include <algorithm> 		// find replace remove_if
 #include <cctype> 			// isspace
+
+#include "../include/directoryManager.hpp" 
 
 //dirent.h used for navigtion
 //if using VisualS, include one, else include the other
