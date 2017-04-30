@@ -128,7 +128,11 @@ void GUI::stylePlaylist() {
 	};
 
 	int counter = 35;
+<<<<<<< HEAD
 	for(auto i=0; i <= textVec.size()-1; ++i) {
+=======
+	for(auto i = 0; i < textVec.size(); ++i) {
+>>>>>>> 7da71cde4ca483556c4ca0882ba2c628c1fdb70a
 		textVec[i].setFont(font);
 		textVec[i].setCharacterSize(24);
 		if(i == 1)
