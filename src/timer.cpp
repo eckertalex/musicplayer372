@@ -85,18 +85,22 @@ void Timer::updateTotalTimer() {
 	}
 }
 
-void Timer::selectDisplayTimer() {
+std::string Timer::selectDisplayTimer() {
 	// 0:xx
+	std::string rv = "";
 	if(totalTimeMinutes < 1) {
-		displayTimerText.setString("0:" + currentSec + "0:" + totalSec);
+		rv = "0:";
+		rv += currentSec + "0:";
+		rv += totalSec;
+		return rv;
 	}
 		// xx:xx
 	else if(currentTimeHours < 1 && totalTimeHours < 1 && totalTimeMinutes > 0) {
-		displayTimerText.setString(currentMin + currentSec + totalMin + totalSec);
+		return currentMin + currentSec + totalMin + totalSec;
 	}
 		// xx:xx:xx
 	else {
-		displayTimerText.setString(currentHour + currentMin + currentSec + totalHour + totalMin + totalSec);
+		return currentHour + currentMin + currentSec + totalHour + totalMin + totalSec;
 	}
 
 	if(music->_music.getStatus() == 0) {
@@ -104,11 +108,10 @@ void Timer::selectDisplayTimer() {
 	}
 }
 
-void Timer::displayTimer(sf::RenderWindow& window) {
+void Timer::displayTimer() {
 	updateCurrentTimer();
 	updateTotalTimer();
 	selectDisplayTimer();
-	window.draw(displayTimerText);
 }
 
 int Timer::convertToMinutes(int seconds) {
@@ -119,12 +122,12 @@ int Timer::convertToHours(int seconds) {
 	return (seconds/(60*60));
 }
 
-void Timer::setStyleTimer(sf::Font font) {
-	displayTimerText.setFont(font);
-	displayTimerText.setCharacterSize(24);
-	displayTimerText.setColor(sf::Color::Red);
-	displayTimerText.setPosition(40,75);
-}
+// void Timer::setStyleTimer(sf::Font font) {
+// 	displayTimerText.setFont(font);
+// 	displayTimerText.setCharacterSize(24);
+// 	displayTimerText.setColor(sf::Color::Red);
+// 	displayTimerText.setPosition(40,75);
+// }
 
 Timer::Timer(std::shared_ptr<Music> music) : music(music) {
 }

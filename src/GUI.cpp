@@ -62,6 +62,7 @@ void GUI::draw() {
 	window.draw(next2Song);
 	window.draw(next3Song);
 	window.draw(next4Song);
+	window.draw(timerText);
 
 
 	window.display();
@@ -137,6 +138,12 @@ void GUI::stylePlaylist() {
 	next4Song.setCharacterSize(24);
 	next4Song.setColor(sf::Color::Black);
 	next4Song.setPosition(360,160);
+
+	timerText.setFont(font);
+	timerText.setCharacterSize(24);
+	timerText.setColor(sf::Color::Red);
+	timerText.setPosition(40,75);
+	timerText.setString(timer->selectDisplayTimer());
 }
 
 void GUI::displayPlaylist() {
@@ -197,8 +204,7 @@ void GUI::displayPlaylist() {
 }
 
 void GUI::update() {
-	timer->setStyleTimer(font);
-	timer->displayTimer(window);
 	stylePlaylist();
 	displayPlaylist();
+	timer->displayTimer();
 }

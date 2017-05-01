@@ -56,11 +56,11 @@ public:
 	sf::Text displayTimerText;
 
 	/****** Timer Functions ******/
-	void setStyleTimer(sf::Font font);
+	//void setStyleTimer(sf::Font font);
 	void updateCurrentTimer();
 	void updateTotalTimer();
-	void selectDisplayTimer();
-	void displayTimer(sf::RenderWindow& window);
+	std::string selectDisplayTimer();
+	void displayTimer();
 	int convertToMinutes(int seconds);
 	int convertToHours(int seconds);
 };
