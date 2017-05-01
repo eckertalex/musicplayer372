@@ -37,8 +37,10 @@ GUI::GUI(std::shared_ptr<Music> music) : music(music) {
 }
 
 std::string GUI::trimFilename(const std::string& str) {
-  std::size_t found = str.find_last_of("/\\");
-  return str.substr(found+1);
+	std::size_t foundSlash = str.find_last_of("/\\");
+	std::string temp = str.substr(foundSlash+1);
+	std::size_t foundDot = temp.find_last_of(".");
+	return temp.erase(foundDot);
 }
 
 void GUI::draw() {
