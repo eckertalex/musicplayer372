@@ -31,3 +31,5 @@
 OperatingSystemOverride = 0
 UniqueSongOverride = false
 "..\res\audio"
+uniquesongoverride=true
+../res/audio
