@@ -60,7 +60,7 @@ public:
 	void updateCurrentTimer();
 	void updateTotalTimer();
 	void selectDisplayTimer();
-	void displayTimer();
+	void displayTimer(sf::RenderWindow& window);
 	int convertToMinutes(int seconds);
 	int convertToHours(int seconds);
 };

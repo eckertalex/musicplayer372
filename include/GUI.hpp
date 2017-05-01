@@ -37,7 +37,7 @@ public:
 
 	std::unique_ptr<TextureManager> texmgr;
 	std::shared_ptr<Music> music;
-	std::unique_ptr<Timer> timer;
+	std::shared_ptr<Timer> timer;
 
 	std::vector<sf::Sprite> spriteVec;
 	sf::Font font;

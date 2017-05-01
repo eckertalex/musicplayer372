@@ -104,12 +104,13 @@ void Timer::selectDisplayTimer() {
 	}
 }
 
-void Timer::displayTimer() {
+void Timer::displayTimer(sf::RenderWindow& window) {
 	updateCurrentTimer();
 	updateTotalTimer();
 	selectDisplayTimer();
-
+	window.draw(displayTimerText);
 }
+
 int Timer::convertToMinutes(int seconds) {
 	return seconds/60;
 }
@@ -126,5 +127,4 @@ void Timer::setStyleTimer(sf::Font font) {
 }
 
 Timer::Timer(std::shared_ptr<Music> music) : music(music) {
-
 }

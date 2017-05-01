@@ -12,7 +12,6 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
-#include <string>
 
 #include "../include/textureManager.hpp"
 #include "../include/GUI.hpp"
@@ -64,7 +63,6 @@ void GUI::draw() {
 	window.draw(next3Song);
 	window.draw(next4Song);
 
-	window.draw(timer->displayTimerText);
 
 	window.display();
 }
@@ -200,7 +198,7 @@ void GUI::displayPlaylist() {
 
 void GUI::update() {
 	timer->setStyleTimer(font);
-	timer->displayTimer();
+	timer->displayTimer(window);
 	stylePlaylist();
 	displayPlaylist();
 }
