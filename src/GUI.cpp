@@ -4,16 +4,13 @@
 // 		Bryan Burkhardt (bmburkhardt@alaska.edu)  
 // 		Alexander Eckert (aeckert@alaska.edu)  
 // 		Jeremiah Jacobson (jjjacobson2@alaska.edu)  
-// 		Jarye Murphy (@alaska.edu)
+// 		Jarye Murphy (jmurphy11@alaska.edu)
 // 		Cameron Showalter (@alaska.edu) 
 //
 // Source file for GUI class
 
 #include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include <iostream>
 
-#include "../include/textureManager.hpp"
 #include "../include/GUI.hpp"
 
 GUI::GUI(std::shared_ptr<Music> music) : music(music) {

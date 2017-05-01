@@ -53,8 +53,6 @@ public:
 
 	Timer(std::shared_ptr<Music> music);
 
-	sf::Text displayTimerText;
-
 	/****** Timer Functions ******/
 	void updateTimer();
 	std::string selectDisplayTimer();

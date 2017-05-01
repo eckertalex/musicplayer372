@@ -4,8 +4,8 @@
 // 		Bryan Burkhardt (bmburkhardt@alaska.edu)  
 // 		Alexander Eckert (aeckert@alaska.edu)  
 // 		Jeremiah Jacobson (jjjacobson2@alaska.edu)  
-// 		Jarye Maurphy (@alaska.edu)  
-// 		Cameron Showalter (cjshowalter@alaska.edu) 
+// 		Jarye Murphy (jmurphy11@alaska.edu)
+// 		Cameron Showalter (cjshowalter@alaska.edu)
 //
 // Header for the Directory Manager
 
@@ -20,7 +20,7 @@
 #include <locale>        	// tolower
 #include <sys/stat.h>		// used in explorer()
 
-//dirent.h used for navigtion
+//dirent.h used for navigation
 //if using VisualS, include one, else include the other
 #ifdef _MSC_VER
 	#include "../include/dirent.h"

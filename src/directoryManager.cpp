@@ -9,13 +9,9 @@
 //
 // Source file_ for directoryManager
 
+#include "../include/directoryManager.hpp"
 
-//all other includes moved to .hpp
-#include "../include/directoryManager.hpp" 
-
-
-DirectoryManager::DirectoryManager()
-{
+DirectoryManager::DirectoryManager() {
 	//These two paths are only defined here so you can change them easy if needed
 	//directory configuation does not matter, Program tries to open with both
 	//linux/MacOS and Windows style repositories.
@@ -29,20 +25,17 @@ DirectoryManager::DirectoryManager()
 
 
 	handlefile();
-	if(file_Found_ == false)
-	{
+	if(!file_Found_) {
 		defaultSettings();
 	}
-	if(warningHit_)
-	{
+	if(warningHit_) {
 		std::cout << "---------------------------------------------------------------------------" << std::endl << std::endl;
 	}
 	std::cout << "Size of Playlist: " << returnedPlaylist_.size() << std::endl;
 
 }
 
-void DirectoryManager::handlefile()
-{
+void DirectoryManager::handlefile() {
 //because operatingsystem override is inside file_, and i need to know the operating system to find
 //the file_, try to open the file_ with linux/mac, then windows. if both fail, then no file_ exists
 
@@ -51,8 +44,7 @@ void DirectoryManager::handlefile()
 	currOperatingSystem_ = "linux/MacOS";
 	formatPathForCorrectOS(configPath_);
 	file_.open(configPath_);
-	if(file_.is_open())
-	{
+	if(file_.is_open()) {
 		configfileFound();
 		file_.close();
 		return;
@@ -63,27 +55,23 @@ void DirectoryManager::handlefile()
 	formatPathForCorrectOS(configPath_);
 	file_.clear();
 	file_.open(configPath_);
-	if(file_.is_open())
-	{	
+	if(file_.is_open()) {
 		configfileFound();
 		file_.close();
 		return;
 	}
 	//else could not open windows path either, file_ not found. Do default task
-	else
-	{
+	else {
 		currOperatingSystem_ = getOsName();
 		file_Found_ = false;
 	}
 	file_.clear();
 }
 
-void DirectoryManager::defaultSettings()
-{
+void DirectoryManager::defaultSettings() {
 	//calls getOsName().
 	//if unknown OS, then do nothing. isOSother() takes care of warning user
-	if(isOSother())
-	{
+	if(isOSother()) {
 		return;
 	}
 	formatPathForCorrectOS(configPath_);
@@ -93,53 +81,37 @@ void DirectoryManager::defaultSettings()
 	std::cout << "		Or looking in \"..\\res\\audio\" if on Windows"						<< std::endl;
 
 	formatPathForCorrectOS(defaultAudioPath_);
-	if(currOperatingSystem_ == "Windows")
-	{
-		explorer( (char*) defaultAudioPath_.c_str() );
-	}
-	else // "linux/MacOS"
-	{
-		explorer( (char*) defaultAudioPath_.c_str() );
-	}
+	explorer( (char*) defaultAudioPath_.c_str() );
 }
 
-void DirectoryManager::printWarning()
-{
-	if(warningHit_ == false)
-	{
+void DirectoryManager::printWarning() {
+	if(!warningHit_) {
 		warningHit_ = true;
 		std::cout << std::endl << "----------------------------------WARNING----------------------------------" << std::endl;
 	}
 }
 
-void DirectoryManager::formatPathForCorrectOS(std::string &currLine)
-{
+void DirectoryManager::formatPathForCorrectOS(std::string &currLine) {
 	//unknown OS, don't know how to format. leave as is
-	if( currOperatingSystem_ == "Other" )
-	{
+	if( currOperatingSystem_ == "Other" ) {
 		return;
 	}
 	//if there is a valad quote, it will now be at currLine.at(0). linux directories dont have quotes so they aren't affected
 	removeWhitespaceOutOfQuotes(currLine);
 	//if currLine is formated for windows, and OS = windows: erase possible whitespace outside of quotes
-	if(checkPathFormatForOS(currLine) == "Windows" && currOperatingSystem_ == "Windows")
-	{
+	if(checkPathFormatForOS(currLine) == "Windows" && currOperatingSystem_ == "Windows") {
 		//do nothing, Already a windows directory
 		return;
 	}
 	//if currLine is formated for linux, and OS = linux: erase all whitespace. (won't erase '\ ')
-	else if(checkPathFormatForOS(currLine) == "linux/MacOS" && currOperatingSystem_ == "linux/MacOS")
-	{
+	else if(checkPathFormatForOS(currLine) == "linux/MacOS" && currOperatingSystem_ == "linux/MacOS") {
 		currLine.erase( std::remove_if(currLine.begin(), currLine.end(), isspace), currLine.end() );
 	}
 	//if currLine is formated for windows, and OS = linux: remove whitespace outside of quotes, replace '\' with '/' ,replace ' ' with '\ '
-	else if(checkPathFormatForOS(currLine) == "Windows" && currOperatingSystem_ == "linux/MacOS")
-	{
+	else if(checkPathFormatForOS(currLine) == "Windows" && currOperatingSystem_ == "linux/MacOS") {
 		std::replace( currLine.begin(), currLine.end(), '\\', '/' );
-		for(unsigned int i=0; i<currLine.size(); ++i)
-		{
-			if(currLine.at(i) == ' ')
-			{
+		for(unsigned int i=0; i<currLine.size(); ++i) {
+			if(currLine.at(i) == ' ') {
 				currLine.insert(i,"\\");
 			}
 		}
@@ -147,12 +119,9 @@ void DirectoryManager::formatPathForCorrectOS(std::string &currLine)
 		currLine.pop_back();
 	}
 	//if currLine is formated for linux, and OS = windows: erase all whitespace. (won't erase '\ '), remove all '\' replace '/' with '\'
-	else if(checkPathFormatForOS(currLine) == "linux/MacOS" && currOperatingSystem_ == "Windows")
-	{
-		for(unsigned int i=0; i<currLine.size(); ++i)
-		{
-			if(currLine[i] == '\\')
-			{
+	else if(checkPathFormatForOS(currLine) == "linux/MacOS" && currOperatingSystem_ == "Windows") {
+		for(unsigned int i=0; i<currLine.size(); ++i) {
+			if(currLine[i] == '\\') {
 				currLine.erase(i,0);
 			}
 		}
@@ -165,19 +134,15 @@ void DirectoryManager::formatPathForCorrectOS(std::string &currLine)
 //	returns the name of the user Opperating System
 //	if not found, returns "Other"
 //	can be overridden
-std::string DirectoryManager::getOsName()
-{
+std::string DirectoryManager::getOsName() {
 	//If override is set:
-	if(operatingSystemOverride_ == 1)
-	{
+	if(operatingSystemOverride_ == 1) {
 		return "linux/MacOS";
 	}
-	else if(operatingSystemOverride_ == 2)
-	{
+	else if(operatingSystemOverride_ == 2) {
 		return "Windows";
 	}
-	else if(operatingSystemOverride_ == 3)
-	{
+	else if(operatingSystemOverride_ == 3) {
 		return "Other";
 	}
 
@@ -201,13 +166,11 @@ std::string DirectoryManager::getOsName()
 	#endif
 }
 
-void DirectoryManager::configfileFound()
-{
+void DirectoryManager::configfileFound() {
 	//go through file_ line by line with currLine
 	std::string currLine;
 	file_Found_ = true;
-	while(!file_.eof())
-	{
+	while(!file_.eof()) {
 		std::getline(file_, currLine);
 		//	removes all whitespace from a string, exept for '\ '
 		//	if currOperatingSystem_ = "Windows", also removes '\' from '\ ' and puts quotes around currLine
@@ -215,8 +178,7 @@ void DirectoryManager::configfileFound()
 		//if empty, comment or overide, do nothing
 		//note: handlefileOverride also sets the overrides if found
 		//isOSother() stops the program from exploring while the OS override = "Other"
-		if( currLine == "" || currLine.at(0) == '#' || handlefileOverride(currLine) || isOSother() )
-		{
+		if( currLine == "" || currLine.at(0) == '#' || handlefileOverride(currLine) || isOSother() ) {
 			continue;
 		}
 		//else try to run everything else as a directory
@@ -229,12 +191,10 @@ void DirectoryManager::configfileFound()
 	}
 }
 
-bool DirectoryManager::isOSother()
-{
+bool DirectoryManager::isOSother() {
 	//file_ not found, overrides are never set, so check for OS, then run explorer with default path if OS != "Other"
 	currOperatingSystem_ = getOsName();
-	if(currOperatingSystem_ == "Other")
-	{
+	if(currOperatingSystem_ == "Other") {
 
 		//if you trip this, it could not find file_, and getOsName only checks for linux/mac/windows
 		//best way to fix: add file_ back. Program tries both the linux and windows directory paths
@@ -249,8 +209,7 @@ bool DirectoryManager::isOSother()
 //tutorial for a basic explorer method copied from https://www.youtube.com/watch?v=w9l8kLPQ39c
 //		returns a vector of all song names inside directory, and recursivly calls all directorys in itself
 //		does not put directories inside vector, just strings of paths to supported songs
-void DirectoryManager::explorer(char *dir_name)
-{
+void DirectoryManager::explorer(char *dir_name) {
 	DIR *dir = NULL; //pointer to an open directory
 	struct dirent *entry; //stuff in current directory
 	struct stat info; //information about each entry
@@ -261,48 +220,40 @@ void DirectoryManager::explorer(char *dir_name)
 	//open:
 	dir = opendir(dir_name);
 	//if bad directory name or can't open, do nothing else
-	if(!dir) 
-	{
+	if(!dir) {
 		printWarning();
 		std::cout << "Failed to Open Directory: \"" << dir_name << "\"" << std::endl;
 		return;
 	}
 
 	//read:
-	while(( entry = readdir(dir) ) != NULL) 
-	{
-		if(entry->d_name[0] != '.') 
-		{	
-			if(currOperatingSystem_ == "linux/MacOS")
-			{
+	while(( entry = readdir(dir) ) != NULL) {
+		if(entry->d_name[0] != '.') {
+			if(currOperatingSystem_ == "linux/MacOS") {
 				path = std::string(dir_name) + "/" + std::string(entry->d_name);
 			}
-			else // if(currOperatingSystem_ == "Windows")
-			{
+				// if(currOperatingSystem_ == "Windows")
+			else {
 				//can't use convertPathToWindows because this is a recursive method, and that adds " " every time its called
 				path = std::string(dir_name) + "\\" + std::string(entry->d_name);
 			}
 			//if the current path a song and the song is not in unique,add path/song to returnedPlaylist_ and song to unique
 			//std::cout << "Path: " << dir_name << " song: " << std::string(entry->d_name) << std::endl;
-			if( isMusicfile(std::string(entry->d_name)) )
-			{
+			if( isMusicfile(std::string(entry->d_name)) ) {
 
 				//if find reaches the end, the song is not already in uniqueSongs_, add it to both
-				if( find(uniqueSongs_.begin(), uniqueSongs_.end(), std::string(entry->d_name)) == uniqueSongs_.end() )
-				{
+				if( find(uniqueSongs_.begin(), uniqueSongs_.end(), std::string(entry->d_name)) == uniqueSongs_.end() ) {
 					uniqueSongs_.push_back(std::string(entry->d_name));
 					returnedPlaylist_.push_back(path);
 				}
 				//else it has the song in uniqueSongs_ already, check flag to see if it gets added to returnedPlaylist_
-				else if(uniqueSongOverride_)
-				{
+				else if(uniqueSongOverride_) {
 					returnedPlaylist_.push_back(std::string(path));
 				}
 			}
 			//checks to see if file_ or folder
 			stat(path.c_str(),&info); 
-			if(S_ISDIR(info.st_mode)) 
-			{
+			if(S_ISDIR(info.st_mode)) {
 				//if folder, then run this method again on new folder
 				explorer((char*)path.c_str());
 			}
@@ -314,78 +265,63 @@ void DirectoryManager::explorer(char *dir_name)
 }
 
 //if it finds quotes, it removes whitespace outside of it. else, do nothing
-void DirectoryManager::removeWhitespaceOutOfQuotes(std::string & currLine)
-{
+void DirectoryManager::removeWhitespaceOutOfQuotes(std::string & currLine) {
 	bool quoteFound = false;
 	unsigned int saveIndex = 0;
-	for(unsigned int i=0; i<currLine.size(); ++i)
-	{
-		if(currLine.at(i) == '"')
-		{
+	for(unsigned int i=0; i<currLine.size(); ++i) {
+		if(currLine.at(i) == '"') {
 			quoteFound = true;
 			saveIndex = i;
-			if(i != 0)
-			{
+			if(i != 0) {
 				currLine.erase( std::remove_if(currLine.begin(), currLine.begin()+i, isspace), currLine.end() );
 			}
 			break;
 		}
 	}
-	if(quoteFound)
-	{
+	if(quoteFound) {
 		currLine.erase( std::remove_if(currLine.begin()+saveIndex, currLine.end(), isspace), currLine.end() );
 	}
 }
 
 
-std::string DirectoryManager::checkPathFormatForOS(const std::string &currLine)
-{
-	if(currLine.size()!=0 && currLine.at(0) == '\"' && currLine.at( currLine.size()-1 ) == '\"')
-	{
+std::string DirectoryManager::checkPathFormatForOS(const std::string &currLine) {
+	if(currLine.size()!=0 && currLine.at(0) == '\"' && currLine.at( currLine.size()-1 ) == '\"') {
 		return "Windows";
 	}
 	return "linux/MacOS";
 }
 
-bool DirectoryManager::handlefileOverride(std::string currLine)
-{
+bool DirectoryManager::handlefileOverride(std::string currLine) {
 	currLine.erase( std::remove_if(currLine.begin(), currLine.end(), isspace), currLine.end() );
 	//convert currLine to all lowercase
-	for(unsigned int i = 0; i < currLine.length(); ++i)
-	{
+	for(unsigned int i = 0; i < currLine.length(); ++i) {
     	currLine[i] = (char) tolower(currLine[i]);
 	}
 	//check for if it equals any override options
-	if( currLine == "uniquesongoverride=false" )
-	{
+	if( currLine == "uniquesongoverride=false" ) {
 		uniqueSongOverride_ = false;
 		return true;
 	}
-	else if ( currLine == "uniquesongoverride=true" )
-	{
+	else if ( currLine == "uniquesongoverride=true" ) {
 		uniqueSongOverride_ = true;
 		std::cout << "Override Detected: Will add repeat songs to playlist" << std::endl;
 		return true;
 	}
-	else if ( currLine == "operatingsystemoverride=0" )
-	{
+	else if ( currLine == "operatingsystemoverride=0" ) {
 		operatingSystemOverride_ = 0;
 		return true;
 	}
-	else if ( currLine == "operatingsystemoverride=1" )
-	{
+	else if ( currLine == "operatingsystemoverride=1" ) {
 		operatingSystemOverride_ = 1;
 		std::cout << "Override Detected: OS is \"linux/MacOS\"" << std::endl;
 		return true;
 	}
-	else if ( currLine == "operatingsystemoverride=2" )
-	{
+	else if ( currLine == "operatingsystemoverride=2" ) {
 		operatingSystemOverride_ = 2;
 		std::cout << "Override Detected: OS is \"Windows\"" << std::endl;
 		return true;
 	}
-	else if ( currLine == "operatingsystemoverride=3" )
-	{
+	else if ( currLine == "operatingsystemoverride=3" ) {
 		operatingSystemOverride_ = 3;
 		std::cout << "Override Detected: OS is \"Other\"" << std::endl;
 		return true;
@@ -397,8 +333,7 @@ bool DirectoryManager::handlefileOverride(std::string currLine)
 //isMusicfile
 //	returns true if file_Name is audio file_ supported by SFML
 //	.mp3 file_s will not be included
-bool DirectoryManager::isMusicfile(std::string file_Name)
-{
+bool DirectoryManager::isMusicfile(std::string file_Name) {
 	//check size incase file_Name is a.au, it won't break with file_Name.substr( file_Name.length()-6 )
 	if(file_Name.size() > 6) {
 		file_Name = file_Name.substr( file_Name.length() - 6 );
@@ -432,8 +367,7 @@ bool DirectoryManager::isMusicfile(std::string file_Name)
 	return false;
 }
 	
-std::vector<std::string> DirectoryManager::getPlaylist()
-{
+std::vector<std::string> DirectoryManager::getPlaylist() {
 	return returnedPlaylist_;
 }
 

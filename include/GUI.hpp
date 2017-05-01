@@ -4,8 +4,8 @@
 // 		Bryan Burkhardt (bmburkhardt@alaska.edu)  
 // 		Alexander Eckert (aeckert@alaska.edu)  
 // 		Jeremiah Jacobson (jjjacobson2@alaska.edu)  
-// 		Jarye Maurphy (@alaska.edu)  
-// 		Cameron Showalter (@alaska.edu) 
+// 		Jarye Murphy (jmurphy11@alaska.edu)
+// 		Cameron Showalter (cjshowalter@alaska.edu)
 //
 // Header for GUI class
 
