@@ -16,6 +16,7 @@
 /****** Timer Functions ******/
 
 void Timer::updateTimer() {
+	/****** Current Timer Stuff ******/
 	currentTimer = music->_music.getPlayingOffset();
 	currentTimeSeconds = (int)currentTimer.asSeconds();
 	currentTimeMinutes = convertToMinutes((int)currentTimer.asSeconds());
@@ -27,6 +28,7 @@ void Timer::updateTimer() {
 	currentTimerStreamMinutes << std::fixed << std::setprecision(0) << ((int)currentTimeMinutes%60);
 	currentTimerStreamHours << std::fixed << std::setprecision(0) << (currentTimeHours);
 	
+	/****** Total Timer Stuff ******/
 	totalTimer = music->_music.getDuration();
 	totalTimeSeconds = (int)totalTimer.asSeconds();
 	totalTimeMinutes = convertToMinutes((int) totalTimeSeconds);
@@ -101,8 +103,6 @@ std::string Timer::selectDisplayTimer() {
 	else {
 		return currentHour + currentMin + currentSec + totalHour + totalMin + totalSec;
 	}
-
-	
 }
 
 void Timer::displayTimer() {
