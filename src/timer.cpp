@@ -43,15 +43,14 @@ void Timer::updateTimer() {
 	// Seconds
 	if ((int)currentTimeSeconds%60 < 10) {
 		currentSec = "0" + currentTimerStreamSeconds.str() + "/";
-		if((int)totalTimeSeconds%60 < 10) {
-			totalSec = "0" + totalTimerStreamSeconds.str();
-		}
-		else {
-			totalSec = totalTimerStreamSeconds.str();
-		}
 	}
 	else {
 		currentSec = currentTimerStreamSeconds.str() + "/";
+	}
+	if((int)totalTimeSeconds%60 < 10) {
+			totalSec = "0" + totalTimerStreamSeconds.str();
+	}
+	else {
 		totalSec = totalTimerStreamSeconds.str();
 	}
 	// Minutes
@@ -72,14 +71,9 @@ void Timer::updateTimer() {
 		totalMin = totalTimerStreamMinutes.str() + ":";
 	}
 	// Hours
-	if((int)currentTimeHours < 10) {
-		currentHour = "0" + currentTimerStreamHours.str() + ":";
-		totalHour = "0" + totalTimerStreamHours.str() + ":";
-	}
-	else {
-		currentHour = currentTimerStreamHours.str() + ":";
-		totalHour = totalTimerStreamHours.str() + ":";
-	}
+	currentHour = currentTimerStreamHours.str() + ":";
+	totalHour = totalTimerStreamHours.str() + ":";
+	
 }
 
 std::string Timer::selectDisplayTimer() {
