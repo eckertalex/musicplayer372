@@ -9,10 +9,7 @@
 //
 // Source file_ for directoryManager
 
-
-//all other includes moved to .hpp
-#include "../include/directoryManager.hpp" 
-
+#include "../include/directoryManager.hpp"
 
 DirectoryManager::DirectoryManager()
 {
@@ -29,7 +26,7 @@ DirectoryManager::DirectoryManager()
 
 
 	handlefile();
-	if(file_Found_ == false)
+	if(!file_Found_)
 	{
 		defaultSettings();
 	}
@@ -105,7 +102,7 @@ void DirectoryManager::defaultSettings()
 
 void DirectoryManager::printWarning()
 {
-	if(warningHit_ == false)
+	if(!warningHit_)
 	{
 		warningHit_ = true;
 		std::cout << std::endl << "----------------------------------WARNING----------------------------------" << std::endl;

@@ -4,7 +4,7 @@
 // 		Bryan Burkhardt (bmburkhardt@alaska.edu)  
 // 		Alexander Eckert (aeckert@alaska.edu)  
 // 		Jeremiah Jacobson (jjjacobson2@alaska.edu)  
-// 		Jarye Maurphy (@alaska.edu)  
+// 		Jarye Murphy (jmurphy11@alaska.edu)
 // 		Cameron Showalter (@alaska.edu) 
 //
 // Source file for Music class
@@ -39,7 +39,7 @@ void Music::callPlayPause() {
 void Music::callNextSong() {
 	if (songList_.size() != 0) {
 		_music.stop();
-		//if you're at the end, just go to the begining(if press next)
+		//if you're at the end, just go to the beginning (if press next)
 		if (songListIndex_ == songList_.size() - 1) {
 			songListIndex_ = 0;
 		}

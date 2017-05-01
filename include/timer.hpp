@@ -53,8 +53,6 @@ public:
 
 	Timer(std::shared_ptr<Music> music);
 
-	sf::Text displayTimerText;
-
 	/****** Timer Functions ******/
 	//void setStyleTimer(sf::Font font);
 	void updateCurrentTimer();
