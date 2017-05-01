@@ -1,27 +1,33 @@
 #DirectoryConfig.txt
 #	If you move this file or change its name, update ../include/directoryMannager.hpp
-#	If this file is deleted or can't be read, directoryManager automatically only looks into "../res/audio" 
-#	Will add all songs it can access from directories listed below, and every directory after them
-
-#     OPERATINGSYSTEMOVERRIDE:
-#	0 -> program returns empty vector if os not reconized
-#	1 -> program will treat your computer as "linux/MacOS"
-#	2 -> program will treat your computer as "Windows"
-
-OPERATINGSYSTEMOVERRIDE = 0
+#	If this file is deleted or can't be read, DirectoryManager automatically only looks into "../res/audio" 
+#	The Program will run overrides and repositories in order listed in this file. You can set an override,
+#		then list a directory, then change the override and list another directory if needed.
 
 
-#     REPEATSONGSOVERRIDE:
-#	false -> if program finds multiple songs of same name if different directories, will NOT add both
-#	true  -> if program finds multiple songs of same name if different directories, it adds both
-
-REPEATSONGSOVERRIDE = false
+#	If the directory is on a different drive, you must override the OS if it's different than the OS
+#	running this program. You must also use a direct path to find the external folder. (Must have permissions)
 
 
-#IMPORTANT WINDOWS USERS: still type the repositories with "/" below, the program will change them automatically if needed.
-#IF YOUR FILES CONTAIN SPACES, YOU MUST BACKSLASH THEM OUT'\ '
-#List of repositories here:
-../res/audio
+
+#   OperatingSystemOverride:
+#	0 -> program will automatically detect the OS running the program
+#	1 -> program will format directories for "linux/MacOS"
+#	2 -> program will format directories for "Windows"
+#	3 -> program has no idea what path system to use: "Other"
+#		Note: if "Other", program will not find any songs. Added for testing purposes
+
+#   UniqueSongOverride:
+#	false -> if program finds multiple songs of same name in different directories, will NOT add both
+#	true  -> if program finds multiple songs of same name in different directories, it adds both
 
 
-#Ask Cameron if you have any questions
+#IMPORTANT WINDOWS USERS: still type the repositories with "/" below, the program will change them 
+#	automatically if needed.
+#IF YOUR FILES/FOLDERS CONTAIN SPACES, YOU MUST BACKSLASH THEM OUT: '\ '
+
+#List of orders to run start here:
+
+OperatingSystemOverride = 0
+UniqueSongOverride = false
+"..\res\audio"
