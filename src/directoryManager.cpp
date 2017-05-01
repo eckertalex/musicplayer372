@@ -90,14 +90,7 @@ void DirectoryManager::defaultSettings()
 	std::cout << "		Or looking in \"..\\res\\audio\" if on Windows"						<< std::endl;
 
 	formatPathForCorrectOS(defaultAudioPath_);
-	if(currOperatingSystem_ == "Windows")
-	{
-		explorer( (char*) defaultAudioPath_.c_str() );
-	}
-	else // "linux/MacOS"
-	{
-		explorer( (char*) defaultAudioPath_.c_str() );
-	}
+	explorer( (char*) defaultAudioPath_.c_str() );
 }
 
 void DirectoryManager::printWarning()
