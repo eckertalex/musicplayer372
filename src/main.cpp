@@ -10,8 +10,6 @@
 // Main file for MusicPlayer372, the project from CS372 
 // 		with Professor Chris Hartman
 
-#include <iostream>
-
 #include "../include/musicPlayer.hpp"
 
 int main()

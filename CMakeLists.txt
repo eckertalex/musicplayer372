@@ -9,7 +9,7 @@ endif()
 
 project(musicplayer372)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++11 -Wall")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++14 -Wall")
 
 include_directories("${PROJECT_BINARY_DIR}")
 
@@ -18,11 +18,15 @@ set(SOURCE_FILES
 			src/musicPlayer.cpp
 			src/textureManager.cpp
 			src/directoryManager.cpp
-)
+			src/GUI.cpp
+			src/InputManager.cpp
+			src/Music.cpp
+        	src/timer.cpp
+		)
 
 # Define sources and executable
 set(EXECUTABLE_NAME musicplayer)
-add_executable(${EXECUTABLE_NAME} ${SOURCE_FILES})
+add_executable(${EXECUTABLE_NAME} ${SOURCE_FILES} src/timer.cpp include/timer.hpp)
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
