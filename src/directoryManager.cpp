@@ -8,25 +8,10 @@
 // 		Cameron Showalter (cjshowalter@alaska.edu) 
 //
 // Source file_ for directoryManager
+
+
+//all other includes moved to .hpp
 #include "../include/directoryManager.hpp" 
-
-
-//------TEMP METHODS FOR TESTING / PRINTING (WILL BE DELETED)------
-void printVec(const std::vector<std::string> & returnedPlaylist_) 
-{
-	//note: strings are in form "../res/audio/(songname)"
-	std::cout << "Song List:" << std::endl;
-	for(unsigned int i=0; i<returnedPlaylist_.size(); ++i) 
-	{
-		std::cout << "   " << returnedPlaylist_[i] << std::endl;
-	}
-	std::cout << "End list;" << std::endl << std::endl;
-}
-
-
-//------END TEMP METHODS------
-
-
 
 
 DirectoryManager::DirectoryManager()
@@ -371,35 +356,35 @@ bool DirectoryManager::handlefileOverride(std::string currLine)
     	currLine[i] = (char) tolower(currLine[i]);
 	}
 	//check for if it equals any override options
-	if( currLine == "uniqueSongOverride_=false" )
+	if( currLine == "uniquesongoverride=false" )
 	{
 		uniqueSongOverride_ = false;
 		return true;
 	}
-	else if ( currLine == "uniqueSongOverride_=true" )
+	else if ( currLine == "uniquesongoverride=true" )
 	{
 		uniqueSongOverride_ = true;
 		std::cout << "Override Detected: Will add repeat songs to playlist" << std::endl;
 		return true;
 	}
-	else if ( currLine == "operatingSystemOverride_=0" )
+	else if ( currLine == "operatingsystemoverride=0" )
 	{
 		operatingSystemOverride_ = 0;
 		return true;
 	}
-	else if ( currLine == "operatingSystemOverride_=1" )
+	else if ( currLine == "operatingsystemoverride=1" )
 	{
 		operatingSystemOverride_ = 1;
 		std::cout << "Override Detected: OS is \"linux/MacOS\"" << std::endl;
 		return true;
 	}
-	else if ( currLine == "operatingSystemOverride_=2" )
+	else if ( currLine == "operatingsystemoverride=2" )
 	{
 		operatingSystemOverride_ = 2;
 		std::cout << "Override Detected: OS is \"Windows\"" << std::endl;
 		return true;
 	}
-	else if ( currLine == "operatingSystemOverride_=3" )
+	else if ( currLine == "operatingsystemoverride=3" )
 	{
 		operatingSystemOverride_ = 3;
 		std::cout << "Override Detected: OS is \"Other\"" << std::endl;

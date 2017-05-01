@@ -225,8 +225,6 @@ MusicPlayer::MusicPlayer() {
 		music.openFromFile(songList_[songListIndex_]);
 	}
 
-	//print for testing, delete later
-	printVec(songList_);
 
 	volSave_ = 100;
 	isMuted_ = false;

@@ -16,9 +16,6 @@
 #include <vector>			// vector
 #include <iostream>			// cout endl
 #include <fstream>			// ifstream
-
-
-
 #include <algorithm> 		// find replace remove_if
 #include <locale>        	// tolower
 #include <sys/stat.h>		// used in explorer()
@@ -31,12 +28,6 @@
 #	include <dirent.h> 
 #endif	
 
-
-
-
-
-//note: printVec will be deleted once testing is done
-void printVec(const std::vector<std::string> & returnedPlaylist_);
 
 class DirectoryManager
 {
