@@ -28,7 +28,6 @@ public:
 	void draw();
 	void update();
 	void handleInput();
-	bool clickInSprite(sf::Sprite s, int x , int y);
 	void loadTextures();
 	void setTextures();
 	void stylePlaylist();

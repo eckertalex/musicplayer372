@@ -104,7 +104,7 @@ void InputManager::handleInput() {
 		case sf::Event::MouseButtonPressed: {
 			if (event.mouseButton.button == sf::Mouse::Left) {
 				for (unsigned int i = 0; i < gui->spriteVec.size(); ++i) {
-					if (gui->clickInSprite(gui->spriteVec[i], mousePosX, mousePosY)) {
+					if (clickInSprite(gui->spriteVec[i], mousePosX, mousePosY)) {
 						if (i == 0) { music->callPlayPause(); } 		// Play/Pause song
 						if (i == 1) { music->callPrevSong(); } 			// Previous song
 						if (i == 2) { music->callNextSong(); }			// Next Song
@@ -121,4 +121,15 @@ void InputManager::handleInput() {
 		}
 	}
 	return;
+}
+
+bool InputManager::clickInSprite(sf::Sprite s, int x, int y) {
+	if (s.getGlobalBounds().top
+		+ s.getGlobalBounds().height > y) {
+		return s.getGlobalBounds().left + s.getGlobalBounds().width > x && x > s.getGlobalBounds().left &&
+			y > s.getGlobalBounds().top;
+	}
+	else {
+		return x >= s.getGlobalBounds().left + s.getGlobalBounds().width && false;
+	}
 }

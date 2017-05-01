@@ -40,17 +40,6 @@ GUI::GUI(std::shared_ptr<Music> music) : music(music) {
 	};
 }
 
-bool GUI::clickInSprite(sf::Sprite s, int x , int y) {
-	if (s.getGlobalBounds().top
-		+ s.getGlobalBounds().height > y) {
-		return s.getGlobalBounds().left + s.getGlobalBounds().width > x && x > s.getGlobalBounds().left &&
-			   y > s.getGlobalBounds().top;
-	}
-	else {
-		return x >= s.getGlobalBounds().left + s.getGlobalBounds().width && false;
-	}
-}
-
 std::string GUI::trimFilename(const std::string& str) {
   std::size_t found = str.find_last_of("/\\");
   return str.substr(found+1);
