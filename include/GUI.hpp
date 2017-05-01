@@ -14,6 +14,7 @@
 
 #include "InputManager.hpp"
 #include "textureManager.hpp"
+#include "timer.hpp"
 #include "Music.hpp"
 #include <memory>
 
@@ -37,6 +38,7 @@ public:
 
 	std::unique_ptr<TextureManager> texmgr;
 	std::shared_ptr<Music> music;
+	std::unique_ptr<Timer> timer;
 
 	std::vector<sf::Sprite> spriteVec;
 	sf::Font font;

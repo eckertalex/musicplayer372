@@ -21,11 +21,12 @@ set(SOURCE_FILES
 			src/GUI.cpp
 			src/InputManager.cpp
 			src/Music.cpp
-)
+        	src/timer.cpp
+		)
 
 # Define sources and executable
 set(EXECUTABLE_NAME musicplayer)
-add_executable(${EXECUTABLE_NAME} ${SOURCE_FILES})
+add_executable(${EXECUTABLE_NAME} ${SOURCE_FILES} src/timer.cpp include/timer.hpp)
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})

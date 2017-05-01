@@ -19,6 +19,7 @@
 
 GUI::GUI(std::shared_ptr<Music> music) : music(music) {
 	texmgr = std::make_unique<TextureManager>();
+	timer = std::make_unique<Timer>(music);
 	loadTextures();
 	window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "MusicPlayer",
 		sf::Style::Titlebar | sf::Style::Close);
@@ -73,6 +74,8 @@ void GUI::draw() {
 	window.draw(next2Song);
 	window.draw(next3Song);
 	window.draw(next4Song);
+
+	window.draw(timer->displayTimerText);
 
 	window.display();
 }
@@ -207,6 +210,8 @@ void GUI::displayPlaylist() {
 }
 
 void GUI::update() {
+	timer->setStyleTimer(font);
+	timer->displayTimer();
 	stylePlaylist();
 	displayPlaylist();
 }
