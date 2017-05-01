@@ -14,12 +14,12 @@
 #	0 -> program will automatically detect the OS running the program
 #	1 -> program will format directories for "linux/MacOS"
 #	2 -> program will format directories for "Windows"
-#	3 -> program has no idea what path system to use, so "Other"
+#	3 -> program has no idea what path system to use: "Other"
 #		Note: if "Other", program will not find any songs. Added for testing purposes
 
 #   UniqueSongOverride:
-#	false -> if program finds multiple songs of same name if different directories, will NOT add both
-#	true  -> if program finds multiple songs of same name if different directories, it adds both
+#	false -> if program finds multiple songs of same name in different directories, will NOT add both
+#	true  -> if program finds multiple songs of same name in different directories, it adds both
 
 
 #IMPORTANT WINDOWS USERS: still type the repositories with "/" below, the program will change them 
@@ -30,4 +30,4 @@
 
 OperatingSystemOverride = 0
 UniqueSongOverride = false
-../res/audio
+"..\res\audio"
