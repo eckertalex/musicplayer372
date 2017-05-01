@@ -88,6 +88,10 @@ void Timer::updateTotalTimer() {
 std::string Timer::selectDisplayTimer() {
 	// 0:xx
 	std::string rv = "";
+	
+	if(music->_music.getStatus() == 0) {
+		music->callNextSong();
+	}
 	if(totalTimeMinutes < 1) {
 		rv = "0:";
 		rv += currentSec + "0:";
@@ -103,9 +107,7 @@ std::string Timer::selectDisplayTimer() {
 		return currentHour + currentMin + currentSec + totalHour + totalMin + totalSec;
 	}
 
-	if(music->_music.getStatus() == 0) {
-		music->callNextSong();
-	}
+	
 }
 
 void Timer::displayTimer() {
