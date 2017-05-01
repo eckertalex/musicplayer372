@@ -54,9 +54,7 @@ public:
 	Timer(std::shared_ptr<Music> music);
 
 	/****** Timer Functions ******/
-	//void setStyleTimer(sf::Font font);
-	void updateCurrentTimer();
-	void updateTotalTimer();
+	void updateTimer();
 	std::string selectDisplayTimer();
 	void displayTimer();
 	int convertToMinutes(int seconds);
