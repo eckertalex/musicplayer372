@@ -32,6 +32,7 @@ public:
 	void setTextures();
 	void stylePlaylist();
 	void displayPlaylist();
+	void setText(sf::Text& tex, const sf::Color& col, float x, float y);
 	
 	std::string trimFilename(const std::string& str);
 
@@ -47,6 +48,11 @@ public:
 	sf::Text next2Song;
 	sf::Text next3Song;
 	sf::Text next4Song;
+	sf::Text next5Song;
+	sf::Text next6Song;
+	sf::Text next7Song;
+	sf::Text next8Song;
+
 
 	sf::Text timerText;
 

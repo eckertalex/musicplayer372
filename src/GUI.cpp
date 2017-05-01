@@ -35,7 +35,7 @@ GUI::GUI(std::shared_ptr<Music> music) : music(music) {
 			nextButton, 				// 2
 			muteButton, 				// 3
 			decreaseVolumeButton, 		// 4
-			increaseVolumeButton
+			increaseVolumeButton		// 5
 	};
 }
 
@@ -62,6 +62,10 @@ void GUI::draw() {
 	window.draw(next2Song);
 	window.draw(next3Song);
 	window.draw(next4Song);
+	window.draw(next5Song);
+	window.draw(next6Song);
+	window.draw(next7Song);
+	window.draw(next8Song);
 	window.draw(timerText);
 
 
@@ -108,41 +112,29 @@ void GUI::setTextures() {
 	increaseVolumeButton.setPosition(210,120);
 }
 
+void GUI::setText(sf::Text& tex, const sf::Color& col, float x, float y) {
+	tex.setFont(font);
+	tex.setCharacterSize(24);
+	tex.setColor(col);
+	tex.setPosition(x,y);
+}
+
 void GUI::stylePlaylist() {
-	prevSong.setFont(font);
-	prevSong.setCharacterSize(24);
-	prevSong.setColor(sf::Color::Black);
-	prevSong.setPosition(360,35);
+	sf::Color songsColor(0x080A58ff);
+	sf::Color currColor(0x1E25EAff);
+	sf::Color timerColor(0x080A58ff);
 
-	currentSong.setFont(font);
-	currentSong.setCharacterSize(24);
-	currentSong.setColor(sf::Color::Blue);
-	currentSong.setPosition(360,60);
-
-	nextSong.setFont(font);
-	nextSong.setCharacterSize(24);
-	nextSong.setColor(sf::Color::Black);
-	nextSong.setPosition(360,85);
-
-	next2Song.setFont(font);
-	next2Song.setCharacterSize(24);
-	next2Song.setColor(sf::Color::Black);
-	next2Song.setPosition(360,110);
-
-	next3Song.setFont(font);
-	next3Song.setCharacterSize(24);
-	next3Song.setColor(sf::Color::Black);
-	next3Song.setPosition(360,135);
-
-	next4Song.setFont(font);
-	next4Song.setCharacterSize(24);
-	next4Song.setColor(sf::Color::Black);
-	next4Song.setPosition(360,160);
-
-	timerText.setFont(font);
-	timerText.setCharacterSize(24);
-	timerText.setColor(sf::Color::Red);
-	timerText.setPosition(40,75);
+	setText(prevSong, songsColor, 360, 12);
+	setText(currentSong, currColor, 360, 37);
+	setText(nextSong, songsColor, 360, 62);
+	setText(next2Song, songsColor, 360, 87);
+	setText(next3Song, songsColor, 360, 112);
+	setText(next4Song, songsColor, 360, 137);
+	setText(next5Song, songsColor, 360, 162);
+	setText(next6Song, songsColor, 360, 187);
+	setText(next7Song, songsColor, 360, 212);
+	setText(next8Song, songsColor, 360, 237);
+	setText(timerText, timerColor, 40, 75);
 	timerText.setString(timer->selectDisplayTimer());
 }
 
@@ -200,6 +192,100 @@ void GUI::displayPlaylist() {
 	}
 	else {
 		next4Song.setString(trimFilename(music->songList_[music->songListIndex_ + 4]));
+	}
+
+	if (music->songListIndex_ == music->songList_.size() - 5) {
+		next5Song.setString(trimFilename(music->songList_[0]));
+	}
+	else if (music->songListIndex_ == music->songList_.size() - 4) {
+		next5Song.setString(trimFilename(music->songList_[1]));
+	}
+	else if (music->songListIndex_ == music->songList_.size() - 3) {
+		next5Song.setString(trimFilename(music->songList_[2]));
+	}
+	else if (music->songListIndex_ == music->songList_.size() - 2) {
+		next5Song.setString(trimFilename(music->songList_[3]));
+	}
+	else if (music->songListIndex_ == music->songList_.size() - 1) {
+		next5Song.setString(trimFilename(music->songList_[4]));
+	}
+	else {
+		next5Song.setString(trimFilename(music->songList_[music->songListIndex_ + 5]));
+	}
+
+	if (music->songListIndex_ == music->songList_.size() - 6) {
+		next6Song.setString(trimFilename(music->songList_[0]));
+	}
+	else if (music->songListIndex_ == music->songList_.size() - 5) {
+		next6Song.setString(trimFilename(music->songList_[1]));
+	}
+	else if (music->songListIndex_ == music->songList_.size() - 4) {
+		next6Song.setString(trimFilename(music->songList_[2]));
+	}
+	else if (music->songListIndex_ == music->songList_.size() - 3) {
+		next6Song.setString(trimFilename(music->songList_[3]));
+	}
+	else if (music->songListIndex_ == music->songList_.size() - 2) {
+		next6Song.setString(trimFilename(music->songList_[4]));
+	}
+	else if (music->songListIndex_ == music->songList_.size() - 1) {
+		next6Song.setString(trimFilename(music->songList_[5]));
+	}
+	else {
+		next6Song.setString(trimFilename(music->songList_[music->songListIndex_ + 6]));
+	}
+
+	if (music->songListIndex_ == music->songList_.size() - 7) {
+		next7Song.setString(trimFilename(music->songList_[0]));
+	}
+	else if (music->songListIndex_ == music->songList_.size() - 6) {
+		next7Song.setString(trimFilename(music->songList_[1]));
+	}
+	else if (music->songListIndex_ == music->songList_.size() - 5) {
+		next7Song.setString(trimFilename(music->songList_[2]));
+	}
+	else if (music->songListIndex_ == music->songList_.size() - 4) {
+		next7Song.setString(trimFilename(music->songList_[3]));
+	}
+	else if (music->songListIndex_ == music->songList_.size() - 3) {
+		next7Song.setString(trimFilename(music->songList_[4]));
+	}
+	else if (music->songListIndex_ == music->songList_.size() - 2) {
+		next7Song.setString(trimFilename(music->songList_[5]));
+	}
+	else if (music->songListIndex_ == music->songList_.size() - 1) {
+		next7Song.setString(trimFilename(music->songList_[6]));
+	}
+	else {
+		next7Song.setString(trimFilename(music->songList_[music->songListIndex_ + 7]));
+	}
+
+	if (music->songListIndex_ == music->songList_.size() - 8) {
+		next8Song.setString(trimFilename(music->songList_[0]));
+	}
+	else if (music->songListIndex_ == music->songList_.size() - 7) {
+		next8Song.setString(trimFilename(music->songList_[1]));
+	}
+	else if (music->songListIndex_ == music->songList_.size() - 6) {
+		next8Song.setString(trimFilename(music->songList_[2]));
+	}
+	else if (music->songListIndex_ == music->songList_.size() - 5) {
+		next8Song.setString(trimFilename(music->songList_[3]));
+	}
+	else if (music->songListIndex_ == music->songList_.size() - 4) {
+		next8Song.setString(trimFilename(music->songList_[4]));
+	}
+	else if (music->songListIndex_ == music->songList_.size() - 3) {
+		next8Song.setString(trimFilename(music->songList_[5]));
+	}
+	else if (music->songListIndex_ == music->songList_.size() - 2) {
+		next8Song.setString(trimFilename(music->songList_[6]));
+	}
+	else if (music->songListIndex_ == music->songList_.size() - 1) {
+		next8Song.setString(trimFilename(music->songList_[7]));
+	}
+	else {
+		next8Song.setString(trimFilename(music->songList_[music->songListIndex_ + 8]));
 	}
 }
 
