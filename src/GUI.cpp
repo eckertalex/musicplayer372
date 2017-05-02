@@ -74,6 +74,7 @@ void GUI::draw() {
 	window.draw(next6Song);
 	window.draw(next7Song);
 	window.draw(next8Song);
+	window.draw(songNumber);
 	window.draw(timerText);
 	line.setSize(sf::Vector2f(music->_music.getVolume()*2, 5));
 	window.draw(line);
@@ -143,10 +144,20 @@ void GUI::stylePlaylist() {
 	setText(next6Song, songsColor, 360, 187);
 	setText(next7Song, songsColor, 360, 212);
 	setText(next8Song, songsColor, 360, 237);
+	setText(songNumber, songsColor, 200, 75);
 	setText(timerText, timerColor, 40, 75);
 }
 
 void GUI::displayPlaylist() {
+	if (music->songListIndex_ < 10) {
+		songNumber.setString("0" + std::to_string(music->songListIndex_)
+							 + "/" + std::to_string(music->songList_.size()));
+	}
+	else {
+		songNumber.setString(std::to_string(music->songListIndex_)
+							 + "/" + std::to_string(music->songList_.size()));
+	}
+
 	if (music->songListIndex_ == 0) {
 		prevSong.setString(trimFilename(music->songList_[music->songList_.size() - 1]));
 	}

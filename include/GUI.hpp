@@ -52,7 +52,7 @@ public:
 	sf::Text next6Song;
 	sf::Text next7Song;
 	sf::Text next8Song;
-
+	sf::Text songNumber;
 
 	sf::Text timerText;
 
