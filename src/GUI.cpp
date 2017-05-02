@@ -151,12 +151,12 @@ void GUI::stylePlaylist() {
 }
 
 void GUI::displayPlaylist() {
-	if (music->songListIndex_ < 10) {
-		songNumber.setString("0" + std::to_string(music->songListIndex_)
+	if (music->songListIndex_+1 < 10) {
+		songNumber.setString("0" + std::to_string(music->songListIndex_+1)
 							 + "/" + std::to_string(music->songList_.size()));
 	}
 	else {
-		songNumber.setString(std::to_string(music->songListIndex_)
+		songNumber.setString(std::to_string(music->songListIndex_+1)
 							 + "/" + std::to_string(music->songList_.size()));
 	}
 
