@@ -1,4 +1,5 @@
 #DirectoryConfig.txt
+# V2.2
 #	If you move this file or change its name, update ../include/directoryMannager.hpp
 #	If this file is deleted or can't be read, DirectoryManager automatically only looks into "../res/audio" 
 #	The Program will run overrides and repositories in order listed in this file. You can set an override,

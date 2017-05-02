@@ -40,14 +40,17 @@ DirectoryManager::DirectoryManager()
 
 void DirectoryManager::handlefile() 
 {
-	file_.open(configPath_);
-	if(file_.is_open()) 
+	std::ifstream file;
+	file.open(configPath_);
+	if(file.is_open()) 
 	{
-		configfileFound();
-		file_.close();
-		return;
+		configfileFound(file);
 	}
-	fileFound_ = false;
+	else
+	{
+		fileFound_ = false;
+	}
+	file.close();
 }
 
 void DirectoryManager::defaultSettings() 
@@ -68,13 +71,13 @@ void DirectoryManager::printWarning()
 }
 
 
-void DirectoryManager::configfileFound() 
+void DirectoryManager::configfileFound(std::ifstream &file)
 {
 	std::string currLine;
 	fileFound_ = true;
-	while(!file_.eof()) 
+	while(!file.eof()) 
 	{
-		std::getline(file_, currLine);
+		std::getline(file, currLine);
 		currLine.erase( std::remove_if(currLine.begin(), currLine.end(), isspace), currLine.end() );
 		if( currLine == "" || currLine.at(0) == '#' || handlefileOverride(currLine) ) 
 		{
@@ -105,7 +108,7 @@ bool DirectoryManager::handlefileOverride(std::string currLine)
 }
 
 //tutorial for a basic explorer method copied from https://www.youtube.com/watch?v=w9l8kLPQ39c
-void DirectoryManager::explorer(char *dir_name) 
+void DirectoryManager::explorer(char *dir_name)
 {
 	DIR *dir = NULL; //pointer to an open directory
 	struct dirent *entry; //stuff in current directory
@@ -141,7 +144,7 @@ void DirectoryManager::explorer(char *dir_name)
 					}
 					else if(uniqueSongOverride_)
 					{
-						returnedPlaylist_.push_back(std::string(path));
+						returnedPlaylist_.push_back(path);
 					} 
 				}
 				else
@@ -214,6 +217,10 @@ std::vector<std::string> DirectoryManager::getPlaylist()
 {
 	return returnedPlaylist_;
 }
+
+
+
+
 
 
 

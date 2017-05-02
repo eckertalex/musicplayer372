@@ -38,7 +38,7 @@ public:
 	void handlefile();
 	void defaultSettings();
 	void printWarning();
-	void configfileFound();
+	void configfileFound(std::ifstream &file);
 	void explorer(char *dir_name);
 	bool handlefileOverride(std::string currLine);
 	bool isMusicfile(std::string fileName);
@@ -64,10 +64,6 @@ private:
 	//I'm stumped, what could these possibly be??
 	std::vector<std::string> returnedPlaylist_;
 	std::vector<std::string> uniqueSongs_;
-
-	std::ifstream file_;
-	//used in multiple methods. Added to private so i don't have to pass it around.
-
 };
 
 #endif // DIRECTORYMANAGER_HPP
