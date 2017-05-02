@@ -38,58 +38,36 @@ public:
 	void handlefile();
 	void defaultSettings();
 	void printWarning();
-	void formatPathForCorrectOS(std::string & path);
-	std::string getOsName();
 	void configfileFound();
-	bool isOSother();
 	void explorer(char *dir_name);
-	void removeWhitespaceOutOfQuotes(std::string & currLine);
-	std::string checkPathFormatForOS(const std::string &currLine);
 	bool handlefileOverride(std::string currLine);
-	bool isMusicfile(std::string file_Name);
-
-
-
-
+	bool isMusicfile(std::string fileName);
 	std::vector<std::string> getPlaylist();
 
 
 private:
-	//Overrides can be accessed/changed inside DirectoryConfig.txt
+	//change in DirectoryManager().
 	std::string configPath_;
 	std::string defaultAudioPath_;
+	bool addLockedFiles_;
 
-	int operatingSystemOverride_;
-	//0 -> program will automatically detect the OS running the program
-	//1 -> program will format directories for "linux/MacOS"
-	//2 -> program will format directories for "Windows"
-	//3 -> program has no idea what path system to use, so "Other"
-	//		Note: if "Other", program will not find any songs. Added for testing purposes
-
-	int uniqueSongOverride_;
 	//true - > If songs with same name are found in different directories, includes both in playlist
 	//false -> If songs with same name are found in different directories, only adds the first one to playlist
+	int uniqueSongOverride_;
 
-	std::string currOperatingSystem_;
-	//returns your operating system. IS affected by oppereatingSystemOveride
-	//possible returns: "Windows" "linux/MacOS" "Other"
+	//If file found, look in directories listed. If not, look in defaultAudioPath_
+	bool fileFound_;
 
-	bool file_Found_;
-
+	//If true, prints warning box around all warnings
 	bool warningHit_;
 
+	//I'm stumped, what could these possibly be??
 	std::vector<std::string> returnedPlaylist_;
-	//it's a list of songs...
-
 	std::vector<std::string> uniqueSongs_;
-	//private because no reason for others to use this. it's not equal to returnedPlaylist_ if
-	//uniqueSongOverride_ is ever set to true
 
 	std::ifstream file_;
 	//used in multiple methods. Added to private so i don't have to pass it around.
 
 };
-
-
 
 #endif // DIRECTORYMANAGER_HPP

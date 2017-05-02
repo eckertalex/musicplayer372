@@ -4,32 +4,17 @@
 #	The Program will run overrides and repositories in order listed in this file. You can set an override,
 #		then list a directory, then change the override and list another directory if needed.
 
-
-#	If the directory is on a different drive, you must override the OS if it's different than the OS
-#	running this program. You must also use a direct path to find the external folder. (Must have permissions)
-
+#	If the directory is on a different drive, you must use a direct path to find the 
+#	external folder. (Must have permissions)
 
 
-#   OperatingSystemOverride:
-#	0 -> program will automatically detect the OS running the program
-#	1 -> program will format directories for "linux/MacOS"
-#	2 -> program will format directories for "Windows"
-#	3 -> program has no idea what path system to use: "Other"
-#		Note: if "Other", program will not find any songs. Added for testing purposes
-
-#   UniqueSongOverride:
+#  UniqueSongOverride:
 #	false -> if program finds multiple songs of same name in different directories, will NOT add both
 #	true  -> if program finds multiple songs of same name in different directories, it adds both
 
-
-#IMPORTANT WINDOWS USERS: still type the repositories with "/" below, the program will change them 
-#	automatically if needed.
-#IF YOUR FILES/FOLDERS CONTAIN SPACES, YOU MUST BACKSLASH THEM OUT: '\ '
-
 #List of orders to run start here:
 
-OperatingSystemOverride = 0
+
 UniqueSongOverride = false
-"..\res\audio"
-uniquesongoverride=false
 ../res/audio
+
