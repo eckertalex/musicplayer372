@@ -36,7 +36,7 @@ Building this project in the Terminal (\*nix):
   * `cmake ..`
 * If all the required packages are correctly installed and could be found, we can run our Makefile to create the executable:
   * `make`
-* Now, you can play the game with the following command:
+* Now, you can listen to the musicplayer with the following command:
   * `./musicplayer`
 * Enjoy!!
 
