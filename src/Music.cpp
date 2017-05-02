@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <memory>
+#include <math.h>
 
 #include "../include/Music.hpp"
 
@@ -77,7 +78,7 @@ void Music::callIncreaseVolume() {
 	}
 	//if we change the " +1" for music.getVolume, make sure to reduce the "<= 99" in the if statement (100 - number) -CS
 	if (_music.getVolume() <= 99) {
-		_music.setVolume(_music.getVolume() + 1);
+		_music.setVolume(ceil(_music.getVolume() + 1));
 		std::cout << "The volume is " << _music.getVolume() << std::endl;
 	}
 }
@@ -90,7 +91,7 @@ void Music::callDecreaseVolume() {
 	}
 	//if we change the " -1" for music.getVolume, make sure to change the ">= 1" in the if statement to the same value -CS
 	if (_music.getVolume() >= 1) {
-		_music.setVolume(_music.getVolume() - 1);
+		_music.setVolume(floor(_music.getVolume() - 1));
 		std::cout << "The volume is " << _music.getVolume() << std::endl;
 	}
 }
