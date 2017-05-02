@@ -63,6 +63,7 @@ public:
 	sf::Sprite muteButton;
 	sf::Sprite decreaseVolumeButton;
 	sf::Sprite increaseVolumeButton;
+	sf::RectangleShape line;
 };
 
 // define window size
