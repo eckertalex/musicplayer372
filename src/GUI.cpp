@@ -40,7 +40,11 @@ std::string GUI::trimFilename(const std::string& str) {
 	std::size_t foundSlash = str.find_last_of("/\\");
 	std::string temp = str.substr(foundSlash+1);
 	std::size_t foundDot = temp.find_last_of(".");
-	return temp.erase(foundDot);
+	temp.erase(foundDot);
+	if (temp.length() <= 23)
+		return temp;
+	else
+		return temp.erase(21, temp.length()) + "...";
 }
 
 void GUI::draw() {
