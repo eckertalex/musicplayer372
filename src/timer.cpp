@@ -62,7 +62,7 @@ void Timer::updateTimer() {
 		currentMin = "0" + currentTimerStreamMinutes.str() + ":";
 		totalMin = totalTimerStreamMinutes.str() + ":";
 	}
-	else if((int)currentTimeMinutes%60 < 10 && (int)totalTimeHours > 0) {
+	else if((int)currentTimeMinutes%60 < 10 && (int)totalTimeMinutes%60 < 10 && (int)totalTimeHours > 0) {
 		currentMin = "0" + currentTimerStreamMinutes.str() + ":";
 		totalMin = "0" + totalTimerStreamMinutes.str() + ":";
 	}
