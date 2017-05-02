@@ -34,7 +34,7 @@ public:
 	void displayPlaylist();
 	void setText(sf::Text& tex, const sf::Color& col, float x, float y);
 	
-	std::string trimFilename(const std::string& str);
+	std::string trimFilename(const std::string& str, unsigned long cutoff);
 
 	std::unique_ptr<TextureManager> texmgr;
 	std::shared_ptr<Music> music;
@@ -44,6 +44,7 @@ public:
 	sf::Font font;
 	sf::Text prevSong;
 	sf::Text currentSong;
+	sf::Text currentSongInfo;
 	sf::Text nextSong;
 	sf::Text next2Song;
 	sf::Text next3Song;

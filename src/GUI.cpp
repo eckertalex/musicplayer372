@@ -41,15 +41,15 @@ GUI::GUI(std::shared_ptr<Music> music) : music(music) {
 	};
 }
 
-std::string GUI::trimFilename(const std::string& str) {
+std::string GUI::trimFilename(const std::string& str, unsigned long cutoff) {
 	std::size_t foundSlash = str.find_last_of("/\\");
 	std::string temp = str.substr(foundSlash+1);
 	std::size_t foundDot = temp.find_last_of(".");
 	temp.erase(foundDot);
-	if (temp.length() <= 23)
+	if (temp.length() <= cutoff)
 		return temp;
 	else
-		return temp.erase(21, temp.length()) + "...";
+		return temp.erase(cutoff-2, temp.length()) + "...";
 }
 
 void GUI::draw() {
@@ -75,6 +75,7 @@ void GUI::draw() {
 	window.draw(next7Song);
 	window.draw(next8Song);
 	window.draw(songNumber);
+	window.draw(currentSongInfo);
 	window.draw(timerText);
 	line.setSize(sf::Vector2f(music->_music.getVolume()*2, 5));
 	window.draw(line);
@@ -144,8 +145,9 @@ void GUI::stylePlaylist() {
 	setText(next6Song, songsColor, 360, 187);
 	setText(next7Song, songsColor, 360, 212);
 	setText(next8Song, songsColor, 360, 237);
-	setText(songNumber, songsColor, 200, 75);
-	setText(timerText, timerColor, 40, 75);
+	setText(currentSongInfo, currColor, 40, 14);
+	setText(songNumber, songsColor, 40, 42);
+	setText(timerText, timerColor, 40, 70);
 }
 
 void GUI::displayPlaylist() {
@@ -159,152 +161,153 @@ void GUI::displayPlaylist() {
 	}
 
 	if (music->songListIndex_ == 0) {
-		prevSong.setString(trimFilename(music->songList_[music->songList_.size() - 1]));
+		prevSong.setString(trimFilename(music->songList_[music->songList_.size() - 1], 23));
 	}
 	else {
-		prevSong.setString(trimFilename(music->songList_[music->songListIndex_ - 1]));
+		prevSong.setString(trimFilename(music->songList_[music->songListIndex_ - 1], 23));
 	}
 
-	currentSong.setString(trimFilename(music->songList_[music->songListIndex_]));
+	currentSong.setString(trimFilename(music->songList_[music->songListIndex_], 23));
+	currentSongInfo.setString(trimFilename(music->songList_[music->songListIndex_], 16));
 
 	if (music->songListIndex_ == music->songList_.size() - 1) {
-		nextSong.setString(trimFilename(music->songList_[0]));
+		nextSong.setString(trimFilename(music->songList_[0], 23));
 	}
 	else {
-		nextSong.setString(trimFilename(music->songList_[music->songListIndex_ + 1]));
+		nextSong.setString(trimFilename(music->songList_[music->songListIndex_ + 1], 23));
 	}
 
 	if (music->songListIndex_ == music->songList_.size() - 2) {
-		next2Song.setString(trimFilename(music->songList_[0]));
+		next2Song.setString(trimFilename(music->songList_[0], 23));
 	}
 	else if (music->songListIndex_ == music->songList_.size() - 1) {
-		next2Song.setString(trimFilename(music->songList_[1]));
+		next2Song.setString(trimFilename(music->songList_[1], 23));
 	}
 	else {
-		next2Song.setString(trimFilename(music->songList_[music->songListIndex_ + 2]));
+		next2Song.setString(trimFilename(music->songList_[music->songListIndex_ + 2], 23));
 	}
 
 	if (music->songListIndex_ == music->songList_.size() - 3) {
-		next3Song.setString(trimFilename(music->songList_[0]));
+		next3Song.setString(trimFilename(music->songList_[0], 23));
 	}
 	else if (music->songListIndex_ == music->songList_.size() - 2) {
-		next3Song.setString(trimFilename(music->songList_[1]));
+		next3Song.setString(trimFilename(music->songList_[1], 23));
 	}
 	else if (music->songListIndex_ == music->songList_.size() - 1) {
-		next3Song.setString(trimFilename(music->songList_[2]));
+		next3Song.setString(trimFilename(music->songList_[2], 23));
 	}
 	else {
-		next3Song.setString(trimFilename(music->songList_[music->songListIndex_ + 3]));
+		next3Song.setString(trimFilename(music->songList_[music->songListIndex_ + 3], 23));
 	}
 
 	if (music->songListIndex_ == music->songList_.size() - 4) {
-		next4Song.setString(trimFilename(music->songList_[0]));
+		next4Song.setString(trimFilename(music->songList_[0], 23));
 	}
 	else if (music->songListIndex_ == music->songList_.size() - 3) {
-		next4Song.setString(trimFilename(music->songList_[1]));
+		next4Song.setString(trimFilename(music->songList_[1], 23));
 	}
 	else if (music->songListIndex_ == music->songList_.size() - 2) {
-		next4Song.setString(trimFilename(music->songList_[2]));
+		next4Song.setString(trimFilename(music->songList_[2], 23));
 	}
 	else if (music->songListIndex_ == music->songList_.size() - 1) {
-		next4Song.setString(trimFilename(music->songList_[3]));
+		next4Song.setString(trimFilename(music->songList_[3], 23));
 	}
 	else {
-		next4Song.setString(trimFilename(music->songList_[music->songListIndex_ + 4]));
+		next4Song.setString(trimFilename(music->songList_[music->songListIndex_ + 4], 23));
 	}
 
 	if (music->songListIndex_ == music->songList_.size() - 5) {
-		next5Song.setString(trimFilename(music->songList_[0]));
+		next5Song.setString(trimFilename(music->songList_[0], 23));
 	}
 	else if (music->songListIndex_ == music->songList_.size() - 4) {
-		next5Song.setString(trimFilename(music->songList_[1]));
+		next5Song.setString(trimFilename(music->songList_[1], 23));
 	}
 	else if (music->songListIndex_ == music->songList_.size() - 3) {
-		next5Song.setString(trimFilename(music->songList_[2]));
+		next5Song.setString(trimFilename(music->songList_[2], 23));
 	}
 	else if (music->songListIndex_ == music->songList_.size() - 2) {
-		next5Song.setString(trimFilename(music->songList_[3]));
+		next5Song.setString(trimFilename(music->songList_[3], 23));
 	}
 	else if (music->songListIndex_ == music->songList_.size() - 1) {
-		next5Song.setString(trimFilename(music->songList_[4]));
+		next5Song.setString(trimFilename(music->songList_[4], 23));
 	}
 	else {
-		next5Song.setString(trimFilename(music->songList_[music->songListIndex_ + 5]));
+		next5Song.setString(trimFilename(music->songList_[music->songListIndex_ + 5], 23));
 	}
 
 	if (music->songListIndex_ == music->songList_.size() - 6) {
-		next6Song.setString(trimFilename(music->songList_[0]));
+		next6Song.setString(trimFilename(music->songList_[0], 23));
 	}
 	else if (music->songListIndex_ == music->songList_.size() - 5) {
-		next6Song.setString(trimFilename(music->songList_[1]));
+		next6Song.setString(trimFilename(music->songList_[1], 23));
 	}
 	else if (music->songListIndex_ == music->songList_.size() - 4) {
-		next6Song.setString(trimFilename(music->songList_[2]));
+		next6Song.setString(trimFilename(music->songList_[2], 23));
 	}
 	else if (music->songListIndex_ == music->songList_.size() - 3) {
-		next6Song.setString(trimFilename(music->songList_[3]));
+		next6Song.setString(trimFilename(music->songList_[3], 23));
 	}
 	else if (music->songListIndex_ == music->songList_.size() - 2) {
-		next6Song.setString(trimFilename(music->songList_[4]));
+		next6Song.setString(trimFilename(music->songList_[4], 23));
 	}
 	else if (music->songListIndex_ == music->songList_.size() - 1) {
-		next6Song.setString(trimFilename(music->songList_[5]));
+		next6Song.setString(trimFilename(music->songList_[5], 23));
 	}
 	else {
-		next6Song.setString(trimFilename(music->songList_[music->songListIndex_ + 6]));
+		next6Song.setString(trimFilename(music->songList_[music->songListIndex_ + 6], 23));
 	}
 
 	if (music->songListIndex_ == music->songList_.size() - 7) {
-		next7Song.setString(trimFilename(music->songList_[0]));
+		next7Song.setString(trimFilename(music->songList_[0], 23));
 	}
 	else if (music->songListIndex_ == music->songList_.size() - 6) {
-		next7Song.setString(trimFilename(music->songList_[1]));
+		next7Song.setString(trimFilename(music->songList_[1], 23));
 	}
 	else if (music->songListIndex_ == music->songList_.size() - 5) {
-		next7Song.setString(trimFilename(music->songList_[2]));
+		next7Song.setString(trimFilename(music->songList_[2], 23));
 	}
 	else if (music->songListIndex_ == music->songList_.size() - 4) {
-		next7Song.setString(trimFilename(music->songList_[3]));
+		next7Song.setString(trimFilename(music->songList_[3], 23));
 	}
 	else if (music->songListIndex_ == music->songList_.size() - 3) {
-		next7Song.setString(trimFilename(music->songList_[4]));
+		next7Song.setString(trimFilename(music->songList_[4], 23));
 	}
 	else if (music->songListIndex_ == music->songList_.size() - 2) {
-		next7Song.setString(trimFilename(music->songList_[5]));
+		next7Song.setString(trimFilename(music->songList_[5], 23));
 	}
 	else if (music->songListIndex_ == music->songList_.size() - 1) {
-		next7Song.setString(trimFilename(music->songList_[6]));
+		next7Song.setString(trimFilename(music->songList_[6], 23));
 	}
 	else {
-		next7Song.setString(trimFilename(music->songList_[music->songListIndex_ + 7]));
+		next7Song.setString(trimFilename(music->songList_[music->songListIndex_ + 7], 23));
 	}
 
 	if (music->songListIndex_ == music->songList_.size() - 8) {
-		next8Song.setString(trimFilename(music->songList_[0]));
+		next8Song.setString(trimFilename(music->songList_[0], 23));
 	}
 	else if (music->songListIndex_ == music->songList_.size() - 7) {
-		next8Song.setString(trimFilename(music->songList_[1]));
+		next8Song.setString(trimFilename(music->songList_[1], 23));
 	}
 	else if (music->songListIndex_ == music->songList_.size() - 6) {
-		next8Song.setString(trimFilename(music->songList_[2]));
+		next8Song.setString(trimFilename(music->songList_[2], 23));
 	}
 	else if (music->songListIndex_ == music->songList_.size() - 5) {
-		next8Song.setString(trimFilename(music->songList_[3]));
+		next8Song.setString(trimFilename(music->songList_[3], 23));
 	}
 	else if (music->songListIndex_ == music->songList_.size() - 4) {
-		next8Song.setString(trimFilename(music->songList_[4]));
+		next8Song.setString(trimFilename(music->songList_[4], 23));
 	}
 	else if (music->songListIndex_ == music->songList_.size() - 3) {
-		next8Song.setString(trimFilename(music->songList_[5]));
+		next8Song.setString(trimFilename(music->songList_[5], 23));
 	}
 	else if (music->songListIndex_ == music->songList_.size() - 2) {
-		next8Song.setString(trimFilename(music->songList_[6]));
+		next8Song.setString(trimFilename(music->songList_[6], 23));
 	}
 	else if (music->songListIndex_ == music->songList_.size() - 1) {
-		next8Song.setString(trimFilename(music->songList_[7]));
+		next8Song.setString(trimFilename(music->songList_[7], 23));
 	}
 	else {
-		next8Song.setString(trimFilename(music->songList_[music->songListIndex_ + 8]));
+		next8Song.setString(trimFilename(music->songList_[music->songListIndex_ + 8], 23));
 	}
 }
 
