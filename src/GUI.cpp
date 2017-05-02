@@ -144,7 +144,6 @@ void GUI::stylePlaylist() {
 	setText(next7Song, songsColor, 360, 212);
 	setText(next8Song, songsColor, 360, 237);
 	setText(timerText, timerColor, 40, 75);
-	timerText.setString(timer->selectDisplayTimer());
 }
 
 void GUI::displayPlaylist() {
@@ -300,5 +299,6 @@ void GUI::displayPlaylist() {
 
 void GUI::update() {
 	displayPlaylist();
+	timerText.setString(timer->selectDisplayTimer());
 	timer->displayTimer();
 }
