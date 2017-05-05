@@ -26,6 +26,7 @@ public:
 
 	void mouseOverHighlight();
 	bool clickInSprite(sf::Sprite s, int x, int y);
+	bool clickInVolumeBar(int x, int y);
 	std::shared_ptr<Music> music;
 	std::shared_ptr<GUI> gui;
 };

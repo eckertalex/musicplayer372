@@ -113,6 +113,15 @@ void InputManager::handleInput() {
 						if (i == 5) { music->callIncreaseVolume(); }	// Increase volume
 					}
 				}
+				if (clickInVolumeBar(mousePosX, mousePosY)) {
+					int tempVolume = (unsigned int) ((245 - mousePosY) / 2);
+					if (tempVolume == 0) {
+						music->callMuteUnmute();
+					} else {
+						music->volSave_ = (unsigned int) tempVolume;
+						music->callSetVolume();
+					}
+				}
 			}
 			break;
 		}
@@ -132,4 +141,9 @@ bool InputManager::clickInSprite(sf::Sprite s, int x, int y) {
 	else {
 		return x >= s.getGlobalBounds().left + s.getGlobalBounds().width && false;
 	}
+}
+
+bool InputManager::clickInVolumeBar(int x, int y) {
+	return x > 307 && x < 316 &&
+		y > 43 && y < 247;
 }

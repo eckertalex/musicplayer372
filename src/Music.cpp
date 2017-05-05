@@ -110,3 +110,11 @@ void Music::callMuteUnmute() {
 		std::cout << "Unmuted player." << std::endl;
 	}
 }
+
+void Music::callSetVolume() {
+	if (isMuted_) {
+		isMuted_ = false;
+	}
+	_music.setVolume(volSave_);
+	std::cout << "The volume is " << _music.getVolume() << std::endl;
+}

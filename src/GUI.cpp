@@ -22,10 +22,10 @@ GUI::GUI(std::shared_ptr<Music> music) : music(music) {
 	window.setFramerateLimit(60);
 	setTextures();
 	stylePlaylist();
-	line.rotate(270);
-	line.setPosition(307, 245);
+	volumeBar.rotate(270);
+	volumeBar.setPosition(307, 245);
 	sf::Color lineColor(0x080A58ff);
-	line.setFillColor(lineColor);
+	volumeBar.setFillColor(lineColor);
 	if(!font.loadFromFile("../res/fonts/TravelingTypewriter.ttf"))
 		std::cout << "Font couldn't be found" << std::endl;
 	else
@@ -77,8 +77,8 @@ void GUI::draw() {
 	window.draw(songNumber);
 	window.draw(currentSongInfo);
 	window.draw(timerText);
-	line.setSize(sf::Vector2f(music->_music.getVolume()*2, 5));
-	window.draw(line);
+	volumeBar.setSize(sf::Vector2f(music->_music.getVolume()*2, 5));
+	window.draw(volumeBar);
 
 	window.display();
 }

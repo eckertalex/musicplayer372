@@ -29,9 +29,9 @@ public:
 	void callPrevSong();
 	void callIncreaseVolume();
 	void callDecreaseVolume();
+	void callSetVolume();
 	void callMuteUnmute();
 	void closeProgram();
-
 
 	std::unique_ptr<DirectoryManager> dirmgr;
 	std::vector<std::string> songList_;
